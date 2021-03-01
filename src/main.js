@@ -1,5 +1,24 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-import router from './router'
 
-createApp(App).use(router).mount('#app')
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+
+Vue.use(VueRouter)
+
+const Foo = { template: '<div>foo</div>' }
+const Bar = { template: '<div>bar</div>' }
+
+const routes = [
+  { path: '/foo', component: Foo },
+  { path: '/bar', component: Bar }
+]
+
+const router = new VueRouter({
+  routes // (缩写) 相当于 routes: routes
+})
+
+
+const app = new Vue({
+  router
+}).$mount('#app')
