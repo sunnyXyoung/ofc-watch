@@ -6,12 +6,11 @@
     <a href="https://v3.vuejs.org/" target="_blank">Vue 3 Documentation</a>
   </p>
 
-  <button @click="state.count--">la count is: {{ state.count }}</button>
+  <button @click="state.count++">count is: {{ state.count }}</button>
   <p>
     Edit
-    <code>components/index.vue</code> to test hot module replacement.
+    <code>components/HelloWorld.vue</code> to test hot module replacement.
   </p>
-  <p>COOL</p>
 </template>
 
 <script setup>
