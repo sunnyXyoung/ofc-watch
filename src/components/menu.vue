@@ -1,13 +1,15 @@
 <template>
 	<div class="-menu">
-		<li>1</li>
-		<li>2</li>
+    <a href="#">a</a>
+    <a href="#">b</a>
 	</div>
 </template>
 
 <style>
-	.-menu {
+	.-menu{
 		background-color: #123456;
+    color: white;
+
 	}
 
 </style>
