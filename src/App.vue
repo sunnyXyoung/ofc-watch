@@ -1,15 +1,11 @@
-
-
-
 <template>
-  
   <div id="app">
     <div id="nav">
       <div>
-        <router-link class="left-btn"  to="/">主頁</router-link>|
-        <router-link class="left-btn"  to="/about1">關於</router-link>|
-        <router-link class="left-btn"  to="/about2">關於</router-link>|
-        <router-link class="left-btn"  to="/about3">關於</router-link>|
+        <router-link class="left-btn"  to="/">首頁</router-link>|
+        <router-link class="left-btn"  to="/about1">戰鬥員分析</router-link>|
+        <router-link class="left-btn"  to="/about2">陣營分析</router-link>|
+        <router-link class="left-btn"  to="/about3">裝備分析</router-link>|
         <router-link class="left-btn"  to="/about4">關於</router-link>
       </div>
       <div class="pusher"></div>
@@ -20,7 +16,6 @@
     </div>
     <router-view/>
   </div>
-
 </template>
 <script>
   // import mymenu from './components/menu.vue';
@@ -32,9 +27,13 @@
   //    mymenu
   //   }
   // }
-
 </script>
-<style>
+<style scoped>
+
+a {
+  text-decoration:none;
+}
+
 #app {
   width: 100%;
   flex-direction: row-reverse;
@@ -54,28 +53,44 @@ body {
   flex-grow: 10;
 }
 
-
-
 #nav {
   display: flex;
   padding: 30px;
   flex-direction: row;
   text-align: left;
 }
+
 @keyframes menu-hover {
   0% {
-    color: #2c3e50;
+    background-color: #ffffff;
+    color: white;
+    margin-left: 20px;
+    margin-right: 20px;
+    padding: 0px;
+    border-radius: 0 10px 0 10px;
   }
   100% {
-    color: #6c8eb0;
+    background-color: #123456;
+    color: white;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 10px;
+    border-radius: 0 10px 0 10px;
   }
 
 }
-#nav a:hover {
-  animation-name: menu-hover;
-  color: #6c8eb0;
-}
 
+.left-btn:hover {
+  animation-name: menu-hover;
+  animation-duration: 0.5s;
+  background-color: #123456;
+  color: white;
+  margin-left: 10px;
+  margin-right: 10px;
+  padding: 10px;
+  border-radius: 0 10px 0 10px;
+
+}
 
 
 .left-btn {
@@ -86,10 +101,10 @@ body {
   margin-left: 20px;
 }
 
-#nav a.router-link-exact-active {
+.left-btn.router-link-exact-active {
   color: #6c8eb0;
-}
 
+}
 
 .right-btn {
   background-color: #123456;
@@ -99,6 +114,7 @@ body {
   padding: 10px;
   border-radius: 0 10px 0 10px;
 }
+
 </style>
 
 
