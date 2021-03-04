@@ -1,12 +1,14 @@
 <template>
+
+
   <div id="app">
     <div id="nav">
       <div>
         <router-link class="left-btn"  to="/">首頁</router-link>|
-        <router-link class="left-btn"  to="/about1">戰鬥員分析</router-link>|
-        <router-link class="left-btn"  to="/about2">陣營分析</router-link>|
-        <router-link class="left-btn"  to="/about3">裝備分析</router-link>|
-        <router-link class="left-btn"  to="/about4">關於</router-link>
+        <router-link class="left-btn"  to="/fighter">戰鬥員分析</router-link>|
+        <router-link class="left-btn"  to="/faction">陣營分析</router-link>|
+        <router-link class="left-btn"  to="/weapon">裝備分析</router-link>|
+        <router-link class="left-btn"  to="/about">關於</router-link>
       </div>
       <div class="pusher"></div>
       <div>
@@ -18,7 +20,7 @@
   </div>
 </template>
 <script>
-  // import mymenu from './components/menu.vue';
+
 
 
   // export default {
