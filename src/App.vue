@@ -28,7 +28,7 @@
   //   }
   // }
 </script>
-<style scoped>
+<style>
 
 a {
   text-decoration:none;
