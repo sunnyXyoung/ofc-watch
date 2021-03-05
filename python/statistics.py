@@ -34,8 +34,6 @@ for line in a:
 	else:
 		last_number = line_dict['report']['id']
 
-
-
 	this_hour = time.localtime(int(line_dict['report']['time'])/1000).tm_hour
 
 	try:
@@ -44,20 +42,7 @@ for line in a:
 		hour_count[this_hour] = 1
 
 	# for weapon in line_dict['report']['messages']['stats']['a']['equipments']:
-	# 	try:	
-	# 		weapon_count[weapon['type']] += 1
-	# 	except:
-	# 		weapon_count[weapon['type']] = 1
 
-
-	# try:
-	# 	for weapon in line_dict['report']['messages']['stats']['a']['equipments']:
-	# 		try:
-	# 			weapon_count[weapon['type']] += 1
-	# 		except:
-	# 			weapon_count[weapon['type']] = 1
-	# except:
-	# 	pass
 	
 	
 print(weapon_count)
