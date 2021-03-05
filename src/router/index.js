@@ -6,6 +6,8 @@ import VueGoogleCharts from 'vue-google-charts'
 Vue.use(VueGoogleCharts)
 Vue.use(VueRouter)
 
+
+
 const routes = [
   {
     path: '/',
