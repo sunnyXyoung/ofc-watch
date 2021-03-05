@@ -3,12 +3,14 @@ import time
 
 
 
-log = open('history_five.txt', 'a', encoding="utf-8")
-time_use = 0
+with open('history_five.txt', 'r', encoding="utf-8") as log:
+	i = len(log.readlines())+1
 
-i = 1
+log = open('history_five.txt', 'a', encoding="utf-8")
+
+time_use = 0
 while True:
-	
+	print(i)
 	time1 = time.time()
 	# time.sleep((0.25 if 0.25-time_use < 0 else 0.25-time_use) + random.random()/4)
 	headers = {

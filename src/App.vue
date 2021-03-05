@@ -5,6 +5,7 @@
     <div id="nav">
       <div>
         <router-link class="left-btn"  to="/">首頁</router-link>|
+        <router-link class="left-btn"  to="/report">戰報分析</router-link>|
         <router-link class="left-btn"  to="/fighter">戰鬥員分析</router-link>|
         <router-link class="left-btn"  to="/faction">陣營分析</router-link>|
         <router-link class="left-btn"  to="/weapon">裝備分析</router-link>|
