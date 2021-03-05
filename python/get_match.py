@@ -1,8 +1,6 @@
 import requests
 import time
 
-import random
-
 
 
 log = open('history_five.txt', 'a', encoding="utf-8")
