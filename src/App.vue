@@ -13,15 +13,26 @@
       <div class="pusher"></div>
       <div>
         <router-link class="right-btn" to="/login">登入</router-link>
-<!--        <router-link to="/about">About</router-link>-->
       </div>
     </div>
+    <select id="round-selector" v-model="round">
+      <option>第四輪</option>
+      <option>第五輪</option>
+    </select>
+
     <router-view/>
   </div>
 </template>
 <script>
 
+  export default {
+    data (){
+      return{
+        round : "第四輪",
 
+      }
+    }
+  }
 
   // export default {
   //   name: 'Home',
@@ -44,6 +55,12 @@ a {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+}
+
+#round-selector {
+  display: flex;
+  flex-flow: row;
+  margin-left: 50px;
 }
 
 body {

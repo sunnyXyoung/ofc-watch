@@ -1,6 +1,5 @@
 <template>
   <div>
-    <p>still not working.</p>
     <div id="app">
       <fusioncharts
           :type="type"
@@ -29,7 +28,6 @@ var dataFetch = fetch(
 var schemaFetch = fetch(
     "https://s3.eu-central-1.amazonaws.com/fusion.store/ft/schema/plotting-multiple-series-on-time-axis-schema.json"
 ).then(jsonify);
-
 
 
 export default {
