@@ -9,7 +9,9 @@
   },
   "dependencies": {
     "core-js": "^3.6.5",
+    "fusioncharts": "^3.16.0",
     "vue": "^2.6.11",
+    "vue-fusioncharts": "^3.1.0",
     "vue-google-charts": "^0.3.3",
     "vue-router": "^3.2.0"
   },
