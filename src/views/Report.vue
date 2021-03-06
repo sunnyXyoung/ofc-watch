@@ -1,24 +1,25 @@
 <template>
-  <div id="app">
-    <fusioncharts
-        :type="type1"
-        :width="width"
-        :height="height"
-        :dataFormat="dataFormat"
-        :dataSource="dataSource"
-    ></fusioncharts>
+  <div>
+    <div class="row-div2">
+      <fusioncharts
+          :type="type1"
+          :width="width"
+          :height="height"
+          :dataFormat="dataFormat"
+          :dataSource="dataSource"
+      ></fusioncharts>
+    </div>
 
-    <div id="row-div">
-      <VueApexCharts
-          width="500" type="bar"
-          :options="options" :series="series2"
-      >
-      </VueApexCharts>
-      <VueApexCharts
-          width="500" type="donut"
-          :options="options2" :series="series3"
-      >
-      </VueApexCharts>
+
+    <div class="row-div2">
+      <div class="row-div">
+        <p>戰報時間統計</p>
+        <VueApexCharts
+            width="500" type="donut"
+            :options="options2" :series="series3"
+        >
+        </VueApexCharts>
+      </div>
 
     </div>
   </div>
@@ -117,9 +118,7 @@ export default {
           formatter: function (val) {
             return val + "%"
           },
-          dropShadow: {
-
-          }
+          dropShadow: {}
         }
       }
     }
@@ -148,8 +147,5 @@ export default {
   padding: 50px;
 }
 
-#row-div {
-  display: flex;
-  flex-flow: row;
-}
+
 </style>

@@ -29,7 +29,7 @@
   export default {
     data (){
       return{
-        round : "第四輪",
+        round : "第五輪",
 
       }
     }
@@ -43,6 +43,18 @@
   // }
 </script>
 <style>
+
+.row-div {
+  display: flex;
+  flex-flow: row;
+}
+
+.row-div2 {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  flex-flow: row;
+}
 
 a {
   text-decoration:none;
