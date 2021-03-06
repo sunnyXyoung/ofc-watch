@@ -6,9 +6,14 @@ import FusionCharts from "fusioncharts";
 import TimeSeries from "fusioncharts/fusioncharts.timeseries";
 
 
+// import VueApexCharts from 'vue-apexcharts'
+
+
+
 Vue.use(VueFusionCharts, FusionCharts, TimeSeries);
 Vue.config.productionTip = false
 // Vue.prototype.google = google
+
 
 
 new Vue({
