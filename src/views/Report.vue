@@ -1,6 +1,16 @@
 <template>
   <div>
     <div class="row-div2">
+    <div class="row-div">
+      <VueApexCharts
+          width="500" type="donut"
+          :options="options2" :series="series3"
+      >
+      </VueApexCharts>
+    </div>
+
+  </div>
+    <div class="row-div2">
       <fusioncharts
           :type="type1"
           :width="width"
@@ -11,17 +21,7 @@
     </div>
 
 
-    <div class="row-div2">
-      <div class="row-div">
-        <p>戰報時間統計</p>
-        <VueApexCharts
-            width="500" type="donut"
-            :options="options2" :series="series3"
-        >
-        </VueApexCharts>
-      </div>
 
-    </div>
   </div>
 </template>
 
@@ -37,6 +37,23 @@ var dataFetch = fetch(
 var schemaFetch = fetch(
     "https://s3.eu-central-1.amazonaws.com/fusion.store/ft/schema/plotting-multiple-series-on-time-axis-schema.json"
 ).then(jsonify);
+
+
+// new Vue({
+//   el: '#app',
+//   components: {
+//     apexchart: VueApexCharts,
+//   },
+//   data: {
+//
+//     series: [25, 15, 44, 55, 41, 17],
+//     chartOptions
+//
+//
+//   },
+//
+// })
+
 
 
 export default {
@@ -70,57 +87,59 @@ export default {
           }
         ]
       },
-      chartOptions: {
+      // chartOptions: {
+      //   chart: {
+      //     type: 'donut',
+      //   },
+      //   responsive: [{
+      //     breakpoint: 480,
+      //     options: {
+      //       chart: {
+      //         width: 200
+      //       },
+      //       legend: {
+      //         position: 'bottom'
+      //       }
+      //     }
+      //   }]
+      // },
+      series3: [44, 55, 41, 17],
+      options2: {
         chart: {
-          type: 'donut',
+          width: '100%',
+          type: 'pie',
         },
-        responsive: [{
-          breakpoint: 480,
-          options: {
-            chart: {
-              width: 200
-            },
-            legend: {
-              position: 'bottom'
+        labels: ["大麻神教", "吳", "海外勢力", "艾基爾"],
+        theme: {
+          monochrome: {
+            enabled: true
+          }
+        },
+        plotOptions: {
+          pie: {
+            dataLabels: {
+              offset: -5
             }
           }
-        }]
-      },
-      series3: [44, 55, 41, 17, 15],
-      options: {
-        chart: {
-          id: 'vuechart-example'
         },
-        xaxis: {
-          categories: [
-            "Jan",
-            "Feb",
-            "Mar",
-            "Apr",
-            "May",
-            "Jun",
-            "Jul",
-            "Aug",
-            "Sep",
-            "Oct",
-            "Nov",
-            "Dec"
-          ]
+        title: {
+          text: "戰報時間統計"
+        },
+        dataLabels: {
+          formatter(val, opts) {
+            const name = opts.w.globals.labels[opts.seriesIndex]
+            return [name, val.toFixed(1) + '%']
+          }
+        },
+        legend: {
+          show: false
         }
       },
       series2: [{
         name: 'series-1',
         data: [55, 62, 89, 66, 98, 72, 101, 75, 94, 120, 117, 139]
       }],
-      options2: {
-        dataLabels: {
-          enabled: true,
-          formatter: function (val) {
-            return val + "%"
-          },
-          dropShadow: {}
-        }
-      }
+
     }
   },
   mounted: function () {

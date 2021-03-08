@@ -15,6 +15,8 @@
 <script>
 import VueApexCharts from "vue-apexcharts";
 
+
+
 export default {
   name: "Weapon",
   components: {
@@ -22,7 +24,7 @@ export default {
   },
   data() {
     return {
-      series1: [44, 55, 41, 17, 15],
+      series1: [5],
       series2: [44, 55, 41, 17, 15],
       options1: {
         dataLabels: {
@@ -49,6 +51,11 @@ export default {
     }
   },
   mounted: function () {
+    var jsonify = res => res.json();
+    fetch(
+        "http://localhost:3000/time1.json"
+    ).then(jsonify).then(data=>{this.series1=data});
+    console.log(this.series1);
   }
 }
 </script>
