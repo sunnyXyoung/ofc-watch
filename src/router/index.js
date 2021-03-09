@@ -47,6 +47,36 @@ const routes = [
     name: 'Login',
     component: () => import('../views/Login.vue')
   },
+  {
+    path: '/kill',
+    name: 'Kill',
+    component: () => import('../views/Kill.vue')
+  },
+  {
+    path: '/killed',
+    name: 'Killed',
+    component: () => import('../views/Killed.vue')
+  },
+  {
+    path: '/damage',
+    name: 'Damage',
+    component: () => import('../views/Damage.vue')
+  },
+  {
+    path: '/damaged',
+    name: 'Damaged',
+    component: () => import('../views/Damaged.vue')
+  },
+  {
+    path: '/xp',
+    name: 'Xp',
+    component: () => import('../views/Xp.vue')
+  },
+  {
+    path: '/loot',
+    name: 'Loot',
+    component: () => import('../views/Loot.vue')
+  },
 ]
 
 const router = new VueRouter({

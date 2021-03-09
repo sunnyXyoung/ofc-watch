@@ -1,12 +1,10 @@
 <template>
-  <div>
-    還沒做好
-  </div>
+<div></div>
 </template>
 
 <script>
 export default {
-name: "Login"
+  name: "Damage"
 }
 </script>
 
