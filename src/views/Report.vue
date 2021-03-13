@@ -39,20 +39,6 @@ var schemaFetch = fetch(
 ).then(jsonify);
 
 
-// new Vue({
-//   el: '#app',
-//   components: {
-//     apexchart: VueApexCharts,
-//   },
-//   data: {
-//
-//     series: [25, 15, 44, 55, 41, 17],
-//     chartOptions
-//
-//
-//   },
-//
-// })
 
 
 
@@ -87,22 +73,6 @@ export default {
           }
         ]
       },
-      // chartOptions: {
-      //   chart: {
-      //     type: 'donut',
-      //   },
-      //   responsive: [{
-      //     breakpoint: 480,
-      //     options: {
-      //       chart: {
-      //         width: 200
-      //       },
-      //       legend: {
-      //         position: 'bottom'
-      //       }
-      //     }
-      //   }]
-      // },
       series3: [44, 55, 41, 17],
       options2: {
         chart: {

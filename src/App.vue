@@ -26,21 +26,16 @@
 </template>
 <script>
 
-  export default {
-    data (){
-      return{
-        round : "第五輪",
+export default {
+  data (){
+    return{
+      round : "第五輪",
 
-      }
     }
   }
+}
 
-  // export default {
-  //   name: 'Home',
-  //   components: {
-  //    mymenu
-  //   }
-  // }
+
 </script>
 <style>
 
