@@ -1,15 +1,15 @@
 <template>
   <div>
     <div class="row-div2">
-    <div class="row-div">
-      <VueApexCharts
-          width="500" type="donut"
-          :options="options2" :series="series3"
-      >
-      </VueApexCharts>
-    </div>
+      <div class="row-div">
+        <VueApexCharts
+            width="500" type="donut"
+            :options="options2" :series="series3"
+        >
+        </VueApexCharts>
+      </div>
 
-  </div>
+    </div>
     <div class="row-div2">
       <fusioncharts
           :type="type1"
@@ -21,7 +21,6 @@
     </div>
 
 
-
   </div>
 </template>
 
@@ -31,15 +30,12 @@ import FusionCharts from "fusioncharts";
 
 var jsonify = res => res.json();
 var dataFetch = fetch(
-    "/data/time1.json"
+    "http://localhost:3000/Report2.json"
 ).then(jsonify);
 
 var schemaFetch = fetch(
-    "https://s3.eu-central-1.amazonaws.com/fusion.store/ft/schema/plotting-multiple-series-on-time-axis-schema.json"
+    "http://localhost:3000/Report3.json"
 ).then(jsonify);
-
-
-
 
 
 export default {
@@ -73,13 +69,13 @@ export default {
           }
         ]
       },
-      series3: [44, 55, 41, 17],
+      series3: [44, 55, 41, 17, 44, 55, 41, 17, 44, 55, 41, 17, 44, 55, 41, 17, 44, 55, 41, 17, 44, 55, 41, 17],
       options2: {
         chart: {
           width: '100%',
           type: 'pie',
         },
-        labels: ["大麻神教", "吳", "海外勢力", "艾基爾"],
+        labels: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
         theme: {
           monochrome: {
             enabled: true
@@ -105,10 +101,7 @@ export default {
           show: false
         }
       },
-      series2: [{
-        name: 'series-1',
-        data: [55, 62, 89, 66, 98, 72, 101, 75, 94, 120, 117, 139]
-      }],
+
 
     }
   },
@@ -123,7 +116,12 @@ export default {
       );
       // this.dataSource.data = fusionTable;
     });
-
+    var jsonify = res => res.json();
+    fetch(
+        "http://localhost:3000/Report1.json"
+    ).then(jsonify).then(data => {
+      this.series1 = data
+    });
   }
 }
 

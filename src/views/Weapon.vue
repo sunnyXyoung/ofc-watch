@@ -1,12 +1,14 @@
 <template>
   <div>
     <div class="row-div chart-p row-div2">
-      <p>裝備出場分布</p>
       <VueApexCharts
           width="500" type="donut"
           :options="options1" :series="series1"
       >
       </VueApexCharts>
+    </div>
+    <div class="row-div2">
+
     </div>
   </div>
 
@@ -14,7 +16,6 @@
 
 <script>
 import VueApexCharts from "vue-apexcharts";
-
 
 
 export default {
@@ -27,14 +28,32 @@ export default {
       series1: [5],
       series2: [44, 55, 41, 17, 15],
       options1: {
-        dataLabels: {
-          enabled: true,
-          formatter: function (val) {
-            return val + "%"
-          },
-          dropShadow: {
+        chart: {
+          width: '100%',
+          type: 'pie',
+        },
+        labels: ["大麻神教", "吳", "海外勢力", "艾基爾"],
+        theme: {
 
+        },
+        plotOptions: {
+          pie: {
+            dataLabels: {
+              offset: -5
+            }
           }
+        },
+        title: {
+          text: "裝備出場分布"
+        },
+        dataLabels: {
+          formatter(val, opts) {
+            const name = opts.w.globals.labels[opts.seriesIndex]
+            return [name, val.toFixed(1) + '%']
+          }
+        },
+        legend: {
+          show: false
         }
       },
       options2: {
@@ -53,9 +72,11 @@ export default {
   mounted: function () {
     var jsonify = res => res.json();
     fetch(
-        "http://localhost:3000/time1.json"
+        "http://localhost:3000/Weapon1.json"
     ).then(jsonify).then(data=>{this.series1=data});
-    console.log(this.series1);
+    fetch(
+        "http://localhost:3000/Weapon2.json"
+    ).then(jsonify).then(data=>{this.options1.labels=data});
   }
 }
 </script>

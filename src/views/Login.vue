@@ -1,6 +1,6 @@
 <template>
   <div>
-    還沒做好
+    還沒弄好
   </div>
 </template>
 
