@@ -26,13 +26,13 @@ export default {
   data() {
     return {
       series1: [5],
-      series2: [44, 55, 41, 17, 15],
+
       options1: {
         chart: {
           width: '100%',
           type: 'pie',
         },
-        labels: ["大麻神教", "吳", "海外勢力", "艾基爾"],
+        labels: ["單手劍"],
         theme: {
 
         },
