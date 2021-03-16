@@ -1,10 +1,43 @@
 <template>
-<div></div>
+<div>
+  <RanksMenu></RanksMenu>
+  <div class="row-div2">
+    <table>
+      <tr>
+        <th>名次</th><th>暱稱</th><th>獲得總戰鬥經驗</th>
+      <tr v-for="(item, index) in killBoardList" :key="item">
+        <td>{{ index+1 }}</td><td>{{ item.name }}</td><td>{{ item.xp }}</td>
+      </tr>
+    </table>
+
+  </div>
+</div>
 </template>
 
 <script>
+import RanksMenu from '@/components/RanksMenu.vue'
 export default {
-name: "Xp"
+name: "Xp",
+  components:{
+    RanksMenu
+  },
+  data() {
+    return {
+      killBoardList: [
+        {name: "Kulimi", xp: 48763},
+        {name: "Kulidfasdfasdfasdfmi2", xp: 8888},
+      ]
+    }
+  },
+  mounted: function () {
+    var jsonify = res => res.json();
+    fetch(
+        "http://localhost:3000/Killed.json"
+    ).then(jsonify).then(data => {
+      this.killBoardList = data
+    });
+
+  }
 }
 </script>
 
