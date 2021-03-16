@@ -4,11 +4,13 @@ import router from './router'
 import VueFusionCharts from "vue-fusioncharts";
 import FusionCharts from "fusioncharts";
 import TimeSeries from "fusioncharts/fusioncharts.timeseries";
+import store from './store';
 
-Vue.use(VueFusionCharts, FusionCharts, TimeSeries);
+
+Vue.use(VueFusionCharts, FusionCharts, TimeSeries,);
 Vue.config.productionTip = false
 
 new Vue({
-  router,
-  render: h => h(App)
+    router, store,
+    render: h => h(App)
 }).$mount('#app')

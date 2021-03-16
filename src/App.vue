@@ -1,25 +1,29 @@
 <template>
-
-
   <div id="app">
     <div id="nav">
       <div>
-        <router-link class="left-btn"  to="/">首頁</router-link>|
-        <router-link class="left-btn"  to="/report">戰報分析</router-link>|
-        <router-link class="left-btn"  to="/fighter">戰鬥員分析</router-link>|
-        <router-link class="left-btn"  to="/faction">陣營分析</router-link>|
-        <router-link class="left-btn"  to="/weapon">裝備分析</router-link>|
-        <router-link class="left-btn"  to="/about">關於</router-link>
+        <router-link class="left-btn" to="/">首頁</router-link>
+        |
+        <router-link class="left-btn" to="/report">戰報分析</router-link>
+        |
+        <router-link class="left-btn" to="/fighter">戰鬥員分析</router-link>
+        |
+        <router-link class="left-btn" to="/faction">陣營分析</router-link>
+        |
+        <router-link class="left-btn" to="/weapon">裝備分析</router-link>
+        |
+        <router-link class="left-btn" to="/about">關於</router-link>
       </div>
       <div class="pusher"></div>
       <div>
         <router-link class="right-btn" to="/login">登入</router-link>
       </div>
     </div>
-    <select id="round-selector" v-model="round">
-      <option>第四輪</option>
-      <option>第五輪</option>
-      <option>第六輪（未完成）</option>
+    <select id="round-selector" v-model="round" @change="ChangeRound">
+      <option v-for="option in options" v-bind:value="option.value" :key="option">
+        {{ option.text }}
+      </option>
+
     </select>
 
     <router-view/>
@@ -28,10 +32,24 @@
 <script>
 
 export default {
-  data (){
-    return{
-      round : "第五輪",
+  data() {
 
+    // this.$store.commit("ChangeRound");
+    return {
+      round: "",
+      options: [
+        {text: '第四輪', value: '4'},
+        {text: '第五輪', value: '5'},
+        {text: '第六輪（未完成）', value: '6'}
+      ]
+
+    }
+  },
+
+  methods: {
+
+    ChangeRound() {
+      this.$store.commit("ChangeRound", this.round);
     }
   }
 }
@@ -53,7 +71,7 @@ export default {
 }
 
 a {
-  text-decoration:none;
+  text-decoration: none;
 }
 
 #app {
@@ -142,6 +160,7 @@ body {
   padding: 10px;
   border-radius: 0 10px 0 10px;
 }
+
 .ranks-link {
   font-weight: bold;
   color: #2c3e50;
@@ -153,6 +172,7 @@ body {
 .ranks-link:hover {
   text-decoration: underline;
 }
+
 #ranks {
   text-align: center;
   width: 100%;

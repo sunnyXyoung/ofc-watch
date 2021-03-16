@@ -32,7 +32,7 @@ name: "Xp",
   mounted: function () {
     var jsonify = res => res.json();
     fetch(
-        "http://localhost:3000/Killed.json"
+        "http://kulimi.cnmc.tw/history_five.txt"
     ).then(jsonify).then(data => {
       this.killBoardList = data
     });
