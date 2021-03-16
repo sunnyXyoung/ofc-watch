@@ -26,6 +26,11 @@
             :options="options3" :series="series3"
         >
         </VueApexCharts>
+        <VueApexCharts
+            width="500" type="donut"
+            :options="options4" :series="series4"
+        >
+        </VueApexCharts>
       </div>
     </div>
   </div>
@@ -49,6 +54,7 @@ export default {
       series1: [44, 55, 41, 17],
       series2: [44, 55, 41, 17],
       series3: [44, 55, 41, 17],
+      series4: [44, 55, 41, 17],
       options1: {
         chart: {
           width: '100%',
@@ -136,6 +142,35 @@ export default {
           show: false
         }
       },
+      options4: {
+        chart: {
+          width: '100%',
+          type: 'pie',
+        },
+        labels: ["大麻神教", "吳", "海外勢力", "艾基爾"],
+        theme: {
+
+        },
+        plotOptions: {
+          pie: {
+            dataLabels: {
+              offset: -5
+            }
+          }
+        },
+        title: {
+          text: "獲得樓層獎勵數"
+        },
+        dataLabels: {
+          formatter(val, opts) {
+            const name = opts.w.globals.labels[opts.seriesIndex]
+            return [name, val.toFixed(1) + '%']
+          }
+        },
+        legend: {
+          show: false
+        }
+      },
     }
   },
   mounted: function () {
@@ -144,11 +179,26 @@ export default {
         "http://localhost:3000/Faction1.json"
     ).then(jsonify).then(data=>{this.series1=data});
     fetch(
+        "http://localhost:3000/Faction12.json"
+    ).then(jsonify).then(data=>{this.options1.labels=data});
+    fetch(
         "http://localhost:3000/Faction2.json"
     ).then(jsonify).then(data=>{this.series2=data});
     fetch(
+        "http://localhost:3000/Faction22.json"
+    ).then(jsonify).then(data=>{this.options2.labels=data});
+    fetch(
         "http://localhost:3000/Faction3.json"
     ).then(jsonify).then(data=>{this.series3=data});
+    fetch(
+        "http://localhost:3000/Faction32.json"
+    ).then(jsonify).then(data=>{this.options3.labels=data});
+    fetch(
+        "http://localhost:3000/Faction4.json"
+    ).then(jsonify).then(data=>{this.series4=data});
+    fetch(
+        "http://localhost:3000/Faction42.json"
+    ).then(jsonify).then(data=>{this.options4.labels=data});
   }
 }
 

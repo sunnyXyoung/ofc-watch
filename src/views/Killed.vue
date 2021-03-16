@@ -2,11 +2,11 @@
 <div>
   <RanksMenu></RanksMenu>
   <div class="row-div2">
-    <table>
+    <table cellpadding="3">
       <tr>
-        <th>名次</th><th>暱稱</th><th>被擊殺數</th>
+        <th>名次</th><th>陣營（最終）</th><th>暱稱</th><th>被擊殺數</th>
       <tr v-for="(item, index) in killBoardList" :key="item">
-        <td>{{ index+1 }}</td><td>{{ item.name }}</td><td>{{ item.killed }}</td>
+        <td>{{ index+1 }}</td><td>{{item.faction}}<td>{{ item.name }}</td><td>{{ item.killed }}</td>
       </tr>
     </table>
 
@@ -24,8 +24,8 @@ name: "Killed",
   data() {
     return {
       killBoardList: [
-        {name: "Kulimi", killed: 48763},
-        {name: "Kulidfasdfasdfasdfmi2", killed: 8888},
+        {name: "Kulimi",faction:"吳", killed: 48763},
+        {name: "Kulidfasdfasdfasdfmi2", faction:"吳",killed: 8888},
       ]
     }
   },

@@ -2,11 +2,11 @@
   <div>
     <RanksMenu></RanksMenu>
     <div class="row-div2">
-      <table>
+      <table cellpadding="3">
         <tr>
-          <th>名次</th><th>暱稱</th><th>擊殺數</th>
+          <th>名次</th><th>陣營（最終）</th><th>暱稱</th><th>擊殺數</th>
         <tr v-for="(item, index) in killBoardList" :key="item">
-        <td>{{ index+1 }}</td><td>{{ item.name }}</td><td>{{ item.kill }}</td>
+        <td>{{ index+1 }}</td><td>{{item.faction}}<td>{{ item.name }}</td><td>{{ item.kill }}</td>
         </tr>
       </table>
 
@@ -17,6 +17,7 @@
 </template>
 
 <script>
+
 import RanksMenu from '@/components/RanksMenu.vue'
 export default {
   name: "Kill",
@@ -26,9 +27,10 @@ export default {
   data() {
     return {
       killBoardList: [
-        {name: "Kulimi", kill: 48763},
-        {name: "Kulidfasdfasdfasdfmi2", kill: 8888},
-      ]
+        {name: "Kulimi",faction:"吳", kill: 48763},
+        {name: "Kulidfasdfasdfasdfmi2",faction:"吳", kill: 8888},
+      ],
+
     }
   },
   mounted: function () {

@@ -19,6 +19,7 @@
     <select id="round-selector" v-model="round">
       <option>第四輪</option>
       <option>第五輪</option>
+      <option>第六輪（未完成）</option>
     </select>
 
     <router-view/>
@@ -156,6 +157,10 @@ body {
   text-align: center;
   width: 100%;
   margin-bottom: 50px;
+}
+
+table {
+
 }
 
 </style>
