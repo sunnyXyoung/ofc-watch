@@ -36,7 +36,7 @@ export default {
   mounted: function () {
     var jsonify = res => res.json();
     fetch(
-        "http://localhost:3000/Kill.json"
+        "./"+this.$store.state.round+"/Kill.json"
     ).then(jsonify).then(data => {
       this.killBoardList = data
     });

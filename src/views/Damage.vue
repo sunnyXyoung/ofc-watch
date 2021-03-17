@@ -32,7 +32,7 @@ export default {
   mounted: function () {
     var jsonify = res => res.json();
     fetch(
-        "http://localhost:3000/Damage.json"
+        "./"+this.$store.state.round+"/Damage.json"
     ).then(jsonify).then(data => {
       this.killBoardList = data
     });

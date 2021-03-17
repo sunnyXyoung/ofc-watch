@@ -176,28 +176,28 @@ export default {
   mounted: function () {
     var jsonify = res => res.json();
     fetch(
-        "http://localhost:3000/Faction1.json"
+        "./"+this.$store.state.round+"/Faction1.json"
     ).then(jsonify).then(data=>{this.series1=data});
     fetch(
-        "http://localhost:3000/Faction12.json"
+        "./"+this.$store.state.round+"/Faction12.json"
     ).then(jsonify).then(data=>{this.options1.labels=data});
     fetch(
-        "http://localhost:3000/Faction2.json"
+        "./"+this.$store.state.round+"/Faction2.json"
     ).then(jsonify).then(data=>{this.series2=data});
     fetch(
-        "http://localhost:3000/Faction22.json"
+        "./"+this.$store.state.round+"/Faction22.json"
     ).then(jsonify).then(data=>{this.options2.labels=data});
     fetch(
-        "http://localhost:3000/Faction3.json"
+        "./"+this.$store.state.round+"/Faction3.json"
     ).then(jsonify).then(data=>{this.series3=data});
     fetch(
-        "http://localhost:3000/Faction32.json"
+        "./"+this.$store.state.round+"/Faction32.json"
     ).then(jsonify).then(data=>{this.options3.labels=data});
     fetch(
-        "http://localhost:3000/Faction4.json"
+        "./"+this.$store.state.round+"/Faction4.json"
     ).then(jsonify).then(data=>{this.series4=data});
     fetch(
-        "http://localhost:3000/Faction42.json"
+        "./"+this.$store.state.round+"/Faction42.json"
     ).then(jsonify).then(data=>{this.options4.labels=data});
   }
 }

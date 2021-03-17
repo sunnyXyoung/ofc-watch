@@ -11,12 +11,12 @@
         <router-link class="left-btn" to="/faction">陣營分析</router-link>
         |
         <router-link class="left-btn" to="/weapon">裝備分析</router-link>
-        |
-        <router-link class="left-btn" to="/about">關於</router-link>
+<!--        |
+        <router-link class="left-btn" to="/about">關於</router-link>-->
       </div>
       <div class="pusher"></div>
       <div>
-        <router-link class="right-btn" to="/login">登入</router-link>
+        <router-link class="right-btn" to="/about">關於</router-link>
       </div>
     </div>
     <select id="round-selector" v-model="round" @change="ChangeRound">
@@ -40,7 +40,7 @@ export default {
       options: [
         {text: '第四輪', value: '4'},
         {text: '第五輪', value: '5'},
-        {text: '第六輪（未完成）', value: '6'}
+        {text: '第六輪', value: '6'}
       ]
 
     }

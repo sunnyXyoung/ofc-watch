@@ -32,7 +32,7 @@ name: "Killed",
   mounted: function () {
     var jsonify = res => res.json();
     fetch(
-        "http://localhost:3000/Killed.json"
+        "./"+this.$store.state.round+"/Killed.json"
     ).then(jsonify).then(data => {
       this.killBoardList = data
     });

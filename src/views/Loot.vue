@@ -45,9 +45,14 @@ name: "Loot",
   mounted: function () {
     var jsonify = res => res.json();
     fetch(
-        "http://localhost:3000/Killed.json"
+        "./"+this.$store.state.round+"/Loot.json"
     ).then(jsonify).then(data => {
       this.killBoardList = data
+    });
+    fetch(
+        "./"+this.$store.state.round+"/laList.json"
+    ).then(jsonify).then(data => {
+      this.laList = data
     });
 
   }

@@ -32,7 +32,7 @@ name: "Xp",
   mounted: function () {
     var jsonify = res => res.json();
     fetch(
-        "http://kulimi.cnmc.tw/history_five.txt"
+        "./"+this.$store.state.round+"/Xp.json"
     ).then(jsonify).then(data => {
       this.killBoardList = data
     });

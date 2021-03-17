@@ -28,14 +28,6 @@
 import VueApexCharts from 'vue-apexcharts'
 import FusionCharts from "fusioncharts";
 
-var jsonify = res => res.json();
-var dataFetch = fetch(
-    "http://localhost:3000/Report2.json"
-).then(jsonify);
-
-var schemaFetch = fetch(
-    "http://localhost:3000/Report3.json"
-).then(jsonify);
 
 
 export default {
@@ -106,6 +98,14 @@ export default {
     }
   },
   mounted: function () {
+    var jsonify = res => res.json();
+    var dataFetch = fetch(
+        "./"+this.$store.state.round+"/Report2.json"
+    ).then(jsonify);
+
+    var schemaFetch = fetch(
+        "./"+this.$store.state.round+"/Report3.json"
+    ).then(jsonify);
     Promise.all([dataFetch, schemaFetch]).then(res => {
       const data = res[0];
       const schema = res[1];
@@ -116,12 +116,15 @@ export default {
       );
       // this.dataSource.data = fusionTable;
     });
-    var jsonify = res => res.json();
+
     fetch(
-        "http://localhost:3000/Report1.json"
+        "./"+this.$store.state.round+"/Report1.json"
     ).then(jsonify).then(data => {
       this.series1 = data
     });
+
+
+
   }
 }
 

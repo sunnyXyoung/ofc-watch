@@ -72,10 +72,10 @@ export default {
   mounted: function () {
     var jsonify = res => res.json();
     fetch(
-        "http://localhost:3000/Weapon1.json"
+        "./"+this.$store.state.round+"/Weapon1.json"
     ).then(jsonify).then(data=>{this.series1=data});
     fetch(
-        "http://localhost:3000/Weapon2.json"
+        "./"+this.$store.state.round+"/Weapon2.json"
     ).then(jsonify).then(data=>{this.options1.labels=data});
   }
 }

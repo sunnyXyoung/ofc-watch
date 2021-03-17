@@ -10,7 +10,10 @@
     <hr align="center" width="20%" style="margin-bottom: 25px;margin-top: 25px;border-color: rgba(12, 34, 56, 0.5)">
     這個網站所有的資訊都是從戰報抓的，所以大概算是公開的資訊。<br>
     而且對茅場的伺服器造成的負擔應該很小（吧? <br>
-    不用擔心影響效能的問題。
+    不用擔心影響效能的問題。<br>
+    <hr align="center" width="20%" style="margin-bottom: 25px;margin-top: 25px;border-color: rgba(12, 34, 56, 0.5)">
+    資料每小時更新一次，所以不用猛按重新整理。<br>
+    上次更新時間： {{aboutList[0]}}
   </div>
 
 </template>
@@ -21,6 +24,20 @@
 export default {
   name: "About",
   components: {},
+  data (){
+    return {
+      aboutList: ['11/23 48:76:03']
+    }
+  },
+  mounted: function () {
+    var jsonify = res => res.json();
+    fetch(
+        "./About.json"
+    ).then(jsonify).then(data => {
+      this.aboutList = data
+    });
+
+  }
 }
 </script>
 
