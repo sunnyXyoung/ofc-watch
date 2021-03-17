@@ -24,13 +24,16 @@ export default {
   0%{
     transform: matrix(1, 0, 0, 0, 0, 0);
   }
-  1%{
-     transform: matrix(1, 0, 0, 0.01, 0, 0);
+  50%{
+     transform: matrix(1, 0, 0, 0.0001, 0, 0);
    }
-  25%{
+  60%{
     transform: matrix(1, 0, 0, 0.3, 0, 0);
   }
-  35%{
+  70%{
+    transform: matrix(1, 0, 0, 0.3, 0, 0);
+  }
+  80%{
     transform: matrix(1.01, 0, 0, 0.01, 0, 0);
   }
 
@@ -43,7 +46,7 @@ export default {
   width: 500px;
   height: 500px;
   animation-name: eye-open;
-  animation-duration: 1.5s;
+  animation-duration: 2.5s;
 
 
 }

@@ -16,7 +16,7 @@
         <tr>
           <th>名次</th><th>陣營（最終）</th><th>暱稱</th><th>個人獲得樓層獎勵數</th><th>獲得樓層獎勵</th>
         <tr v-for="(item, index) in killBoardList" :key="item">
-          <td>{{ index+1 }}</td><td>{{item.faction}}<td>{{ item.name }}</td><td>{{ item.xp }}</td>
+          <td>{{ index+1 }}</td><td>{{item.faction}}<td>{{ item.name }}</td><td>{{ item.times }}</td><td>{{item.loots}}</td>
         </tr>
       </table>
 
@@ -34,8 +34,8 @@ name: "Loot",
   data() {
     return {
       killBoardList: [
-        {name: "Kulimi",faction:"吳", xp: 48763},
-        {name: "Kulidfasdfasdfasdfmi2",faction:"吳", xp: 8888},
+        {name: "Kulimi",faction:"吳", times: 48763, loots:"第一層 黑夜大衣、第一層 黑夜大衣、第一層 黑夜大衣"},
+        {name: "Kulidfasdfasdfasdfmi2",faction:"吳", times: 8888},
       ],
       laList:[
         {floor: 1,type:"水龍頭",quality:"垃圾般的", name:"火龍頭",attack:"8787",defence:"7414",minepower:"400",durability:"2234"}

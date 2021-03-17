@@ -120,7 +120,7 @@ export default {
     fetch(
         "./"+this.$store.state.round+"/Report1.json"
     ).then(jsonify).then(data => {
-      this.series1 = data
+      this.series3 = data
     });
 
 
