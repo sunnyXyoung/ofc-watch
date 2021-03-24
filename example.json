@@ -1,0 +1,91 @@
+{
+  "report": {
+    "id": 1,
+    "messages": {
+      "messages": [
+        {
+          "m": "Tiery攻擊Konvicted造成 1 點傷害"
+        },
+        {
+          "m": "Konvicted攻擊Tiery造成 77 點傷害"
+        },
+        {
+          "m": "Tiery攻擊Konvicted造成 1 點傷害"
+        },
+        {
+          "m": "Konvicted攻擊Tiery造成 78 點傷害"
+        },
+        {
+          "m": "Tiery攻擊，但是被Konvicted格擋了"
+        },
+        {
+          "m": "Konvicted攻擊Tiery造成 71 點傷害"
+        },
+        {
+          "m": "Tiery被擊殺身亡了，Konvicted還有 198 點體力",
+          "s": "critical"
+        },
+        {
+          "m": "破龍耗損了 5 點耐久",
+          "s": "info"
+        },
+        {
+          "m": "刺穿死棘之槍耗損了 9 點耐久",
+          "s": "info"
+        },
+        {
+          "m": "Tiery獲得了 1 點經驗值",
+          "s": "info"
+        },
+        {
+          "m": "Konvicted獲得了 5 點經驗值",
+          "s": "info"
+        }
+      ],
+      "stats": {
+        "a": {
+          "name": "Tiery",
+          "role": "戰鬥員",
+          "hp": 190,
+          "fightExp": 17,
+          "equipments": [
+            {
+              "name": "破龍",
+              "quality": "破爛",
+              "type": "無鉛水龍頭",
+              "atk": 0,
+              "def": 2,
+              "minePower": 0
+            }
+          ]
+        },
+        "b": {
+          "name": "Konvicted",
+          "role": "戰鬥員",
+          "hp": 200,
+          "fightExp": 38,
+          "equipments": [
+            {
+              "name": "刺穿死棘之槍",
+              "quality": "頂級",
+              "type": "長槍",
+              "atk": 231,
+              "def": 127,
+              "minePower": 23
+            }
+          ]
+        }
+      }
+    },
+    "location": "鋼之鍊金術師的城堡",
+    "time": 1615771806350,
+    "aFactionName": "鬼滅之刃",
+    "bFactionName": "鋼之鍊金術師",
+    "aName": "Tiery",
+    "bName": "Konvicted",
+    "aId": 888,
+    "bId": 9,
+    "aBadgeColor": null,
+    "bBadgeColor": null
+  }
+}
