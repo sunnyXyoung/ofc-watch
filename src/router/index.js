@@ -78,6 +78,11 @@ const routes = [
         name: 'Times',
         component: () => import('../views/Times.vue')
     },
+    {
+        path: '/castleDamage',
+        name: 'CastleDamage',
+        component: () => import('../views/CastleDamage.vue')
+    },
 ]
 
 const router = new VueRouter({

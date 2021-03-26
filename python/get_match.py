@@ -2,6 +2,8 @@ import requests
 import time
 
 
+
+
 with open('history_five.txt', 'r', encoding="utf-8") as log:
 	i = len(log.readlines())+1
 
