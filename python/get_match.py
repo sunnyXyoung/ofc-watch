@@ -1,13 +1,13 @@
 import requests
 import time
 
+round = '6'
 
 
-
-with open('history_five.txt', 'r', encoding="utf-8") as log:
+with open(f'history_{round}.txt', 'r', encoding="utf-8") as log:
 	i = len(log.readlines())+1
 
-log = open('history_five.txt', 'a', encoding="utf-8")
+log = open(f'history_{round}.txt', 'a', encoding="utf-8")
 
 
 while True:
@@ -18,7 +18,7 @@ while True:
 	    'User-Agent': 'I just wanna know all the secret data',
 	    'Accept': '*/*',
 	    'Accept-Language': 'zh-TW,zh;q=0.8,en-US;q=0.5,en;q=0.3',
-	    'token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50Ijp7ImVtYWlsIjoiaWFsaWF4aW1pbHVrQGdtYWlsLmNvbSIsInVzZXJJZCI6MjkzOH0sInYiOjUsImlhdCI6MTYxNDk0ODExNCwiZXhwIjoxNjMwNTAwMTE0fQ.LfV71A-l6-UUybC6KzKw_hxDSMBpgVzxOk2g6dwSkHc',
+	    'token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50Ijp7ImVtYWlsIjoidHBpcmNzYXZhajAxQGdtYWlsLmNvbSIsInVzZXJJZCI6NDkxOH0sInYiOjYsImlhdCI6MTYxNjc0NDc3OCwiZXhwIjoxNjMyMjk2Nzc4fQ.-ZY9URncV9IY4srCmnwvSyw4VXyajUQi_9qubqrTdnA',
 	    'Origin': 'https://ourfloatingcastle.com',
 	    'Connection': 'keep-alive',
 	    'TE': 'Trailers',
@@ -41,3 +41,5 @@ while True:
 	
 		time_use = time.time() - time1
 		print(f'use{time_use}sec')
+
+
