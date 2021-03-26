@@ -22,7 +22,7 @@
 
         <a href="https://github.com/ItisCaleb" style="size: A4;text-decoration: #2c3e50">@ItisCaleb</a>
         的鼎力相助。<br>
-        GitHub: <a href="https://github.com/Xialai-Kulimi/ofc-watch">https://github.com/Xialai-Kulimi/ofc-watch</a><br>
+
       </div>
     </div>
 
