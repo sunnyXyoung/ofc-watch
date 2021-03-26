@@ -27,9 +27,9 @@ while True:
 	print(response.text)
 
 
-    if '\n' in response.text:
-        print(response.text)
-        continue
+	if '\n' in response.text:
+		print(response.text)
+		continue
 
 	if response.text == '{"statusCode":400,"message":"戰報不存在"}':
 		print(f'lastest match: {i}')

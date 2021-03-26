@@ -127,3 +127,8 @@ hour_count_list = [0 for i in range(24)]
 
 for i in range(0, 24):
 	hour_count_list[i] = hour_count[i]
+
+
+# =======Generate JSON file=======
+
+
