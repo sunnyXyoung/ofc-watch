@@ -1,24 +1,7 @@
-# ofc-watch
+# OurFloatingCastle Report Watcher
 
-## Project setup
-```
-npm install
-```
+---
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+分析每一輪的浮游城戰報
+順便看看團長到底作弊了幾次
 
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).

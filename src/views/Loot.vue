@@ -50,6 +50,7 @@
 
 <script>
 import RanksMenu from '@/components/RanksMenu.vue'
+import api from "../api";
 
 export default {
   name: "Loot",
@@ -77,19 +78,9 @@ export default {
       ]
     }
   },
-  mounted: function () {
-    var jsonify = res => res.json();
-    fetch(
-        "./" + this.$store.state.round + "/Loot.json"
-    ).then(jsonify).then(data => {
-      this.killBoardList = data
-    });
-    fetch(
-        "./" + this.$store.state.round + "/laList.json"
-    ).then(jsonify).then(data => {
-      this.laList = data
-    });
-
+  mounted:async function () {
+    this.killBoardList = await api.getData("Loot.json")
+    this.laList = await api.getData("laList.json")
   }
 }
 </script>

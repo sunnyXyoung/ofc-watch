@@ -4,7 +4,7 @@
       <div class="row-div chart-p">
 
         <VueApexCharts
-            width="500" type="donut"
+            class="charts" type="donut"
             :options="options1" :series="series1"
         >
         </VueApexCharts>
@@ -12,7 +12,7 @@
       <div class="row-div chart-p">
 
         <VueApexCharts
-            width="500" type="donut"
+            class="charts" type="donut"
             :options="options2" :series="series2"
         >
         </VueApexCharts>
@@ -22,12 +22,12 @@
       <div class="row-div chart-p">
 
         <VueApexCharts
-            width="500" type="donut"
+            class="charts" type="donut"
             :options="options3" :series="series3"
         >
         </VueApexCharts>
         <VueApexCharts
-            width="500" type="donut"
+            class="charts" type="donut"
             :options="options4" :series="series4"
         >
         </VueApexCharts>
@@ -41,6 +41,7 @@
 <script>
 
 import VueApexCharts from 'vue-apexcharts'
+import api from "../api";
 
 
 
@@ -57,7 +58,6 @@ export default {
       series4: [44, 55, 41, 17],
       options1: {
         chart: {
-          width: '100%',
           type: 'pie',
         },
         labels: ["大麻神教", "吳", "海外勢力", "艾基爾"],
@@ -86,7 +86,6 @@ export default {
       },
       options2: {
         chart: {
-          width: '100%',
           type: 'pie',
         },
         labels: ["大麻神教", "吳", "海外勢力", "艾基爾"],
@@ -115,7 +114,6 @@ export default {
       },
       options3: {
         chart: {
-          width: '100%',
           type: 'pie',
         },
         labels: ["大麻神教", "吳", "海外勢力", "艾基爾"],
@@ -144,7 +142,6 @@ export default {
       },
       options4: {
         chart: {
-          width: '100%',
           type: 'pie',
         },
         labels: ["大麻神教", "吳", "海外勢力", "艾基爾"],
@@ -173,32 +170,15 @@ export default {
       },
     }
   },
-  mounted: function () {
-    var jsonify = res => res.json();
-    fetch(
-        "./"+this.$store.state.round+"/Faction1.json"
-    ).then(jsonify).then(data=>{this.series1=data});
-    fetch(
-        "./"+this.$store.state.round+"/Faction12.json"
-    ).then(jsonify).then(data=>{this.options1.labels=data});
-    fetch(
-        "./"+this.$store.state.round+"/Faction2.json"
-    ).then(jsonify).then(data=>{this.series2=data});
-    fetch(
-        "./"+this.$store.state.round+"/Faction22.json"
-    ).then(jsonify).then(data=>{this.options2.labels=data});
-    fetch(
-        "./"+this.$store.state.round+"/Faction3.json"
-    ).then(jsonify).then(data=>{this.series3=data});
-    fetch(
-        "./"+this.$store.state.round+"/Faction32.json"
-    ).then(jsonify).then(data=>{this.options3.labels=data});
-    fetch(
-        "./"+this.$store.state.round+"/Faction4.json"
-    ).then(jsonify).then(data=>{this.series4=data});
-    fetch(
-        "./"+this.$store.state.round+"/Faction42.json"
-    ).then(jsonify).then(data=>{this.options4.labels=data});
+  mounted:async function () {
+    this.series1 = await api.getData("Faction1.json")
+    this.options1.labels = await api.getData("Faction12.json")
+    this.series2 = await api.getData("Faction2.json")
+    this.options2.labels = await api.getData("Faction22.json")
+    this.series3 = await api.getData("Faction3.json")
+    this.options3.labels = await api.getData("Faction32.json")
+    this.series4 = await api.getData("Faction4.json")
+    this.options4.labels = await api.getData("Faction42.json")
   }
 }
 

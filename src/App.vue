@@ -11,16 +11,44 @@
         <router-link class="left-btn" to="/faction">陣營分析</router-link>
         |
         <router-link class="left-btn" to="/weapon">裝備分析</router-link>
-<!--        |
-        <router-link class="left-btn" to="/about">關於</router-link>-->
+        <!--        |
+                <router-link class="left-btn" to="/about">關於</router-link>-->
       </div>
       <div class="pusher"></div>
       <div>
         <router-link class="right-btn" to="/about">關於</router-link>
       </div>
     </div>
+    <div class="navbar-toggler" style="border: none;text-align: right">
+      <i @click="SideBarOn" class="fa fa-navicon fa-lg" style="cursor: pointer"></i>
+    </div>
+    <div v-if="sidebar" @click="SideBarOn" class="black-layout"></div>
+    <transition>
+      <div v-if="sidebar" id="sidebar-nav" :class="{'nav-show':sidebar}">
+        <ul class="navbar-nav" style="display: inline-block;width: 100%">
+          <li class="nav-item sidebar-item" @click="SideBarOn">
+            <router-link class="sidebar-link" to="/">首頁</router-link>
+          </li>
+          <li class="nav-item sidebar-item" @click="SideBarOn">
+            <router-link class="sidebar-link" to="/report">戰報分析</router-link>
+          </li>
+          <li class="nav-item sidebar-item" @click="SideBarOn">
+            <router-link class="sidebar-link" to="/fighter">戰鬥員分析</router-link>
+          </li>
+          <li class="nav-item sidebar-item" @click="SideBarOn">
+            <router-link class="sidebar-link" to="/faction">陣營分析</router-link>
+          </li>
+          <li class="nav-item sidebar-item" @click="SideBarOn">
+            <router-link class="sidebar-link" to="/weapon">裝備分析</router-link>
+          </li>
+          <li class="nav-item sidebar-item" @click="SideBarOn">
+            <router-link class="sidebar-link" to="/about">關於</router-link>
+          </li>
+        </ul>
+      </div>
+    </transition>
     <select id="round-selector" v-model="round" @change="ChangeRound">
-      <option v-for="option in options" v-bind:value="option.value" :key="option">
+      <option v-for="option in options" :key="option.value" :value="option.value">
         {{ option.text }}
       </option>
 
@@ -36,39 +64,31 @@ export default {
 
     // this.$store.commit("ChangeRound");
     return {
-      round: "",
+      round: this.$store.state.round,
       options: [
         {text: '第四輪', value: '4'},
         {text: '第五輪', value: '5'},
         {text: '第六輪', value: '6'}
-      ]
+      ],
+      sidebar: false
 
     }
   },
 
   methods: {
-
     ChangeRound() {
       this.$store.commit("ChangeRound", this.round);
+    },
+    SideBarOn() {
+      this.sidebar = (!this.sidebar);
     }
   }
 }
 
 
 </script>
-<style>
+<style lang="scss">
 
-.row-div {
-  display: flex;
-  flex-flow: row;
-}
-
-.row-div2 {
-  display: flex;
-  width: 100%;
-  justify-content: center;
-  flex-flow: row;
-}
 
 a {
   text-decoration: none;
@@ -104,6 +124,12 @@ body {
   padding: 30px;
   flex-direction: row;
   text-align: left;
+  @include phone-width{
+    display: none;
+  }
+  @include small-pad-width{
+    display: none;
+  }
 }
 
 @keyframes menu-hover {
@@ -161,26 +187,107 @@ body {
   border-radius: 0 10px 0 10px;
 }
 
-.ranks-link {
+.charts{
+  width: 40%;
+  @include phone-width{
+    width: 90%;
+  }
+  @include small-pad-width{
+    width: 100%;
+  }
+  @include pad-width{
+    width: 100%;
+  }
+  @include pc-width{
+    width: 80%
+  }
+}
+
+.navbar-toggler{
+  display: none;
+  @include phone-width{
+    display: block;
+  }
+  @include small-pad-width{
+    display: block;
+  }
+}
+
+.sidebar-link {
+  font-size: x-large;
   font-weight: bold;
   color: #2c3e50;
-
-  margin-right: 20px;
-  margin-left: 20px;
+  display: flex;
+  width: 85%;
+  margin: auto;
+  align-items: center;
+  justify-content: left;
+  @include pad-width{
+    font-size: 35px;
+  }
+  @include small-pad-width{
+    font-size: 35px;
+  }
+  @include phone-width{
+    font-size: 20px;
+  }
 }
 
-.ranks-link:hover {
-  text-decoration: underline;
-}
-
-#ranks {
-  text-align: center;
+.black-layout {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 2;
   width: 100%;
-  margin-bottom: 50px;
+  height: 100%;
 }
 
-table {
-
+#sidebar-nav {
+  position: fixed;
+  top: 0;
+  background: white;
+  z-index: 3;
+  width: 45%;
+  height: 100%;
+  text-align: center;
+  padding-top: 5%;
+  @include pad-width{
+    width: 40%;
+  }
+  @include small-pad-width{
+    width: 40%;
+  }
+  @include pc-width{
+    width: 20%;
+  }
+  @include big-pc-width{
+    width: 20%;
+  }
+}
+.nav-show{
+  right: 0;
+}
+.v-enter{
+  right: -55%;
+  @include pad-width{
+    right: -40%;
+  }
+  @include small-pad-width{
+    right: -40%;
+  }
+  @include pc-width{
+    right: -20%;
+  }
+  @include big-pc-width{
+    right: -20%;
+  }
+}
+.v-enter-active{
+  transition: all ease 0.4s;
+}
+.v-enter-to{
+  right: 0;
 }
 
 </style>

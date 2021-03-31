@@ -2,9 +2,9 @@
   <div>
     <div class="row-div2">
       <div class="row-div">
-        <VueApexCharts
-            width="500" type="donut"
+        <VueApexCharts class="charts"
             :options="options2" :series="series3"
+            type="donut"
         >
         </VueApexCharts>
       </div>
@@ -12,11 +12,11 @@
     </div>
     <div class="row-div2">
       <fusioncharts
-          :type="type1"
-          :width="width"
-          :height="height"
           :dataFormat="dataFormat"
           :dataSource="dataSource"
+          :height="height"
+          :type="type1"
+          :width="width"
       ></fusioncharts>
     </div>
 
@@ -27,7 +27,7 @@
 <script>
 import VueApexCharts from 'vue-apexcharts'
 import FusionCharts from "fusioncharts";
-
+import api from "../api";
 
 
 export default {
@@ -97,15 +97,9 @@ export default {
 
     }
   },
-  mounted: function () {
-    var jsonify = res => res.json();
-    var dataFetch = fetch(
-        "./"+this.$store.state.round+"/Report2.json"
-    ).then(jsonify);
-
-    var schemaFetch = fetch(
-        "./"+this.$store.state.round+"/Report3.json"
-    ).then(jsonify);
+  mounted: async function () {
+    var dataFetch = await api.getData("Report2.json")
+    var schemaFetch = await api.getData("Report3.json")
     Promise.all([dataFetch, schemaFetch]).then(res => {
       const data = res[0];
       const schema = res[1];
@@ -116,13 +110,7 @@ export default {
       );
       // this.dataSource.data = fusionTable;
     });
-
-    fetch(
-        "./"+this.$store.state.round+"/Report1.json"
-    ).then(jsonify).then(data => {
-      this.series3 = data
-    });
-
+    this.series3 = await api.getData("Report1.json")
 
 
   }
@@ -132,10 +120,6 @@ export default {
 
 <style scoped>
 
-#app {
-  width: 100%;
-  padding: 50px;
-}
 
 
 </style>

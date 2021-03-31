@@ -2,12 +2,12 @@
   <div>
     <div class="row-div chart-p row-div2">
       <VueApexCharts
-          width="500" type="donut"
+          class="charts" type="donut"
           :options="options1" :series="series1"
       >
       </VueApexCharts>
       <VueApexCharts
-          width="500" type="donut"
+          class="charts" type="donut"
           :options="options2" :series="series2"
       >
       </VueApexCharts>
@@ -21,6 +21,7 @@
 
 <script>
 import VueApexCharts from "vue-apexcharts";
+import api from "../api";
 
 
 export default {
@@ -93,17 +94,10 @@ export default {
       },
     }
   },
-  mounted: function () {
-    var jsonify = res => res.json();
-    fetch(
-        "./"+this.$store.state.round+"/Weapon1.json"
-    ).then(jsonify).then(data=>{this.series1=data});
-    fetch(
-        "./"+this.$store.state.round+"/Weapon2.json"
-    ).then(jsonify).then(data=>{this.options1.labels=data});
-    fetch(
-        "./"+this.$store.state.round+"/Weapon3.json"
-    ).then(jsonify).then(data=>{this.series2=data});
+  mounted:async function () {
+    this.series1 =  await api.getData("Weapon1.json")
+    this.options1.labels =  await api.getData("Weapon2.json")
+    this.series2 =  await api.getData("Weapon3.json")
   }
 }
 </script>

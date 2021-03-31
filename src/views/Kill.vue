@@ -19,6 +19,7 @@
 <script>
 
 import RanksMenu from '@/components/RanksMenu.vue'
+import api from "../api";
 export default {
   name: "Kill",
   components:{
@@ -33,14 +34,8 @@ export default {
 
     }
   },
-  mounted: function () {
-    var jsonify = res => res.json();
-    fetch(
-        "./"+this.$store.state.round+"/Kill.json"
-    ).then(jsonify).then(data => {
-      this.killBoardList = data
-    });
-
+  mounted: async function () {
+    this.killBoardList = await api.getData("Kill.json")
   }
 }
 </script>

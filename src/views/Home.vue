@@ -18,7 +18,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 
 @keyframes eye-open {
   0%{
@@ -47,8 +47,14 @@ export default {
   height: 500px;
   animation-name: eye-open;
   animation-duration: 2.5s;
-
-
+  @include phone-width{
+    width: 60%;
+    height: 60%;
+  }
+  @include pad-width{
+    width: 70%;
+    height: 70%;
+  }
 }
 
 </style>
