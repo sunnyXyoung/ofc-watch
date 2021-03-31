@@ -21,4 +21,19 @@ name: "RanksMenu"
 
 <style scoped>
 
+.ranks-link {
+  font-weight: bold;
+  color: #2c3e50;
+  margin-right: 20px;
+  margin-left: 20px;
+}
+.ranks-link:hover {
+  text-decoration: underline;
+}
+#ranks {
+  text-align: center;
+  width: 100%;
+  margin-bottom: 50px;
+}
+
 </style>
