@@ -92,6 +92,7 @@ export default {
 .row-div {
   display: flex;
   flex-flow: row;
+  justify-content: center;
   width: 100%;
 }
 

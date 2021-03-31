@@ -167,11 +167,11 @@ export default {
     this.series1 = await api.getData("Faction1.json")
     this.options1.labels = await api.getData("Faction12.json")
     this.series2 = await api.getData("Faction2.json")
-    this.options2.labels = await api.getData("Faction22.json")
+    this.options2.labels = await api.getData("Faction12.json")
     this.series3 = await api.getData("Faction3.json")
-    this.options3.labels = await api.getData("Faction32.json")
+    this.options3.labels = await api.getData("Faction12.json")
     this.series4 = await api.getData("Faction4.json")
-    this.options4.labels = await api.getData("Faction42.json")
+    this.options4.labels = await api.getData("Faction12.json")
   }
 }
 

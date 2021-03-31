@@ -8,7 +8,6 @@
         >
         </VueApexCharts>
       </div>
-
     </div>
     <div class="row-div2">
       <fusioncharts
