@@ -88,7 +88,16 @@ export default {
 
 </script>
 <style lang="scss">
-
+.row-div {
+  display: flex;
+  flex-flow: row;
+}
+.row-div2 {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  flex-flow: row;
+}
 
 a {
   text-decoration: none;
