@@ -223,7 +223,7 @@ with open(os.path.join(web_root, round, 'Weapon2.json'), 'w', encoding='utf8') a
 with open(os.path.join(web_root, round, 'Weapon3.json'), 'w', encoding='utf8') as f:
     a = 0
     for weapon in global_weapon_list:
-        if weapon in loot_list:
+        if weapon['name'] in loot_index:
             a += 1
     f.write(str([len(global_weapon_list) - a, a]))
 
