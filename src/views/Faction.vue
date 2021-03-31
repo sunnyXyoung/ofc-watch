@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="row-div row-div2">
-      <div class="row-div chart-p">
+    <div class=" row-div2">
+      <div class=" chart-p">
 
         <VueApexCharts
             class="charts" type="donut"
@@ -9,7 +9,7 @@
         >
         </VueApexCharts>
       </div>
-      <div class="row-div chart-p">
+      <div class=" chart-p">
 
         <VueApexCharts
             class="charts" type="donut"
@@ -19,13 +19,15 @@
       </div>
     </div>
     <div class="row-div2">
-      <div class="row-div chart-p">
+      <div class=" chart-p">
 
         <VueApexCharts
             class="charts" type="donut"
             :options="options3" :series="series3"
         >
         </VueApexCharts>
+      </div>
+      <div class=" chart-p">
         <VueApexCharts
             class="charts" type="donut"
             :options="options4" :series="series4"
@@ -44,7 +46,6 @@ import VueApexCharts from 'vue-apexcharts'
 import api from "../api";
 
 
-
 export default {
   name: "Faction",
   components: {
@@ -61,9 +62,7 @@ export default {
           type: 'pie',
         },
         labels: ["大麻神教", "吳", "海外勢力", "艾基爾"],
-        theme: {
-
-        },
+        theme: {},
         plotOptions: {
           pie: {
             dataLabels: {
@@ -89,9 +88,7 @@ export default {
           type: 'pie',
         },
         labels: ["大麻神教", "吳", "海外勢力", "艾基爾"],
-        theme: {
-
-        },
+        theme: {},
         plotOptions: {
           pie: {
             dataLabels: {
@@ -117,9 +114,7 @@ export default {
           type: 'pie',
         },
         labels: ["大麻神教", "吳", "海外勢力", "艾基爾"],
-        theme: {
-
-        },
+        theme: {},
         plotOptions: {
           pie: {
             dataLabels: {
@@ -145,9 +140,7 @@ export default {
           type: 'pie',
         },
         labels: ["大麻神教", "吳", "海外勢力", "艾基爾"],
-        theme: {
-
-        },
+        theme: {},
         plotOptions: {
           pie: {
             dataLabels: {
@@ -170,7 +163,7 @@ export default {
       },
     }
   },
-  mounted:async function () {
+  mounted: async function () {
     this.series1 = await api.getData("Faction1.json")
     this.options1.labels = await api.getData("Faction12.json")
     this.series2 = await api.getData("Faction2.json")
@@ -186,6 +179,6 @@ export default {
 
 <style scoped>
 .chart-p {
-  margin: 20px  ;
+  margin: 20px;
 }
 </style>

@@ -88,15 +88,19 @@ export default {
 
 </script>
 <style lang="scss">
+
 .row-div {
   display: flex;
   flex-flow: row;
+  width: 100%;
 }
+
 .row-div2 {
   display: flex;
   width: 100%;
   justify-content: center;
   flex-flow: row;
+  flex-wrap: wrap;
 }
 
 a {
