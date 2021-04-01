@@ -39,7 +39,6 @@ faction_damaged = {}
 faction_times = {}
 faction_loot = {}
 
-fighter_faction = {}
 
 faction_list = []
 
@@ -73,9 +72,7 @@ for line in a:
 
     times_count[line_dict['report']['aName']] = times_count.get(line_dict['report']['aName'], 0) + 1
     times_count[line_dict['report']['bName']] = times_count.get(line_dict['report']['bName'], 0) + 1
-    if line_dict['report']['location'][:len(line_dict['report']['aFactionName'])] != line_dict['report'][
-        'aFactionName']:
-        faction_times[line_dict['report']['aFactionName']] = faction_times.get(line_dict['report']['aFactionName'],
+    if line_dict['report']['location'][:len(line_dict['report']['aFactionName'])] != line_dict['report']['aFactionName']: faction_times[line_dict['report']['aFactionName']] = faction_times.get(line_dict['report']['aFactionName'],
                                                                                0) + 1
     for fighter in line_dict['report']['messages']['stats']:
         player_db[line_dict['report']['messages']['stats'][fighter]['name']] = line_dict['report']['messages']['stats'][fighter]
@@ -101,45 +98,28 @@ for line in a:
 
             if message['m'][:len(line_dict['report']['aName'])] == line_dict['report']['aName']:
                 if line_dict['report']['bName']:
-                    damage_count[line_dict['report']['aName']] = damage_count.get(line_dict['report']['aName'],
-                                                                                  0) + int(p.findall(message['m'])[-1])
-                    damaged_count[line_dict['report']['bName']] = damaged_count.get(line_dict['report']['bName'],
-                                                                                    0) + int(
-                        p.findall(message['m'])[-1])
-                    faction_damage[line_dict['report']['aFactionName']] = faction_damage.get(
-                        line_dict['report']['aFactionName'], 0) + int(p.findall(message['m'])[-1])
-                    faction_damaged[line_dict['report']['bFactionName']] = faction_damage.get(
-                        line_dict['report']['bFactionName'], 0) + int(p.findall(message['m'])[-1])
+                    damage_count[line_dict['report']['aName']] = damage_count.get(line_dict['report']['aName'], 0) + int(p.findall(message['m'])[-1])
+                    damaged_count[line_dict['report']['bName']] = damaged_count.get(line_dict['report']['bName'], 0) + int(p.findall(message['m'])[-1])
+                    faction_damage[line_dict['report']['aFactionName']] = faction_damage.get(line_dict['report']['aFactionName'], 0) + int(p.findall(message['m'])[-1])
+                    faction_damaged[line_dict['report']['bFactionName']] = faction_damage.get(line_dict['report']['bFactionName'], 0) + int(p.findall(message['m'])[-1])
                 else:
-                    castle_damage[line_dict['report']['aName']] = castle_damage.get(line_dict['report']['aName'],
-                                                                                    0) + int(
-                        p.findall(message['m'])[-1])
+                    castle_damage[line_dict['report']['aName']] = castle_damage.get(line_dict['report']['aName'], 0) + int(p.findall(message['m'])[-1])
             else:
-                damage_count[line_dict['report']['bName']] = damage_count.get(line_dict['report']['bName'], 0) + int(
-                    p.findall(message['m'])[-1])
-                damaged_count[line_dict['report']['aName']] = damaged_count.get(line_dict['report']['aName'], 0) + int(
-                    p.findall(message['m'])[-1])
-                faction_damage[line_dict['report']['bFactionName']] = faction_damage.get(
-                    line_dict['report']['bFactionName'], 0) + int(p.findall(message['m'])[-1])
-                faction_damaged[line_dict['report']['aFactionName']] = faction_damaged.get(
-                    line_dict['report']['aFactionName'], 0) + int(p.findall(message['m'])[-1])
+                damage_count[line_dict['report']['bName']] = damage_count.get(line_dict['report']['bName'], 0) + int(p.findall(message['m'])[-1])
+                damaged_count[line_dict['report']['aName']] = damaged_count.get(line_dict['report']['aName'], 0) + int(p.findall(message['m'])[-1])
+                faction_damage[line_dict['report']['bFactionName']] = faction_damage.get(line_dict['report']['bFactionName'], 0) + int(p.findall(message['m'])[-1])
+                faction_damaged[line_dict['report']['aFactionName']] = faction_damaged.get(line_dict['report']['aFactionName'], 0) + int(p.findall(message['m'])[-1])
 
     for message in line_dict['report']['messages']['messages']:
         if message.get('s') == 'info' and message['m'][-4:] == '點經驗值':
-            xp_count[message['m'].split('獲得了')[-2]] = xp_count.get(message['m'].split('獲得了')[-2], 0) + int(
-                message['m'].split(' ')[-2])
+            xp_count[message['m'].split('獲得了')[-2]] = xp_count.get(message['m'].split('獲得了')[-2], 0) + int(message['m'].split(' ')[-2])
 
     for message in line_dict['report']['messages']['messages']:
         if message.get('s') == 'critical' and message['m'][:3] == '獲得了':
-            loot_list[message['m'].split(' ')[3]] = loot_list.get(message['m'].split(' ')[3],
-                                                                  {'floor': message['m'].split(' ')[1]})
-            loot_count[line_dict['report']['aName']] = loot_count.get(line_dict['report']['aName'], [
-                f"{line_dict['report']['bFactionName']}第{message['m'].split(' ')[1]}層：{message['m'].split(' ')[3]}"]) + [
-                                                           f"{line_dict['report']['bFactionName']}第{message['m'].split(' ')[1]}層：{message['m'].split(' ')[3]}"]
+            loot_list[message['m'].split(' ')[3]] = loot_list.get(message['m'].split(' ')[3], {'floor': int(message['m'].split(' ')[1])})
+            loot_count[line_dict['report']['aName']] = loot_count.get(line_dict['report']['aName'], [f"{line_dict['report']['bFactionName']}第{message['m'].split(' ')[1]}層：{message['m'].split(' ')[3]}"]) + [f"{line_dict['report']['bFactionName']}第{message['m'].split(' ')[1]}層：{message['m'].split(' ')[3]}"]
             if message['m'].split(' ')[3] not in loot_index: loot_index.append(message['m'].split(' ')[3])
-            faction_loot[line_dict['report']['aFactionName']] = faction_loot.get(line_dict['report']['aFactionName'],
-                                                                                 []) + [
-                                                                    f"{line_dict['report']['bFactionName']}第{message['m'].split(' ')[1]}層：{message['m'].split(' ')[3]}"]
+            faction_loot[line_dict['report']['aFactionName']] = faction_loot.get(line_dict['report']['aFactionName'], []) + [f"{line_dict['report']['bFactionName']}第{message['m'].split(' ')[1]}層：{message['m'].split(' ')[3]}"]
             break
 
     this_hour = time.localtime(int(line_dict['report']['time']) / 1000).tm_hour
@@ -161,16 +141,13 @@ for i in range(0, 24):
 # =======Generate JSON file=======
 
 with open(os.path.join(web_root, round, 'CastleDamage.json'), 'w', encoding='utf8') as f:
-    f.write(str([{'name': i[0], 'faction': player_db[i[0]]['faction'], 'damage': i[1]} for i in
-                 sorted(castle_damage.items(), key=lambda x: x[1], reverse=True)]).replace("'", '"'))
+    f.write(str([{'name': i[0], 'faction': player_db[i[0]]['faction'], 'damage': i[1]} for i in sorted(castle_damage.items(), key=lambda x: x[1], reverse=True)]).replace("'", '"'))
 
 with open(os.path.join(web_root, round, 'Damage.json'), 'w', encoding='utf8') as f:
-    f.write(str([{'name': i[0], 'faction': player_db[i[0]]['faction'], 'damage': i[1]} for i in
-                 sorted(damage_count.items(), key=lambda x: x[1], reverse=True)]).replace("'", '"'))
+    f.write(str([{'name': i[0], 'faction': player_db[i[0]]['faction'], 'damage': i[1]} for i in sorted(damage_count.items(), key=lambda x: x[1], reverse=True)]).replace("'", '"'))
 
 with open(os.path.join(web_root, round, 'Damaged.json'), 'w', encoding='utf8') as f:
-    f.write(str([{'name': i[0], 'faction': player_db[i[0]]['faction'], 'damage': i[1]} for i in
-                 sorted(damaged_count.items(), key=lambda x: x[1], reverse=True)]).replace("'", '"'))
+    f.write(str([{'name': i[0], 'faction': player_db[i[0]]['faction'], 'damage': i[1]} for i in sorted(damaged_count.items(), key=lambda x: x[1], reverse=True)]).replace("'", '"'))
 
 with open(os.path.join(web_root, round, 'Faction12.json'), 'w', encoding='utf8') as f:
     f.write(str(sorted(faction_list)))
@@ -203,6 +180,17 @@ with open(os.path.join(web_root, round, 'Loot.json'), 'w', encoding='utf8') as f
     f.write(str(sorted(loot_count.items(), key=lambda x: x[1], reverse=True)))
 
 with open(os.path.join(web_root, round, 'laList.json'), 'w', encoding='utf8') as f:
+    laList = []
+    for la in sorted(loot_list.items(), key=lambda x: x[1]['floor']):
+        la_db = {}
+        for weapon in global_weapon_list:
+            if weapon['name'] == la[0]:
+                la_db[str(weapon)] = la_db.get(str(weapon), 0) + 1
+        true_la = sorted(la_db.items(), key=lambda x: x[1])[0]
+        true_la_dict = json.loads(true_la[0].replace("'", '"'))
+        print(true_la_dict)
+        laList.append({'floor': la[1]['floor'], 'type': true_la_dict['type'], 'quality': true_la_dict['quality']})
+    pass
     f.write(str(sorted(loot_list.items(), key=lambda x: x[1], reverse=False)))
 
 with open(os.path.join(web_root, round, 'Report2.json'), 'w', encoding='utf8') as f:

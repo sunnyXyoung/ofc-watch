@@ -11,18 +11,16 @@
           <th>攻擊</th>
           <th>防禦</th>
           <th>挖礦</th>
-          <th>耐久（最低）</th>
           <th>出場次數</th>
         </tr>
         <tr v-for="(item) in laList" :key="item">
           <td>{{ item.floor }}</td>
-          <td>{{ item.type }}
-          <td>{{ item.quality }}</td>
           <td>{{ item.name }}</td>
-          <td>{{ item.attack }}</td>
-          <td>{{ item.defence }}</td>
-          <td>{{ item.minepower }}</td>
-          <td>{{ item.durability }}</td>
+          <td>{{ item.quality }}</td>
+          <td>{{ item.type }}
+          <td>{{ item.atk }}</td>
+          <td>{{ item.def }}</td>
+          <td>{{ item.minePower }}</td>
           <td>{{ item.times }}</td>
         </tr>
       </table>
@@ -66,13 +64,12 @@ export default {
       laList: [
         {
           floor: 1,
-          type: "水龍頭",
-          quality: "垃圾般的",
           name: "火龍頭",
-          attack: "8787",
-          defence: "7414",
-          minepower: "400",
-          durability: "2234",
+          quality: "垃圾般的",
+          type: "水龍頭",
+          atk: "8787",
+          def: "7414",
+          minePower: "400",
           times: "2"
         }
       ]
