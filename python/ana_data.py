@@ -162,15 +162,15 @@ for i in range(0, 24):
 
 with open(os.path.join(web_root, round, 'CastleDamage.json'), 'w', encoding='utf8') as f:
     f.write(str([{'name': i[0], 'faction': player_db[i[0]]['faction'], 'damage': i[1]} for i in
-                 sorted(castle_damage.items(), key=lambda x: x[1], reverse=True)]))
+                 sorted(castle_damage.items(), key=lambda x: x[1], reverse=True)]).replace("'", '"'))
 
 with open(os.path.join(web_root, round, 'Damage.json'), 'w', encoding='utf8') as f:
     f.write(str([{'name': i[0], 'faction': player_db[i[0]]['faction'], 'damage': i[1]} for i in
-                 sorted(damage_count.items(), key=lambda x: x[1], reverse=True)]))
+                 sorted(damage_count.items(), key=lambda x: x[1], reverse=True)]).replace("'", '"'))
 
 with open(os.path.join(web_root, round, 'Damaged.json'), 'w', encoding='utf8') as f:
     f.write(str([{'name': i[0], 'faction': player_db[i[0]]['faction'], 'damage': i[1]} for i in
-                 sorted(damaged_count.items(), key=lambda x: x[1], reverse=True)]))
+                 sorted(damaged_count.items(), key=lambda x: x[1], reverse=True)]).replace("'", '"'))
 
 with open(os.path.join(web_root, round, 'Faction12.json'), 'w', encoding='utf8') as f:
     f.write(str(sorted(faction_list)))
