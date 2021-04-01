@@ -8,7 +8,7 @@ load_dotenv()
 
 # =======Config=======
 logging.basicConfig(level=logging.NOTSET)
-round = '4'
+round = '5'
 web_root = os.getenv('web-root')
 record_path = os.path.join(web_root, 'ofc', f'{round}.ofc')
 
@@ -176,16 +176,16 @@ with open(os.path.join(web_root, round, 'Faction12.json'), 'w', encoding='utf8')
     f.write(str(sorted(faction_list)))
 
 with open(os.path.join(web_root, round, 'Faction1.json'), 'w', encoding='utf8') as f:
-    f.write(str(sorted(faction_damage.items())))
+    f.write(str([i[1] for i in sorted(faction_damage.items())]))
 
 with open(os.path.join(web_root, round, 'Faction2.json'), 'w', encoding='utf8') as f:
     faction_exp = {}
     for fighter in player_db:
         faction_exp[player_db[fighter]['faction']] = faction_exp.get(player_db[fighter]['faction'], 0) + player_db[fighter]['fightExp']
-    f.write(str(sorted(faction_exp.items())))
+    f.write(str([i[1] for i in sorted(faction_exp.items())]))
 
 with open(os.path.join(web_root, round, 'Faction3.json'), 'w', encoding='utf8') as f:
-    f.write(str(sorted(faction_times.items(), key=lambda x: x[1], reverse=True)))
+    f.write(str([i[1] for i in sorted(faction_times.items())]))
 
 with open(os.path.join(web_root, round, 'Faction4.json'), 'w', encoding='utf8') as f:
     faction_loot_count = {}
