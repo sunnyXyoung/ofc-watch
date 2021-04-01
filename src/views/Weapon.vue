@@ -94,6 +94,13 @@ export default {
       },
     }
   },
+  watch: {
+    "$store.state.round": async function () {
+      this.series1 =  await api.getData("Weapon1.json")
+      this.options1.labels =  await api.getData("Weapon2.json")
+      this.series2 =  await api.getData("Weapon3.json")
+    },
+  },
   mounted:async function () {
     this.series1 =  await api.getData("Weapon1.json")
     this.options1.labels =  await api.getData("Weapon2.json")

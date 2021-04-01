@@ -37,6 +37,11 @@ export default {
       ]
     }
   },
+  watch: {
+    "$store.state.round": async function () {
+      this.killBoardList = await api.getData("Damage.json")
+    },
+  },
   mounted: async function () {
     this.killBoardList = await api.getData("Damage.json")
   }

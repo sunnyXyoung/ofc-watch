@@ -163,6 +163,18 @@ export default {
       },
     }
   },
+  watch: {
+    "$store.state.round": async function () {
+      this.series1 = await api.getData("Faction1.json")
+      this.options1.labels = await api.getData("Faction12.json")
+      this.series2 = await api.getData("Faction2.json")
+      this.options2.labels = await api.getData("Faction12.json")
+      this.series3 = await api.getData("Faction3.json")
+      this.options3.labels = await api.getData("Faction12.json")
+      this.series4 = await api.getData("Faction4.json")
+      this.options4.labels = await api.getData("Faction12.json")
+    },
+  },
   mounted: async function () {
     this.series1 = await api.getData("Faction1.json")
     this.options1.labels = await api.getData("Faction12.json")

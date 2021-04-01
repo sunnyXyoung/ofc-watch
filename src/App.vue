@@ -48,7 +48,7 @@
       </div>
     </transition>
     <select id="round-selector" v-model="round" @change="ChangeRound">
-      <option v-for="option in options" :key="option.value" :value="option.value">
+      <option v-for="option in options" :key="option.value" :value="option.value" >
         {{ option.text }}
       </option>
 
@@ -58,6 +58,7 @@
   </div>
 </template>
 <script>
+
 
 export default {
   data() {
@@ -81,6 +82,21 @@ export default {
     },
     SideBarOn() {
       this.sidebar = (!this.sidebar);
+    }
+  },
+  mounted() {
+//     if (this.$cookies.isKey("round")) {
+//       this.$store.commit("ChangeRound", this.$cookies.get("round"))
+//     }
+//     else {
+//       this.$cookies.set("round", this.$store.state.round)
+//     }
+    const round = localStorage.getItem("round");
+    if (round) {
+      this.round = round
+    }
+    else {
+      this.$store.commit("ChangeRound", round)
     }
   }
 }

@@ -1,20 +1,24 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
+const localStoragePlugin = store => {
+    store.subscribe((mutation, {round}) => {
+        if (mutation.type === "ChangeRound") {
+            window.localStorage.setItem("round", round);
+        }
+    });
+};
 Vue.use(Vuex);
 
-// 定義一個新的 Vue Store
 const store = new Vuex.Store({
     state: {
         round: '4',
     },
     mutations: {
-        // 將state設定為參數
         ChangeRound(state, round) {
-            // state的isLoading true/false 互轉
             state.round = round
         }
-    }
-
+    },
+    plugins: [localStoragePlugin]
 })
 export default store;

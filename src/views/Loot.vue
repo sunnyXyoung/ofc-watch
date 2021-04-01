@@ -78,6 +78,12 @@ export default {
       ]
     }
   },
+  watch: {
+    "$store.state.round": async function () {
+      this.killBoardList = await api.getData("Loot.json")
+      this.laList = await api.getData("laList.json")
+    },
+  },
   mounted:async function () {
     this.killBoardList = await api.getData("Loot.json")
     this.laList = await api.getData("laList.json")
