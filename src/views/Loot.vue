@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="loading">
     <RanksMenu></RanksMenu>
     <div class="row-div2" style="margin-bottom: 50px; ">
       <table cellpadding="3">
@@ -57,6 +57,7 @@ export default {
   },
   data() {
     return {
+      loading: false,
       killBoardList: [
         {name: "Kulimi", faction: "吳", times: 48763, loots: "第一層 黑夜大衣、第一層 黑夜大衣、第一層 黑夜大衣"},
         {name: "Kulidfasdfasdfasdfmi2", faction: "吳", times: 8888},
@@ -77,13 +78,16 @@ export default {
   },
   watch: {
     "$store.state.round": async function () {
+      this.loading = false
       this.killBoardList = await api.getData("Loot.json")
       this.laList = await api.getData("laList.json")
+      this.loading = true
     },
   },
   mounted:async function () {
     this.killBoardList = await api.getData("Loot.json")
     this.laList = await api.getData("laList.json")
+    this.loading = true
   }
 }
 </script>

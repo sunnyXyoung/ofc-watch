@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="loading">
     <div class="row-div chart-p row-div2">
       <VueApexCharts
           class="charts" type="donut"
@@ -31,6 +31,7 @@ export default {
   },
   data() {
     return {
+      loading: false,
       series1: [5],
       series2: [5],
 
@@ -96,15 +97,18 @@ export default {
   },
   watch: {
     "$store.state.round": async function () {
+      this.loading = false
       this.series1 =  await api.getData("Weapon1.json")
       this.options1.labels =  await api.getData("Weapon2.json")
       this.series2 =  await api.getData("Weapon3.json")
+      this.loading = true
     },
   },
   mounted:async function () {
     this.series1 =  await api.getData("Weapon1.json")
     this.options1.labels =  await api.getData("Weapon2.json")
     this.series2 =  await api.getData("Weapon3.json")
+    this.loading = true
   }
 }
 </script>

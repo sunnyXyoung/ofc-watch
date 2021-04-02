@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <RanksMenu></RanksMenu>
+  <div v-if="loading">
+  <RanksMenu></RanksMenu>
     <div class="row-div2">
       <table cellpadding="3">
         <tr>
@@ -31,6 +31,7 @@ export default {
   },
   data() {
     return {
+      loading: false,
       killBoardList: [
         {name: "Kulimi", faction: "吳", times: 48763},
         {name: "Kulidfasdfasdfasdfmi2", faction: "吳", times: 8888},
@@ -39,11 +40,14 @@ export default {
   },
   watch: {
     "$store.state.round": async function () {
+      this.loading = false
       this.killBoardList = await api.getData("Times.json")
+      this.loading = true
     },
   },
   mounted:async function () {
     this.killBoardList = await api.getData("Times.json")
+    this.loading = true
   }
 }
 </script>
