@@ -68,9 +68,8 @@ for line in a:
         str(int((line_dict['report']['time']) / 3600000) * 3600000), 0) + 1
     if line_dict['report']['aFactionName'] not in faction_list: faction_list.append(line_dict['report']['aFactionName'])
     if line_dict['report']['bFactionName'] not in faction_list: faction_list.append(line_dict['report']['bFactionName'])
-
     times_count[line_dict['report']['aName']] = times_count.get(line_dict['report']['aName'], 0) + 1
-    times_count[line_dict['report']['bName']] = times_count.get(line_dict['report']['bName'], 0) + 1
+    if line_dict['report']['bName']: times_count[line_dict['report']['bName']] = times_count.get(line_dict['report']['bName'], 0) + 1
     if line_dict['report']['location'][:len(line_dict['report']['aFactionName'])] != line_dict['report'][
         'aFactionName']: faction_times[line_dict['report']['aFactionName']] = faction_times.get(
         line_dict['report']['aFactionName'],
