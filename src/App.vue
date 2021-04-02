@@ -96,7 +96,7 @@ export default {
       this.round = round
     }
     else {
-      this.$store.commit("ChangeRound", round)
+      this.$store.commit("ChangeRound", this.round)
     }
   }
 }
