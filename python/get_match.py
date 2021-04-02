@@ -2,15 +2,17 @@ import requests
 import time
 import os
 from dotenv import load_dotenv
+import sys
 load_dotenv()
 
-round = '6'
-webroot = ''
+try: round = sys.argv[1]
+except IndexError: round = '6'
+webroot = os.getenv('web-root')
 
-with open(f'history_{round}.txt', 'r', encoding="utf-8") as log:
+with open(os.path.join(webroot, 'ofc', f'{round}.ofc'), 'r', encoding="utf-8") as log:
     i = len(log.readlines()) + 1
 
-log = open(f'history_{round}.txt', 'a', encoding="utf-8")
+log = open(os.path.join(webroot, 'ofc', f'{round}.ofc'), 'a', encoding="utf-8")
 
 while True:
     print(i)
