@@ -1,7 +1,8 @@
 <template>
   <div v-if="loading">
-    <p>不計算不死劍阻止的擊殺。</p>
+
     <RanksMenu></RanksMenu>
+    <p>不計算不死劍阻止的擊殺。</p>
     <div class="row-div2">
       <table cellpadding="3">
         <tr>
