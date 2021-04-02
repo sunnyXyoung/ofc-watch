@@ -191,7 +191,7 @@ with open(os.path.join(web_root, round, 'Killed.json'), 'w', encoding='utf8') as
 with open(os.path.join(web_root, round, 'Loot.json'), 'w', encoding='utf8') as f:
     f.write(str([{'name': i[0], 'faction': player_db[i[0]]['faction'], 'times': len(i[1]), 'loots': "、".join(i[1])} for i in
                  sorted(loot_count.items(), key=lambda x: len(x[1]), reverse=True)]).replace("'", '"'))
-raise KeyError
+
 with open(os.path.join(web_root, round, 'laList.json'), 'w', encoding='utf8') as f:
     laList = []
     for la in sorted(loot_list.items(), key=lambda x: x[1]['floor']):
