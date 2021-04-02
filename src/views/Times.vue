@@ -1,7 +1,8 @@
 <template>
   <div v-if="loading">
-    <p>守城的防守和衛兵巡邏以及拆牆等等都納入計算。</p>
+
   <RanksMenu></RanksMenu>
+    <p>守城的防守和衛兵巡邏以及拆牆等等都納入計算。</p>
     <div class="row-div2">
       <table cellpadding="3">
         <tr>
