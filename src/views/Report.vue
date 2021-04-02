@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="loading">
     <div class="row-div2">
       <div class="row-div">
         <VueApexCharts class="charts"
@@ -36,6 +36,7 @@ export default {
   },
   data() {
     return {
+      loading: false,
       width: "80%",
       height: "400",
       type1: "timeseries",
@@ -98,6 +99,7 @@ export default {
   },
   watch: {
     "$store.state.round": async function () {
+      this.loading = false
       var dataFetch = await api.getData("Report2.json")
       var schemaFetch = await api.getData("Report3.json")
       Promise.all([dataFetch, schemaFetch]).then(res => {
@@ -108,9 +110,9 @@ export default {
             data,
             schema
         );
-        // this.dataSource.data = fusionTable;
       });
       this.series3 = await api.getData("Report1.json")
+      this.loading = true
     },
   },
   mounted: async function () {
@@ -127,6 +129,7 @@ export default {
       // this.dataSource.data = fusionTable;
     });
     this.series3 = await api.getData("Report1.json")
+    this.loading = true
   }
 }
 

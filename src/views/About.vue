@@ -1,5 +1,5 @@
 <template>
-  <div style="line-height: 24px ; display: flex; flex-flow: column ; justify-content: center">
+  <div style="line-height: 24px ; display: flex; flex-flow: column ; justify-content: center" v-if="loading">
     <h1>關於作者</h1>
     <div class="row-div2">
       <div>
@@ -50,6 +50,7 @@ export default {
   components: {},
   data (){
     return {
+      loading: false,
       aboutList: ['11/23 48:76:03']
     }
   },
@@ -60,7 +61,7 @@ export default {
     ).then(jsonify).then(data => {
       this.aboutList = data
     });
-
+    this.loading = true
   }
 }
 </script>

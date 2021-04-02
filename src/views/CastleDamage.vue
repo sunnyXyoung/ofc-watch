@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="loading">
     <RanksMenu></RanksMenu>
     <div class="row-div2">
       <table cellpadding="3">
@@ -31,6 +31,7 @@ export default {
   },
   data() {
     return {
+      loading: false,
       killBoardList: [
         {name: "Kulimi", faction: "吳", damage: 48763},
         {name: "Kulidfasdfasdfasdfmi2", faction: "吳", damage: 8888},
@@ -39,11 +40,14 @@ export default {
   },
   watch: {
     "$store.state.round": async function () {
+      this.loading = false
       this.killBoardList = await api.getData("CastleDamage.json")
+      this.loading = true
     },
   },
   mounted: async function () {
     this.killBoardList = await api.getData("CastleDamage.json")
+    this.loading = true
   }
 }
 </script>

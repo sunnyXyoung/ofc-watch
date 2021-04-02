@@ -1,40 +1,30 @@
 <template>
-  <div>
-    <div class=" row-div2">
-      <div class=" chart-p">
-
-        <VueApexCharts
-            class="charts" type="donut"
-            :options="options1" :series="series1"
-        >
-        </VueApexCharts>
-      </div>
-      <div class=" chart-p">
-
-        <VueApexCharts
-            class="charts" type="donut"
-            :options="options2" :series="series2"
-        >
-        </VueApexCharts>
-      </div>
+  <div v-if="loading">
+    <div class="row-div row-div2 chart-p">
+      <VueApexCharts
+          class="charts" type="donut"
+          :options="options1" :series="series1"
+      >
+      </VueApexCharts>
+      <VueApexCharts
+          class="charts" type="donut"
+          :options="options2" :series="series2"
+      >
+      </VueApexCharts>
     </div>
-    <div class="row-div2">
-      <div class=" chart-p">
-
-        <VueApexCharts
-            class="charts" type="donut"
-            :options="options3" :series="series3"
-        >
-        </VueApexCharts>
-      </div>
-      <div class=" chart-p">
-        <VueApexCharts
-            class="charts" type="donut"
-            :options="options4" :series="series4"
-        >
-        </VueApexCharts>
-      </div>
+    <div class="row-div row-div2 chart-p">
+      <VueApexCharts
+          class="charts" type="donut"
+          :options="options3" :series="series3"
+      >
+      </VueApexCharts>
+      <VueApexCharts
+          class="charts" type="donut"
+          :options="options4" :series="series4"
+      >
+      </VueApexCharts>
     </div>
+
   </div>
 
 
@@ -53,6 +43,7 @@ export default {
   },
   data() {
     return {
+      loading: false,
       series1: [44, 55, 41, 17],
       series2: [44, 55, 41, 17],
       series3: [44, 55, 41, 17],
@@ -165,6 +156,7 @@ export default {
   },
   watch: {
     "$store.state.round": async function () {
+      this.loading = false
       this.series1 = await api.getData("Faction1.json")
       this.options1.labels = await api.getData("Faction12.json")
       this.series2 = await api.getData("Faction2.json")
@@ -173,6 +165,7 @@ export default {
       this.options3.labels = await api.getData("Faction12.json")
       this.series4 = await api.getData("Faction4.json")
       this.options4.labels = await api.getData("Faction12.json")
+      this.loading = true
     },
   },
   mounted: async function () {
@@ -184,6 +177,7 @@ export default {
     this.options3.labels = await api.getData("Faction12.json")
     this.series4 = await api.getData("Faction4.json")
     this.options4.labels = await api.getData("Faction12.json")
+    this.loading = true
   }
 }
 
