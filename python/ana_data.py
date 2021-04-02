@@ -47,6 +47,7 @@ f = open(record_path, 'r', encoding='utf8')
 a = f.read().split('\n')
 global_kill_count = 0
 match_id = 0
+if a[0] == "": a.pop(0)
 print(len(a))
 
 for line in a:
