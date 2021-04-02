@@ -11,7 +11,7 @@ load_dotenv()
 # =======Config=======
 logging.basicConfig(level=logging.NOTSET)
 try: round = sys.argv[1]
-except IndexError: round = '5'
+except IndexError: round = '6'
 web_root = os.getenv('web-root')
 record_path = os.path.join(web_root, 'ofc', f'{round}.ofc')
 
@@ -200,11 +200,12 @@ with open(os.path.join(web_root, round, 'laList.json'), 'w', encoding='utf8') as
         for weapon in global_weapon_list:
             if weapon['name'] == la[0]:
                 la_db[str(weapon)] = la_db.get(str(weapon), 0) + 1
-        true_la = sorted(la_db.items(), key=lambda x: x[1], reverse=True)[0]
+        try: true_la = sorted(la_db.items(), key=lambda x: x[1], reverse=True)[0]
+        except IndexError: true_la = ("{'floor': "+str(la[1]['floor'])+", 'name': '"+la[0]+"'}", 0)
         true_la_dict = json.loads(true_la[0].replace("'", '"'))
-        laList.append({'floor': la[1]['floor'], 'name': true_la_dict['name'], 'quality': true_la_dict['quality'],
-                       'type': true_la_dict['type'], 'atk': true_la_dict['atk'], 'def': true_la_dict['def'],
-                       'minePower': true_la_dict['minePower'], 'times': true_la[1]})
+        laList.append({'floor': la[1]['floor'], 'name': true_la_dict['name'], 'quality': true_la_dict.get('quality', "未知"),
+                       'type': true_la_dict.get('type', "未知"), 'atk': true_la_dict.get('atk', "未知"), 'def': true_la_dict.get('def', "未知"),
+                       'minePower': true_la_dict.get('minePower', "未知"), 'times': true_la[1]})
     f.write(str(laList).replace("'", '"'))
 
 
