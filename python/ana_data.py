@@ -193,7 +193,7 @@ with open(os.path.join(web_root, round, 'Faction4.json'), 'w', encoding='utf8') 
     faction_loot_count = {}
     for faction in faction_loot:
         faction_loot_count[faction] = len(faction_loot[faction])
-    f.write(str(sorted(faction_loot_count.items(), key=lambda x: x[1], reverse=True)).replace("'", '"'))
+    f.write(str([i[1] for i in sorted(faction_loot_count.items(), key=lambda x: x[1], reverse=True)]).replace("'", '"'))
 
 with open(os.path.join(web_root, round, 'Kill.json'), 'w', encoding='utf8') as f:
     f.write(str([{'name': i[0], 'faction': player_db[i[0]]['faction'], 'kill': i[1]} for i in sorted(kill_count.items(), key=lambda x: x[1], reverse=True)]).replace("'", '"'))
@@ -219,11 +219,8 @@ with open(os.path.join(web_root, round, 'laList.json'), 'w', encoding='utf8') as
                        'minePower': true_la_dict['minePower'], 'times': true_la[1]})
     f.write(str(laList).replace("'", '"'))
 
-print(str([[f'{time.localtime(int(i[0])).tm_hour}-{time.localtime(int(i[0])).tm_mday}-{time.localtime(int(i[0])).tm_mon}-{time.localtime(int(i[0])).tm_year}', "戰報數", i[1]] for i in
-                 sorted(report_line_graph.items(), key=lambda x: x[0])]).replace("'", '"'))
+
 with open(os.path.join(web_root, round, 'Report2.json'), 'w', encoding='utf8') as f:
-    print(str([[f'{time.localtime(int(i[0])).tm_hour}-{time.localtime(int(i[0])).tm_mday}-{time.localtime(int(i[0])).tm_mon}-{time.localtime(int(i[0])).tm_year}', "戰報數", i[1]] for i in
-                 sorted(report_line_graph.items(), key=lambda x: x[0])]).replace("'", '"'))
     f.write(str([[f'{time.localtime(int(i[0])).tm_hour}-{time.localtime(int(i[0])).tm_mday}-{time.localtime(int(i[0])).tm_mon}-{time.localtime(int(i[0])).tm_year}', "戰報數", i[1]] for i in
                  sorted(report_line_graph.items(), key=lambda x: x[0])]).replace("'", '"'))
 
