@@ -1,5 +1,6 @@
 <template>
   <div v-if="loading">
+    <p>只計算城牆的傷害。</p>
     <RanksMenu></RanksMenu>
     <div class="row-div2">
       <table cellpadding="3">

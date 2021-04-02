@@ -1,6 +1,7 @@
 <template>
   <div v-if="loading">
   <RanksMenu></RanksMenu>
+    <p>藉由戰鬥獲得的所有經驗。</p>
   <div class="row-div2">
     <table cellpadding="3">
       <tr>
