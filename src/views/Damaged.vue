@@ -1,6 +1,7 @@
 <template>
   <div v-if="loading">
     <RanksMenu></RanksMenu>
+    <p>任何人對人傷害都算，即使超出最大生命值。</p>
     <div class="row-div2">
       <table cellpadding="3">
         <tr>
