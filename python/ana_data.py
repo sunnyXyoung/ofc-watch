@@ -193,7 +193,7 @@ with open(os.path.join(web_root, round, 'Faction4.json'), 'w', encoding='utf8') 
     faction_loot_count = {}
     for faction in faction_loot:
         faction_loot_count[faction] = len(faction_loot[faction])
-    f.write(str(sorted(faction_loot_count.items(), key=lambda x: x[1], reverse=True)).replace("'", '"'))
+    f.write(str([i[1] for i in sorted(faction_loot_count.items(), key=lambda x: x[1], reverse=True)]).replace("'", '"'))
 
 with open(os.path.join(web_root, round, 'Kill.json'), 'w', encoding='utf8') as f:
     f.write(str([{'name': i[0], 'faction': player_db[i[0]]['faction'], 'kill': i[1]} for i in sorted(kill_count.items(), key=lambda x: x[1], reverse=True)]).replace("'", '"'))
