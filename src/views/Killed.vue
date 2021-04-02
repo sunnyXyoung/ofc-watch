@@ -30,6 +30,11 @@ name: "Killed",
       ]
     }
   },
+  watch: {
+    "$store.state.round": async function () {
+      this.killBoardList = await api.getData("Killed.json")
+    },
+  },
   mounted:async function () {
     this.killBoardList = await api.getData("Killed.json")
   }

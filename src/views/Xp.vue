@@ -30,6 +30,11 @@ name: "Xp",
       ]
     }
   },
+  watch: {
+    "$store.state.round": async function () {
+      this.killBoardList =  await api.getData("Xp.json")
+    },
+  },
   mounted:async function () {
     this.killBoardList =  await api.getData("Xp.json")
   }

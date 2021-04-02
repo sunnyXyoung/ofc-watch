@@ -96,6 +96,23 @@ export default {
 
     }
   },
+  watch: {
+    "$store.state.round": async function () {
+      var dataFetch = await api.getData("Report2.json")
+      var schemaFetch = await api.getData("Report3.json")
+      Promise.all([dataFetch, schemaFetch]).then(res => {
+        const data = res[0];
+        const schema = res[1];
+        console.log(schema);
+        this.dataSource.data = new FusionCharts.DataStore().createDataTable(
+            data,
+            schema
+        );
+        // this.dataSource.data = fusionTable;
+      });
+      this.series3 = await api.getData("Report1.json")
+    },
+  },
   mounted: async function () {
     var dataFetch = await api.getData("Report2.json")
     var schemaFetch = await api.getData("Report3.json")
@@ -110,8 +127,6 @@ export default {
       // this.dataSource.data = fusionTable;
     });
     this.series3 = await api.getData("Report1.json")
-
-
   }
 }
 
