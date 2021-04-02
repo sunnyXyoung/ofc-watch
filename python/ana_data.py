@@ -4,12 +4,13 @@ import logging
 import re
 import os
 from dotenv import load_dotenv
+import sys
 
 load_dotenv()
 
 # =======Config=======
 logging.basicConfig(level=logging.NOTSET)
-round = '5'
+round = sys.argv[1]
 web_root = os.getenv('web-root')
 record_path = os.path.join(web_root, 'ofc', f'{round}.ofc')
 
