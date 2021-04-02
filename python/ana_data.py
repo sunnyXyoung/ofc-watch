@@ -228,7 +228,7 @@ with open(os.path.join(web_root, round, 'Report3.json'), 'w', encoding='utf8') a
     f.write('''[{
   "name": "Time",
   "type": "date",
-  "format": "%h-%d-%b-%y"
+  "format": "%p-%d-%b-%y"
 }, {
   "name": "Type",
   "type": "string"
