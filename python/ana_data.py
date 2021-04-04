@@ -181,6 +181,8 @@ with open(os.path.join(web_root, round, 'Faction3.json'), 'w', encoding='utf8') 
 
 with open(os.path.join(web_root, round, 'Faction4.json'), 'w', encoding='utf8') as f:
     faction_loot_count = {}
+    for faction in faction_list:
+        faction_loot[faction] = faction_loot.get(faction, [])
     for faction in faction_loot:
         faction_loot_count[faction] = len(faction_loot[faction])
     f.write(str([i[1] for i in sorted(faction_loot_count.items())]).replace("'", '"'))
