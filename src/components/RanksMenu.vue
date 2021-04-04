@@ -87,8 +87,8 @@ export default {
   justify-content: center;
   align-content: center;
   position: fixed;
-  left: 55px;
-  bottom: 55px;
+  right: 55px;
+  top: 95px;
   @include phone-width{
     display: flex;
   }
