@@ -39,7 +39,7 @@ while True:
     if response.text == '{"statusCode":400,"message":"戰報不存在"}':
         print(f'lastest match: {i}')
         time.sleep(wait_time)
-        wait_time = wait_time * 1.5 + 10
+        wait_time = wait_time * 1.5
         if wait_time > 600:
             wait_time = 600
     else:
