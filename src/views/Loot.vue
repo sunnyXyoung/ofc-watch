@@ -14,7 +14,7 @@
           <th>挖礦</th>
           <th>出場次數</th>
         </tr>
-        <tr v-for="(item) in laList" :key="item" v-bind:class="{unknown: item.isUnknown}">
+        <tr v-for="(item) in laList" :key="item" class="lalist" v-bind:class="{unknown: item.isUnknown}">
             <td>{{ item.floor }}</td>
             <td>{{ item.name }}</td>
             <td>{{ item.quality }}</td>
@@ -96,5 +96,9 @@ export default {
 <style scoped>
 .unknown {
   background-color: rgb(255, 229, 99);
+}
+
+.lalist {
+  margin: 0;
 }
 </style>
