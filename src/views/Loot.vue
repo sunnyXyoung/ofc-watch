@@ -1,5 +1,6 @@
 <template>
   <div v-if="loading">
+    黃底的樓層獎勵資料非來自搜集的戰報。
     <RanksMenu></RanksMenu>
     <div class="row-div2" style="margin-bottom: 50px; ">
       <table cellpadding="3">
@@ -14,14 +15,16 @@
           <th>出場次數</th>
         </tr>
         <tr v-for="(item) in laList" :key="item">
-          <td>{{ item.floor }}</td>
-          <td>{{ item.name }}</td>
-          <td>{{ item.quality }}</td>
-          <td>{{ item.type }}
-          <td>{{ item.atk }}</td>
-          <td>{{ item.def }}</td>
-          <td>{{ item.minePower }}</td>
-          <td>{{ item.times }}</td>
+          <div v-bind:class="{unknown: item.isUnknown}">
+            <td>{{ item.floor }}</td>
+            <td>{{ item.name }}</td>
+            <td>{{ item.quality }}</td>
+            <td>{{ item.type }}
+            <td>{{ item.atk }}</td>
+            <td>{{ item.def }}</td>
+            <td>{{ item.minePower }}</td>
+            <td>{{ item.times }}</td>
+          </div>
         </tr>
       </table>
     </div>
@@ -59,8 +62,8 @@ export default {
     return {
       loading: false,
       killBoardList: [
-        {name: "Kulimi", faction: "吳", times: 48763, loots: "第一層 黑夜大衣、第一層 黑夜大衣、第一層 黑夜大衣"},
-        {name: "Kulidfasdfasdfasdfmi2", faction: "吳", times: 8888},
+        {name: "Kulimi", faction: "吳", times: 48763, loots: "第一層 黑夜大衣、第一層 黑夜大衣、第一層 黑夜大衣", isUnknown: false},
+        {name: "Kulidfasdfasdfasdfmi2", faction: "吳", times: 8888 ,isUnknown: false},
       ],
       laList: [
         {
@@ -93,5 +96,7 @@ export default {
 </script>
 
 <style scoped>
-
+.unknown {
+  background-color: rgb(255, 229, 99);
+}
 </style>
