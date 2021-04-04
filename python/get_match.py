@@ -36,7 +36,7 @@ while True:
 
     if response.text == '{"statusCode":400,"message":"戰報不存在"}':
         print(f'lastest match: {i}')
-        time.sleep(3600)
+        time.sleep(600)
 
     else:
         log.write('\n' + response.text)
