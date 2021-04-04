@@ -14,6 +14,8 @@ with open(os.path.join(webroot, 'ofc', f'{round}.ofc'), 'r', encoding="utf-8") a
 
 log = open(os.path.join(webroot, 'ofc', f'{round}.ofc'), 'a', encoding="utf-8")
 
+wait_time = 10
+
 while True:
     print(i)
     time1 = time.time()
@@ -36,11 +38,13 @@ while True:
 
     if response.text == '{"statusCode":400,"message":"戰報不存在"}':
         print(f'lastest match: {i}')
-        time.sleep(600)
-
+        time.sleep(wait_time)
+        wait_time = wait_time * 1.5 + 10
+        if wait_time > 600:
+            wait_time = 600
     else:
         log.write('\n' + response.text)
         i += 1
-
+        wait_time = 10
         time_use = time.time() - time1
         print(f'use{time_use}sec')
