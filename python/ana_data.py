@@ -222,14 +222,14 @@ with open(os.path.join(web_root, round, 'laList.json'), 'w', encoding='utf8') as
 
 
 with open(os.path.join(web_root, round, 'Report2.json'), 'w', encoding='utf8') as f:
-    f.write(str([[f'{time.localtime(int(i[0])/1000).tm_hour}-{time.localtime(int(i[0])/1000).tm_mday}-{time.localtime(int(i[0])/1000).tm_mon}-{time.localtime(int(i[0])/1000).tm_year}', "戰報數", i[1]] for i in
+    f.write(str([[f'{str(time.localtime(int(i[0])/1000).tm_min).zfill(2)}-{time.localtime(int(i[0])/1000).tm_hour}-{time.localtime(int(i[0])/1000).tm_mday}-{time.localtime(int(i[0])/1000).tm_mon}-{time.localtime(int(i[0])/1000).tm_year}', "戰報數", i[1]] for i in
                  sorted(report_line_graph.items(), key=lambda x: x[0])]).replace("'", '"'))
 
 with open(os.path.join(web_root, round, 'Report3.json'), 'w', encoding='utf8') as f:
     f.write('''[{
   "name": "Time",
   "type": "date",
-  "format": "%H-%d-%m-%Y"
+  "format": "%M-%H-%d-%m-%Y"
 }, {
   "name": "Type",
   "type": "string"
