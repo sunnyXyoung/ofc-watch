@@ -5,6 +5,8 @@ import re
 import os
 from dotenv import load_dotenv
 import sys
+import pathlib
+
 
 load_dotenv()
 
@@ -201,12 +203,19 @@ with open(os.path.join(web_root, round, 'laList.json'), 'w', encoding='utf8') as
             if weapon['name'] == la[0]:
                 la_db[str(weapon)] = la_db.get(str(weapon), 0) + 1
         try: true_la = sorted(la_db.items(), key=lambda x: x[1], reverse=True)[0]
-        except IndexError: true_la = ("{'floor': "+str(la[1]['floor'])+", 'name': '"+la[0]+"'}", 0)
+        except IndexError:
+            with open(os.path.join(pathlib.Path(__file__).parent.absolute(), round, 'Unknown.json'), 'r', encoding='utf8') as unknown_f:
+                unknown_las = json.loads(unknown_f.read())
+                for unknown_la in unknown_las:
+                    if unknown_la['name'] == la[0]:
+                        unknown_la['isUnknown'] = True
+                        true_la = (json.dumps(unknown_la), 0)
+                        break
         true_la_dict = json.loads(true_la[0].replace("'", '"'))
         laList.append({'floor': la[1]['floor'], 'name': true_la_dict['name'], 'quality': true_la_dict.get('quality', "未知"),
                        'type': true_la_dict.get('type', "未知"), 'atk': true_la_dict.get('atk', "未知"), 'def': true_la_dict.get('def', "未知"),
-                       'minePower': true_la_dict.get('minePower', "未知"), 'times': true_la[1]})
-    f.write(str(laList).replace("'", '"'))
+                       'minePower': true_la_dict.get('minePower', "未知"), 'times': true_la[1], 'isUnknown': true_la_dict.get('isUnknown', False)})
+    f.write(json.dumps(laList).replace("'", '"'))
 
 
 with open(os.path.join(web_root, round, 'Report2.json'), 'w', encoding='utf8') as f:
