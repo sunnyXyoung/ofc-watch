@@ -1,7 +1,8 @@
 <template>
   <div v-if="loading">
-    黃底的樓層獎勵資料非來自搜集的戰報。
+
     <RanksMenu></RanksMenu>
+    黃底的樓層獎勵資料非來自搜集的戰報。
     <div class="row-div2" style="margin-bottom: 50px; ">
       <table cellpadding="3">
         <tr>
