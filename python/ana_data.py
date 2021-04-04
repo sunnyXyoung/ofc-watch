@@ -215,6 +215,7 @@ with open(os.path.join(web_root, round, 'laList.json'), 'w', encoding='utf8') as
         laList.append({'floor': la[1]['floor'], 'name': true_la_dict['name'], 'quality': true_la_dict.get('quality', "未知"),
                        'type': true_la_dict.get('type', "未知"), 'atk': true_la_dict.get('atk', "未知"), 'def': true_la_dict.get('def', "未知"),
                        'minePower': true_la_dict.get('minePower', "未知"), 'times': true_la[1], 'isUnknown': true_la_dict.get('isUnknown', False)})
+
     f.write(json.dumps(laList, ensure_ascii=False).replace("'", '"'))
 
 
