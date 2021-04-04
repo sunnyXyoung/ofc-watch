@@ -48,7 +48,7 @@ export default {
           text: "戰報時間分布"
         },
         subcaption: {
-          text: "時間解析度：1小時"
+          text: "時間解析度：1分鐘"
         },
         series: "Type",
         yaxis: [
