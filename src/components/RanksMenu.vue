@@ -79,16 +79,17 @@ export default {
 
 .navbar-toggler {
   height: 50px;
-  width: 60px;
-  border-radius: 15px;
+  width: 30px;
+  border-radius: 15px 0 0 15px;
   background-color: white;
   box-shadow:3px 3px 5px 6px #cccccc;
   display: none;
   justify-content: left;
   align-content: center;
   position: fixed;
-  right: -30px;
+  right: 0px;
   top: 95px;
+  z-index: 3;
   @include phone-width{
     display: flex;
   }
@@ -103,21 +104,23 @@ export default {
   align-content: center;
   line-height: 50px;
   margin-left: 10px;
+
 }
 
 @keyframes m-move {
   0%{
-    right: -30px;
+    right: 0;
   }
   100%{
-    right: 45% -30px;
+    right: 45%;
   }
 }
 
 .m-menu-btn-a {
   animation-duration: 0.4s;
   animation-name: m-move;
-  right: 45% -30px;
+  right: 45%;
+  box-shadow:none;
 }
 
 </style>

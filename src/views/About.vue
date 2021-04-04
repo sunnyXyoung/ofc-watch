@@ -46,7 +46,7 @@
       </div>
 
       <hr align="center" width="20%" style="margin-bottom: 25px;margin-top: 25px;border-color: rgba(12, 34, 56, 0.5)">
-      資料每分鐘更新一次，所以請適時搭配重新整理，因為我還沒做及時串流。<br>
+      資料每分鐘更新一次，所以請適時搭配重新整理，因為我還沒做即時串流。<br>
       上次更新時間： {{ aboutList[0] }}
     <hr align="center" width="20%" style="margin-bottom: 25px;margin-top: 25px;border-color: rgba(12, 34, 56, 0.5)">
     <div class="row-div2">

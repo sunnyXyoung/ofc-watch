@@ -324,8 +324,19 @@ body {
     right: -20%;
   }
 }
+
+@keyframes m-move {
+  0%{
+    left: 100%;
+  }
+  100%{
+    left: 55%;
+  }
+}
+
 .v-enter-active{
-  transition: all ease 0.4s;
+  animation-name: m-move;
+  animation-duration: 0.4s;
 }
 .v-enter-to{
   right: 0;
