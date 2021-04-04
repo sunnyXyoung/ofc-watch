@@ -5,7 +5,6 @@
     <div class="row-div2" style="margin-bottom: 50px; ">
       <table cellpadding="3">
         <tr>
-          <div>
           <th>層數</th>
           <th>種類</th>
           <th>品質</th>
@@ -14,10 +13,8 @@
           <th>防禦</th>
           <th>挖礦</th>
           <th>出場次數</th>
-          </div>
         </tr>
-        <tr v-for="(item) in laList" :key="item">
-          <div v-bind:class="{unknown: item.isUnknown}">
+        <tr v-for="(item) in laList" :key="item" v-bind:class="{unknown: item.isUnknown}">
             <td>{{ item.floor }}</td>
             <td>{{ item.name }}</td>
             <td>{{ item.quality }}</td>
@@ -26,7 +23,6 @@
             <td>{{ item.def }}</td>
             <td>{{ item.minePower }}</td>
             <td>{{ item.times }}</td>
-          </div>
         </tr>
       </table>
     </div>
