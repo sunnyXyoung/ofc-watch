@@ -54,7 +54,7 @@ export default {
         yaxis: [
           {
             plot: "Sales Value",
-            title: "每小時戰報數",
+            title: "每分鐘戰報數",
             format: {
               prefix: ""
             }

@@ -69,7 +69,7 @@ for line in a:
         print(f'{match_id} miss, get {line_dict["report"]["id"]}')
         break
 
-    report_line_graph[str(int((line_dict['report']['time']) / 3600000) * 3600000)] = report_line_graph.get(str(int((line_dict['report']['time']) / 3600000) * 3600000), 0) + 1
+    report_line_graph[str(int((line_dict['report']['time']) / 60000) * 60000)] = report_line_graph.get(str(int((line_dict['report']['time']) / 3600000) * 3600000), 0) + 1
     if line_dict['report']['aFactionName'] not in faction_list: faction_list.append(line_dict['report']['aFactionName'])
     if line_dict['report']['bFactionName'] not in faction_list: faction_list.append(line_dict['report']['bFactionName'])
     times_count[line_dict['report']['aName']] = times_count.get(line_dict['report']['aName'], 0) + 1
