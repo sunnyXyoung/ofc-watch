@@ -83,6 +83,11 @@ const routes = [
         name: 'CastleDamage',
         component: () => import('../views/CastleDamage.vue')
     },
+    {
+        path: '/thanks',
+        name: 'Thanks',
+        component: () => import('../views/Thanks.vue')
+    },
 ]
 
 const router = new VueRouter({

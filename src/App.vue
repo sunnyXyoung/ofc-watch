@@ -19,34 +19,42 @@
         <router-link class="right-btn" to="/about">關於</router-link>
       </div>
     </div>
-    <div class="navbar-toggler" style="border: none;text-align: right">
-      <i @click="SideBarOn" class="fa fa-navicon fa-lg" style="cursor: pointer"></i>
+    <div class="m-menu">
+      <router-link class="m-btn" to="/"><p>OFC WATCH</p></router-link>
+      <router-link class="m-icon" to="/report"><img src="./assets/history.svg" alt="戰報"></router-link>
+      <router-link class="m-icon" to="/fighter"><img src="./assets/man-with-two-swords.svg" alt="戰鬥員"></router-link>
+      <router-link class="m-icon" to="/faction"><img src="./assets/flag.svg" alt="陣營"></router-link>
+      <router-link class="m-icon" to="/weapon"><img src="./assets/sword.svg" alt="裝備"></router-link>
+      <router-link class="m-icon" to="/about"><img src="./assets/information.svg" alt="關於"></router-link>
     </div>
-    <div v-if="sidebar" @click="SideBarOn" class="black-layout"></div>
-    <transition>
-      <div v-if="sidebar" id="sidebar-nav" :class="{'nav-show':sidebar}">
-        <ul class="navbar-nav" style="display: inline-block;width: 100%">
-          <li class="nav-item sidebar-item" @click="SideBarOn">
-            <router-link class="sidebar-link" to="/">首頁</router-link>
-          </li>
-          <li class="nav-item sidebar-item" @click="SideBarOn">
-            <router-link class="sidebar-link" to="/report">戰報分析</router-link>
-          </li>
-          <li class="nav-item sidebar-item" @click="SideBarOn">
-            <router-link class="sidebar-link" to="/fighter">戰鬥員分析</router-link>
-          </li>
-          <li class="nav-item sidebar-item" @click="SideBarOn">
-            <router-link class="sidebar-link" to="/faction">陣營分析</router-link>
-          </li>
-          <li class="nav-item sidebar-item" @click="SideBarOn">
-            <router-link class="sidebar-link" to="/weapon">裝備分析</router-link>
-          </li>
-          <li class="nav-item sidebar-item" @click="SideBarOn">
-            <router-link class="sidebar-link" to="/about">關於</router-link>
-          </li>
-        </ul>
-      </div>
-    </transition>
+<!--    <div class="navbar-toggler" style="border: none;text-align: right">-->
+<!--      <i @click="SideBarOn" class="fa fa-navicon fa-lg" style="cursor: pointer"></i>-->
+<!--    </div>-->
+<!--    <div v-if="sidebar" @click="SideBarOn" class="black-layout"></div>-->
+<!--    <transition>-->
+<!--      <div v-if="sidebar" id="sidebar-nav" :class="{'nav-show':sidebar}">-->
+<!--        <ul class="navbar-nav" style="display: inline-block;width: 100%">-->
+<!--          <li class="nav-item sidebar-item" @click="SideBarOn">-->
+<!--            <router-link class="sidebar-link" to="/">首頁</router-link>-->
+<!--          </li>-->
+<!--          <li class="nav-item sidebar-item" @click="SideBarOn">-->
+<!--            <router-link class="sidebar-link" to="/report">戰報分析</router-link>-->
+<!--          </li>-->
+<!--          <li class="nav-item sidebar-item" @click="SideBarOn">-->
+<!--            <router-link class="sidebar-link" to="/fighter">戰鬥員分析</router-link>-->
+<!--          </li>-->
+<!--          <li class="nav-item sidebar-item" @click="SideBarOn">-->
+<!--            <router-link class="sidebar-link" to="/faction">陣營分析</router-link>-->
+<!--          </li>-->
+<!--          <li class="nav-item sidebar-item" @click="SideBarOn">-->
+<!--            <router-link class="sidebar-link" to="/weapon">裝備分析</router-link>-->
+<!--          </li>-->
+<!--          <li class="nav-item sidebar-item" @click="SideBarOn">-->
+<!--            <router-link class="sidebar-link" to="/about">關於</router-link>-->
+<!--          </li>-->
+<!--        </ul>-->
+<!--      </div>-->
+<!--    </transition>-->
     <select id="round-selector" v-model="round" @change="ChangeRound">
       <option v-for="option in options" :key="option.value" :value="option.value" >
         {{ option.text }}
@@ -297,6 +305,9 @@ body {
 }
 .nav-show{
   right: 0;
+  display: flex;
+  flex-wrap: wrap;
+  flex-flow: column;
 }
 .v-enter{
   right: -55%;
@@ -318,6 +329,45 @@ body {
 }
 .v-enter-to{
   right: 0;
+}
+
+.m-menu{
+  display: none;
+  width: 100%;
+  height: 40px;
+  box-shadow:3px 3px 5px 6px #cccccc;
+  align-content: center;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+
+  @include phone-width{
+    display: flex;
+  }
+  @include small-pad-width{
+    display: flex;
+  }
+}
+
+body {
+  margin: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.m-btn{
+  font-weight: bold;
+  color: #2c3e50;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+}
+
+.m-icon {
+  width: 30px;
+  display: flex;
+  align-content: center;
+  justify-content: center;
 }
 
 </style>

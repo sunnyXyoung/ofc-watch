@@ -10,11 +10,13 @@ except IndexError: round = '6'
 webroot = os.getenv('web-root')
 
 with open(os.path.join(webroot, 'ofc', f'{round}.ofc'), 'r', encoding="utf-8") as log:
-    i = len(log.readlines()) + 1
+    all_lines = log.readlines()
+    i = len(all_lines) + 1
 
 log = open(os.path.join(webroot, 'ofc', f'{round}.ofc'), 'a', encoding="utf-8")
 
 wait_time = 10
+
 
 while True:
     print(i)
