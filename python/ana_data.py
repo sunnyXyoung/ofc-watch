@@ -257,5 +257,21 @@ with open(os.path.join(web_root, round, 'Weapon3.json'), 'w', encoding='utf8') a
             a += 1
     f.write(str([len(global_weapon_list) - a, a]).replace("'", '"'))
 
+with open(os.path.join(web_root, round, 'Weapon4.json'), 'w', encoding='utf8') as f:
+    weapon_name_count = {}
+    for weapon in global_weapon_list:
+        weapon_name_count[str([weapon['name'], weapon['type']])] = weapon_name_count.get(str([weapon['name'], weapon['type']]), 0) + 1
+    f.write(str([{'name': list(i[0])[0], 'type': list(i[0])[1], 'times': i[1]} for i in sorted(weapon_name_count.items(), key=lambda x: x[1], reverse=True)]).replace("'", '"'))
+
+with open(os.path.join(web_root, round, 'Weapon5.json'), 'w', encoding='utf8') as f:
+    global_weapon_index = []
+    same_weapon_name_count = {}
+    for weapon in global_weapon_list:
+        if weapon not in global_weapon_index: global_weapon_index.append(weapon)
+    for weapon in global_weapon_index:
+        same_weapon_name_count[str([weapon['name'], weapon['type']])] = same_weapon_name_count.get(
+            str([weapon['name'], weapon['type']]), 0) + 1
+    f.write(str([{'name': list(i[0])[0], 'type': list(i[0])[1], 'times': i[1]} for i in sorted(same_weapon_name_count.items(), key=lambda x: x[1], reverse=True)]).replace("'", '"'))
+
 with open(os.path.join(web_root, round, 'Xp.json'), 'w', encoding='utf8') as f:
     f.write(str([{'name': i[0], 'faction': player_db[i[0]]['faction'], 'xp': i[1]} for i in sorted(xp_count.items(), key=lambda x: x[1], reverse=True)]).replace("'", '"'))

@@ -161,6 +161,7 @@ export default {
   display: flex;
   flex-wrap: wrap;
   flex-flow: column;
+
 }
 
 

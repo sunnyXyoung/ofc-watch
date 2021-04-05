@@ -15,7 +15,32 @@
     <div class="row-div2">
 
     </div>
-  </div>
+    <div>
+      <p>武器名稱統計</p>
+      <div class="row-div2">
+        <div>
+          <p>數值完全一樣的武器視作同一把。</p>
+          <table cellpadding="3">
+            <tr>
+              <th>名次</th><th>陣營（最終）</th><th>暱稱</th><th>擊殺數</th>
+            <tr v-for="(item, index) in killBoardList" :key="item">
+              <td>{{ index+1 }}</td><td>{{item.faction}}<td>{{ item.name }}</td><td>{{ item.kill }}</td>
+            </tr>
+          </table>
+        </div>
+        <div>
+          <p></p>
+          <table cellpadding="3">
+            <tr>
+              <th>名次</th><th>陣營（最終）</th><th>暱稱</th><th>擊殺數</th>
+            <tr v-for="(item, index) in killBoardList" :key="item">
+              <td>{{ index+1 }}</td><td>{{item.faction}}<td>{{ item.name }}</td><td>{{ item.kill }}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
 
 </template>
 
