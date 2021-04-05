@@ -12,34 +12,21 @@
       >
       </VueApexCharts>
     </div>
+
     <div class="row-div2">
+      <div>
+        <p>統計各種裝備種類的名稱出場數。</p>
+        <table cellpadding="3">
+          <tr>
+            <th>名次</th><th>名稱</th><th>陣營</th><th>種類</th><th>出場數</th>
+          <tr v-for="(item, index) in itemBoardList" :key="item">
+            <td>{{ index+1 }}</td><td>{{item.name}}<td>{{ item.faction }}</td><td>{{item.type}}</td><td>{{ item.times }}</td>
+          </tr>
+        </table>
+      </div>
 
     </div>
-    <div>
-      <p>武器名稱統計</p>
-      <div class="row-div2">
-        <div>
-          <p>數值完全一樣的武器視作同一把。</p>
-          <table cellpadding="3">
-            <tr>
-              <th>名次</th><th>陣營（最終）</th><th>暱稱</th><th>擊殺數</th>
-            <tr v-for="(item, index) in killBoardList" :key="item">
-              <td>{{ index+1 }}</td><td>{{item.faction}}<td>{{ item.name }}</td><td>{{ item.kill }}</td>
-            </tr>
-          </table>
-        </div>
-        <div>
-          <p></p>
-          <table cellpadding="3">
-            <tr>
-              <th>名次</th><th>陣營（最終）</th><th>暱稱</th><th>擊殺數</th>
-            <tr v-for="(item, index) in killBoardList" :key="item">
-              <td>{{ index+1 }}</td><td>{{item.faction}}<td>{{ item.name }}</td><td>{{ item.kill }}</td>
-            </tr>
-          </table>
-        </div>
-      </div>
-    </div>
+  </div>
 
 
 </template>
@@ -59,7 +46,9 @@ export default {
       loading: false,
       series1: [5],
       series2: [5],
-
+      itemBoardList: [
+          {"name": "金剛輪宝仁王", "faction": "進擊的巨人", "type": "長槍", "times": 533}
+          ],
       options1: {
         chart: {
           width: '100%',
@@ -126,6 +115,7 @@ export default {
       this.series1 =  await api.getData("Weapon1.json")
       this.options1.labels =  await api.getData("Weapon2.json")
       this.series2 =  await api.getData("Weapon3.json")
+      this.itemBoardList =  await api.getData("Weapon4.json")
       this.loading = true
     },
   },
@@ -133,6 +123,7 @@ export default {
     this.series1 =  await api.getData("Weapon1.json")
     this.options1.labels =  await api.getData("Weapon2.json")
     this.series2 =  await api.getData("Weapon3.json")
+    this.itemBoardList =  await api.getData("Weapon4.json")
     this.loading = true
   }
 }
