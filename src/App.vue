@@ -288,6 +288,8 @@ body {
   margin: 0;
   height: 100%;
   width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 .m-btn{
@@ -313,6 +315,11 @@ body {
 .m-img{
   width: 30px;
   height: 50px;
+}
+
+html{
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 </style>

@@ -13,7 +13,7 @@
       </VueApexCharts>
     </div>
 
-    <div class="row-div2">
+    <div class="row-div">
       <div>
         <p>統計各種裝備種類的名稱出場數。</p>
         <table cellpadding="3">
