@@ -20,12 +20,12 @@
       </div>
     </div>
     <div class="m-menu">
-      <router-link class="m-btn" to="/"><p>OFC WATCH</p></router-link>
-      <router-link class="m-icon" to="/report"><img src="./assets/history.svg" alt="戰報"></router-link>
-      <router-link class="m-icon" to="/fighter"><img src="./assets/man-with-two-swords.svg" alt="戰鬥員"></router-link>
-      <router-link class="m-icon" to="/faction"><img src="./assets/flag.svg" alt="陣營"></router-link>
-      <router-link class="m-icon" to="/weapon"><img src="./assets/sword.svg" alt="裝備"></router-link>
-      <router-link class="m-icon" to="/about"><img src="./assets/information.svg" alt="關於"></router-link>
+      <router-link class="m-btn" to="/"><p class="m-btn">OFC WATCH</p></router-link>
+      <router-link class="m-icon" to="/report"><img class="m-img" src="./assets/history.svg" alt="戰報"></router-link>
+      <router-link class="m-icon" to="/fighter"><img class="m-img"  src="./assets/man-with-two-swords.svg" alt="戰鬥員"></router-link>
+      <router-link class="m-icon" to="/faction"><img class="m-img"  src="./assets/flag.svg" alt="陣營"></router-link>
+      <router-link class="m-icon" to="/weapon"><img class="m-img" src="./assets/sword.svg" alt="裝備"></router-link>
+      <router-link class="m-icon" to="/about"><img class="m-img"  src="./assets/information.svg" alt="關於"></router-link>
     </div>
 <!--    <div class="navbar-toggler" style="border: none;text-align: right">-->
 <!--      <i @click="SideBarOn" class="fa fa-navicon fa-lg" style="cursor: pointer"></i>-->
@@ -370,15 +370,23 @@ body {
   font-weight: bold;
   color: #2c3e50;
   display: flex;
+  height: 50px;
+  width: auto;
   align-content: center;
   justify-content: center;
 }
 
 .m-icon {
   width: 30px;
+  height: 50px;
   display: flex;
   align-content: center;
   justify-content: center;
+}
+
+.m-img{
+  width: 30px;
+  height: 50px;
 }
 
 </style>
