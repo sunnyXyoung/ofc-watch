@@ -123,4 +123,47 @@ export default {
   box-shadow:none;
 }
 
+.sidebar-link {
+  font-size: x-large;
+  font-weight: bold;
+  color: #2c3e50;
+  display: flex;
+  width: 85%;
+  margin: auto;
+  align-items: center;
+  justify-content: left;
+  @include pad-width{
+    font-size: 35px;
+  }
+  @include small-pad-width{
+    font-size: 35px;
+  }
+  @include phone-width{
+    font-size: 20px;
+  }
+}
+
+#sidebar-nav {
+  position: fixed;
+  top: 0;
+  background: white;
+  z-index: 3;
+  width: 45%;
+  height: 100%;
+  text-align: center;
+  padding-top: 5%;
+  left: 55%;
+}
+
+
+.nav-show{
+  right: 0;
+  display: flex;
+  flex-wrap: wrap;
+  flex-flow: column;
+}
+
+
+
+
 </style>
