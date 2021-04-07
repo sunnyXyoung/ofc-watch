@@ -36,6 +36,7 @@ while True:
 
     if '\n' in response.text:
         print(response.text)
+        time.sleep(10)
         continue
 
     if response.text == '{"statusCode":400,"message":"戰報不存在"}':
