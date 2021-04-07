@@ -24,7 +24,15 @@
       >
       </VueApexCharts>
     </div>
-
+    <div class="row-div2">
+      <fusioncharts
+          :dataFormat="dataFormat"
+          :dataSource="dataSource"
+          :height="height"
+          :type="type1"
+          :width="width"
+      ></fusioncharts>
+    </div>
   </div>
 
 
@@ -34,6 +42,7 @@
 
 import VueApexCharts from 'vue-apexcharts'
 import api from "../api";
+import FusionCharts from "fusioncharts";
 
 
 export default {
@@ -44,6 +53,41 @@ export default {
   data() {
     return {
       loading: false,
+      width: "80%",
+      height: "400",
+      type1: "timeseries",
+      dataFormat: "json",
+      dataSource: {
+        data: {},
+        chart: {},
+        caption: {
+          text: "樓層推進進度"
+        },
+        subcaption: {
+          text: "還原歷史戰況"
+        },
+        series: "Type",
+        yaxis: [
+          {
+            plot: [
+              {
+                value: "樓層數",
+                plottype: "Step Line",
+                connectnulldata: true,
+                style: {
+                  "plot.null": {
+                    "stroke-dasharray": "none",
+                  }
+                }
+              }
+            ],
+            title: "樓層推進進度",
+            format: {
+              prefix: ""
+            }
+          }
+        ]
+      },
       series1: [44, 55, 41, 17],
       series2: [44, 55, 41, 17],
       series3: [44, 55, 41, 17],
@@ -157,6 +201,18 @@ export default {
   watch: {
     "$store.state.round": async function () {
       this.loading = false
+      var dataFetch = await api.getData("Faction5.json")
+      var schemaFetch = await api.getData("Faction6.json")
+      Promise.all([dataFetch, schemaFetch]).then(res => {
+        const data = res[0];
+        const schema = res[1];
+        console.log(schema);
+        this.dataSource.data = new FusionCharts.DataStore().createDataTable(
+            data,
+            schema
+        );
+        // this.dataSource.data = fusionTable;
+      });
       this.series1 = await api.getData("Faction1.json")
       this.options1.labels = await api.getData("Faction12.json")
       this.series2 = await api.getData("Faction2.json")
@@ -169,6 +225,18 @@ export default {
     },
   },
   mounted: async function () {
+    var dataFetch = await api.getData("Faction5.json")
+    var schemaFetch = await api.getData("Faction6.json")
+    Promise.all([dataFetch, schemaFetch]).then(res => {
+      const data = res[0];
+      const schema = res[1];
+      console.log(schema);
+      this.dataSource.data = new FusionCharts.DataStore().createDataTable(
+          data,
+          schema
+      );
+      // this.dataSource.data = fusionTable;
+    });
     this.series1 = await api.getData("Faction1.json")
     this.options1.labels = await api.getData("Faction12.json")
     this.series2 = await api.getData("Faction2.json")

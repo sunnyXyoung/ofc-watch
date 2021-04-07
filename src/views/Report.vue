@@ -53,7 +53,7 @@ export default {
         series: "Type",
         yaxis: [
           {
-            plot: "Sales Value",
+            plot: "戰報數",
             title: "每分鐘戰報數",
             format: {
               prefix: ""
