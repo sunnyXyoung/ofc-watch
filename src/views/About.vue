@@ -9,6 +9,7 @@
 
         <a href="https://github.com/ItisCaleb" style="size: A4;text-decoration: #2c3e50">@ItisCaleb</a>
         的鼎力相助。<br>
+        GitHub Repo: <a href="https://github.com/Xialai-Kulimi/ofc-watch">https://github.com/Xialai-Kulimi/ofc-watch</a>
       </div>
       <hr align="center" width="20%" style="margin-bottom: 25px;margin-top: 25px;border-color: rgba(12, 34, 56, 0.5)">
       <div>
