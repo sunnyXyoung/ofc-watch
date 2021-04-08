@@ -46,12 +46,10 @@ faction_loot = {}
 
 faction_list = []
 
-f = open(record_path, 'r', encoding='utf8')
-a = f.read().split('\n')
 global_kill_count = 0
 match_id = 0
-if a[0] == "": a.pop(0)
-print(len(a))
+
+report_check_list = [1 for i in range(len(os.listdir(os.path.join(web_root, 'ofc', round))))]
 
 for file in os.listdir(os.path.join(web_root, 'ofc', round)):
     match_id += 1
@@ -67,9 +65,7 @@ for file in os.listdir(os.path.join(web_root, 'ofc', round)):
 
     match_db[match_id] = line_dict
 
-    if match_id != line_dict['report']['id']:
-        print(f'{match_id} miss, get {line_dict["report"]["id"]}')
-        break
+    report_check_list[match_id] = 0
 
     report_line_graph[str(int((line_dict['report']['time']) / 60000) * 60000)] = report_line_graph.get(str(int((line_dict['report']['time']) / 3600000) * 3600000), 0) + 1
     if line_dict['report']['aFactionName'] not in faction_list: faction_list.append(line_dict['report']['aFactionName'])
@@ -148,6 +144,10 @@ for file in os.listdir(os.path.join(web_root, 'ofc', round)):
         weapon['faction'] = line_dict['report']['bFactionName']
         weapon_count[weapon.get('type')] = weapon_count.get(weapon.get('type'), 0) + 1
         global_weapon_list.append(weapon)
+
+for i in range(len(report_check_list)):
+    if report_check_list[i] == 1:
+        print(f'{i} miss')
 
 hour_count_list = [0 for i in range(24)]
 
