@@ -50,7 +50,7 @@ export default {
       options: [
         {text: '第四輪', value: '4'},
         {text: '第五輪', value: '5'},
-        {text: '幕間劇場', value: '6.6'}
+        {text: '幕間劇場', value: '5.5'}
       ],
       sidebar: false
 
