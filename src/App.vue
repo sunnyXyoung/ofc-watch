@@ -27,34 +27,7 @@
       <router-link class="m-icon" to="/weapon"><img class="m-img" src="./assets/sword.svg" alt="裝備"></router-link>
       <router-link class="m-icon" to="/about"><img class="m-img"  src="./assets/information.svg" alt="關於"></router-link>
     </div>
-<!--    <div class="navbar-toggler" style="border: none;text-align: right">-->
-<!--      <i @click="SideBarOn" class="fa fa-navicon fa-lg" style="cursor: pointer"></i>-->
-<!--    </div>-->
-<!--    <div v-if="sidebar" @click="SideBarOn" class="black-layout"></div>-->
-<!--    <transition>-->
-<!--      <div v-if="sidebar" id="sidebar-nav" :class="{'nav-show':sidebar}">-->
-<!--        <ul class="navbar-nav" style="display: inline-block;width: 100%">-->
-<!--          <li class="nav-item sidebar-item" @click="SideBarOn">-->
-<!--            <router-link class="sidebar-link" to="/">首頁</router-link>-->
-<!--          </li>-->
-<!--          <li class="nav-item sidebar-item" @click="SideBarOn">-->
-<!--            <router-link class="sidebar-link" to="/report">戰報分析</router-link>-->
-<!--          </li>-->
-<!--          <li class="nav-item sidebar-item" @click="SideBarOn">-->
-<!--            <router-link class="sidebar-link" to="/fighter">戰鬥員分析</router-link>-->
-<!--          </li>-->
-<!--          <li class="nav-item sidebar-item" @click="SideBarOn">-->
-<!--            <router-link class="sidebar-link" to="/faction">陣營分析</router-link>-->
-<!--          </li>-->
-<!--          <li class="nav-item sidebar-item" @click="SideBarOn">-->
-<!--            <router-link class="sidebar-link" to="/weapon">裝備分析</router-link>-->
-<!--          </li>-->
-<!--          <li class="nav-item sidebar-item" @click="SideBarOn">-->
-<!--            <router-link class="sidebar-link" to="/about">關於</router-link>-->
-<!--          </li>-->
-<!--        </ul>-->
-<!--      </div>-->
-<!--    </transition>-->
+
     <select id="round-selector" v-model="round" @change="ChangeRound">
       <option v-for="option in options" :key="option.value" :value="option.value" >
         {{ option.text }}
@@ -77,7 +50,7 @@ export default {
       options: [
         {text: '第四輪', value: '4'},
         {text: '第五輪', value: '5'},
-        {text: '幕間劇場', value: '6'}
+        {text: '幕間劇場', value: '6.6'}
       ],
       sidebar: false
 
@@ -93,13 +66,11 @@ export default {
     }
   },
   mounted() {
-//     if (this.$cookies.isKey("round")) {
-//       this.$store.commit("ChangeRound", this.$cookies.get("round"))
-//     }
-//     else {
-//       this.$cookies.set("round", this.$store.state.round)
-//     }
     const round = localStorage.getItem("round");
+    if (round === '6') {
+      this.round = '5.5'
+      this.$store.commit("ChangeRound", '5.5')
+    }
     if (round) {
       this.round = round
     }
