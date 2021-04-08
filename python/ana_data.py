@@ -62,8 +62,7 @@ for file in os.listdir(os.path.join(web_root, 'ofc', round)):
         continue
 
     match_db[line_dict['report']['id']] = line_dict
-
-    report_check_list[line_dict['report']['id']] = 0
+    report_check_list[line_dict['report']['id']-1] = 0
 
     report_line_graph[str(int((line_dict['report']['time']) / 60000) * 60000)] = report_line_graph.get(str(int((line_dict['report']['time']) / 3600000) * 3600000), 0) + 1
     if line_dict['report']['aFactionName'] not in faction_list: faction_list.append(line_dict['report']['aFactionName'])
