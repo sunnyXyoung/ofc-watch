@@ -72,7 +72,7 @@ export default {
             plot: [
               {
                 value: "樓層數",
-                plottype: "Step Line",
+                plottype: "column-range",
                 connectnulldata: true,
                 style: {
                   "plot.null": {

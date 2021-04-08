@@ -53,15 +53,16 @@ match_id = 0
 if a[0] == "": a.pop(0)
 print(len(a))
 
-for line in a:
+for file in os.listdir(os.path.join(web_root, 'ofc', round)):
     match_id += 1
 
     try:
-        line_dict = json.loads(line)
+        with open(os.path.join(web_root, 'ofc', round, file)) as f:
+            line_dict = json.loads(f.read().strip())
     except Exception as e:
         logging.error(e)
         logging.warning(f'error: Can not jsonlize. id: {match_id}')
-        logging.warning(line)
+        logging.warning(f.read().strip())
         continue
 
     match_db[match_id] = line_dict
