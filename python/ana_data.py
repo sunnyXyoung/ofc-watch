@@ -47,25 +47,23 @@ faction_loot = {}
 faction_list = []
 
 global_kill_count = 0
-match_id = 0
 
 report_check_list = [1 for i in range(len(os.listdir(os.path.join(web_root, 'ofc', round))))]
 
 for file in os.listdir(os.path.join(web_root, 'ofc', round)):
-    match_id += 1
 
     try:
         with open(os.path.join(web_root, 'ofc', round, file)) as f:
             line_dict = json.loads(f.read().strip())
     except Exception as e:
         logging.error(e)
-        logging.warning(f'error: Can not jsonlize. id: {match_id}')
+        logging.warning(f'error: Can not jsonlize. file: {file}')
         logging.warning(f.read().strip())
         continue
 
-    match_db[match_id] = line_dict
+    match_db[line_dict['report']['id']] = line_dict
 
-    report_check_list[match_id] = 0
+    report_check_list[line_dict['report']['id']] = 0
 
     report_line_graph[str(int((line_dict['report']['time']) / 60000) * 60000)] = report_line_graph.get(str(int((line_dict['report']['time']) / 3600000) * 3600000), 0) + 1
     if line_dict['report']['aFactionName'] not in faction_list: faction_list.append(line_dict['report']['aFactionName'])
