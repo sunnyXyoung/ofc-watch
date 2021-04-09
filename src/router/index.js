@@ -88,6 +88,16 @@ const routes = [
         name: 'Thanks',
         component: () => import('../views/Thanks.vue')
     },
+    {
+        path: '/history/:round/:id',
+        name: 'History',
+        component: () => import('../views/History.vue')
+    },
+    {
+        path: '/player/:id',
+        name: 'Player',
+        component: () => import('../views/Player.vue')
+    },
 ]
 
 const router = new VueRouter({
