@@ -25,7 +25,7 @@
         <hr align="center" width="87%" id="player-split" >
         <div class="player">
           <b><i>防守方</i></b>
-          <table class="player-table">
+          <div v-if="report.report.messages.stats.b"><table class="player-table">
             <tr><th>陣營</th><td>{{report.report.bFactionName}}</td></tr>
             <tr><th>玩家</th><td>{{report.report.messages.stats.b.name}}</td></tr>
             <tr><th>職業</th><td>{{report.report.messages.stats.b.role}}</td></tr>
@@ -36,7 +36,8 @@
             <tr><th>裝備</th><td><p v-for="(item) in report.report.messages.stats.b.equipments" :key="item">
               {{item.quality}}的 <b>{{item.name}}</b>（{{item.type}}）<b>攻擊</b>{{item.atk}}、<b>防禦</b>{{item.def}}、<b>礦力</b>{{item.minePower}}
             </p></td></tr>
-          </table>
+          </table></div>
+          <div v-if="!report.report.messages.stats.b">{{report.report.location}}</div>
         </div>
       </div>
       <hr align="center" width="87%" style="margin-bottom: 25px;margin-top: 25px;border-color: rgba(12, 34, 56, 0.5)">
