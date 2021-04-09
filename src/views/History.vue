@@ -124,7 +124,7 @@ export default {
   },
 
   mounted: async function () {
-    this.report = await api.getReport(this.$route.params.round + "/" + this.$route.params.id + ".json")
+    this.report = await api.getReport( this.$route.params.id + ".json")
     this.format_time = (new Date(this.report.report.time)).toLocaleString()
     this.loading = true
   }
