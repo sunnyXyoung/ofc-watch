@@ -1,6 +1,7 @@
 <template>
-  <div class="row-div2" id="base" >
+  <div class="row-div2" id="base" v-if="loading">
     <div id="report-box" v-if="loading">
+      <div class="row2"><h1>戰報</h1><p>還原歷史經過</p></div>
       <table>
         <tr><th>在 </th><td>{{report.report.location}}</td></tr>
       </table>
@@ -10,7 +11,7 @@
           <b><i>攻擊方</i></b>
           <table class="player-table">
             <tr><th>陣營</th><td>{{report.report.aFactionName}}</td></tr>
-            <tr><th>名稱</th><td>{{report.report.messages.stats.a.name}}</td></tr>
+            <tr><th>玩家</th><td>{{report.report.messages.stats.a.name}}</td></tr>
             <tr><th>職業</th><td>{{report.report.messages.stats.a.role}}</td></tr>
             <tr><th>副職</th><td>{{report.report.messages.stats.a.role2}}</td></tr>
             <tr><th>HP</th><td>{{report.report.messages.stats.a.hp}}</td></tr>
@@ -21,11 +22,12 @@
             </p></td></tr>
          </table>
         </div>
+        <hr align="center" width="87%" id="player-split" >
         <div class="player">
           <b><i>防守方</i></b>
           <table class="player-table">
             <tr><th>陣營</th><td>{{report.report.bFactionName}}</td></tr>
-            <tr><th>名稱</th><td>{{report.report.messages.stats.b.name}}</td></tr>
+            <tr><th>玩家</th><td>{{report.report.messages.stats.b.name}}</td></tr>
             <tr><th>職業</th><td>{{report.report.messages.stats.b.role}}</td></tr>
             <tr><th>副職</th><td>{{report.report.messages.stats.b.role2}}</td></tr>
             <tr><th>HP</th><td>{{report.report.messages.stats.b.hp}}</td></tr>
@@ -61,62 +63,58 @@ export default {
   data() {
     return {
       loading: true,
-      format_time: "",
+      format_time: "54545454",
       report: {
         "report": {
-          "id": 8787,
+          "id": 100,
           "messages": {
-            "messages": [{
-              "m": "魔三玖使出火球術，對聖光會阿阿阿阿阿造成 375 點傷害",
-              "s": "skill"
-            }, {"m": "聖光會阿阿阿阿阿被擊殺身亡了，魔三玖還有 250 點體力", "s": "critical"}, {
-              "m": "BLUE CLAPPER耗損了 2 點耐久",
-              "s": "info"
-            }, {"m": "單手錘耗損了 5 點耐久", "s": "info"}, {"m": "單手錘耗損了 4 點耐久", "s": "info"}, {
-              "m": "魔三玖獲得了 21 點經驗值",
-              "s": "info"
-            }, {"m": "聖光會阿阿阿阿阿獲得了 8 點經驗值", "s": "info"}],
+            "messages": [
+              {
+                "m": "荔枝紅了NMSL直接攻擊城堡，造成 22 點傷害"
+              },
+              {
+                "m": "荔枝紅了NMSL在攻城過程中消耗了 1 點體力"
+              },
+              {
+                "m": "第 1 層還有 456 點血量"
+              },
+              {
+                "m": "斬顏良誅顏良耗損了 2 點耐久",
+                "s": "info"
+              },
+              {
+                "m": "荔枝紅了NMSL獲得了 1 點經驗值",
+                "s": "info"
+              }
+            ],
             "stats": {
               "a": {
-                "name": "魔三玖",
+                "name": "荔枝紅了NMSL",
                 "role": "戰鬥員",
-                "hp": 250,
-                "fightExp": 4362,
-                "equipments": [{
-                  "name": "單手錘",
-                  "quality": "上等",
-                  "type": "賢者魔杖",
-                  "atk": 1099,
-                  "def": 614,
-                  "minePower": 294
-                }, {"name": "單手錘", "quality": "上等", "type": "賢者魔杖", "atk": 499, "def": 1280, "minePower": 182}],
-                "role2": "斥候"
-              },
-              "b": {
-                "name": "聖光會阿阿阿阿阿",
-                "role": "戰鬥員",
-                "hp": 205,
-                "fightExp": 1135,
-                "equipments": [{
-                  "name": "BLUE CLAPPER",
-                  "quality": "頂級",
-                  "type": "長槍",
-                  "atk": 1778,
-                  "def": 1432,
-                  "minePower": 255
-                }],
+                "hp": 75,
+                "fightExp": 32,
+                "equipments": [
+                  {
+                    "name": "斬顏良誅顏良",
+                    "quality": "普通",
+                    "type": "長槍",
+                    "atk": 87,
+                    "def": 174,
+                    "minePower": 24
+                  }
+                ],
                 "role2": "長槍使"
               }
             }
           },
-          "location": "鋼之鍊金術師的城堡",
-          "time": 1616597661294,
+          "location": "鬼滅之刃第 1 層",
+          "time": 1615772026913,
           "aFactionName": "進擊的巨人",
-          "bFactionName": "鋼之鍊金術師",
-          "aName": "魔三玖",
-          "bName": "聖光會阿阿阿阿阿",
-          "aId": 398,
-          "bId": 414,
+          "bFactionName": "鬼滅之刃",
+          "aName": "荔枝紅了NMSL",
+          "bName": null,
+          "aId": 2442,
+          "bId": null,
           "aBadgeColor": null,
           "bBadgeColor": null
         }
@@ -136,12 +134,40 @@ export default {
 
 <style scoped lang="scss">
 
+h1 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  display: flex;
+
+}
+
+#player-split{
+  display: none;
+
+  border-color: rgba(12, 34, 56, 0.2);
+  @include phone-width{
+    display: block;
+  }
+  @include small-pad-width {
+    display: block;
+  }
+}
+
 #report-box{
   box-shadow:3px 3px 5px 6px #cccccc;
   width: 60%;
-  min-width: 250px;
   padding: 30px;
+  @include phone-width{
+    padding: 10px;
+    width: 90%;
+  }
+  @include small-pad-width {
+    padding: 10px;
+    width: 90%;
+  }
+
 }
+
 .player{
   width: 50%;
   display: flex;
@@ -160,12 +186,21 @@ export default {
   display: flex;
   flex-flow: column;
   text-align: left;
-  padding-left: 20px;
+  padding-left: 10px;
+
+}
+
+.player-table > tr > th {
+}
+
+.player-table > tr > * {
+
+
 }
 
 #message-table > tr > td{
   display: flex;
-  flex-flow: column;
+
   text-align: left;
   padding-left: 12px;
 }
@@ -195,6 +230,11 @@ export default {
   }
 }
 
+.row2{
+  display: flex;
+  flex-direction: row;
+}
+
 .skill{
   color: #00887e;
 }
@@ -207,5 +247,14 @@ export default {
   color: #ff1200;
 }
 
+p{
+  margin: 15px;
+}
 
+//div{
+//  border: #b3b3b3 1px solid;
+//  padding: 10px;
+//  margin: 10px;
+//  background-color: rgba(128, 128, 128, 0.01);
+//}
 </style>

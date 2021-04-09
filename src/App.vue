@@ -106,7 +106,7 @@ a {
 #app {
   width: 100%;
   flex-direction: row-reverse;
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -288,6 +288,8 @@ body {
 html{
   max-width: 100%;
   overflow-x: hidden;
+  font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  line-height: 1.4;
 }
 
 </style>
