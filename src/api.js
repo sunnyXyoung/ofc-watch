@@ -7,7 +7,7 @@ function ajax(url){
 }
 function report(url){
     return new Promise((resolve, reject) => {
-        fetch(`./${url}`).then(jsonify).then(resolve).catch(reject)
+        fetch(`/${url}`).then(jsonify).then(resolve).catch(reject)
     })
 }
 export default {
