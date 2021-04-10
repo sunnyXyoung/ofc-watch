@@ -43,7 +43,12 @@ export default {
       dataFormat: "json",
       dataSource: {
         data: {},
-        chart: {},
+        chart: {
+          bgColor: "#123456",
+          bgAlpha: 0,
+          borderAlpha: 0
+        },
+
         caption: {
           text: "戰報時間分布"
         },

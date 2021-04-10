@@ -41,10 +41,9 @@
 <script>
 
 
+
 export default {
   data() {
-
-    // this.$store.commit("ChangeRound");
     return {
       round: this.$store.state.round,
       options: [
@@ -56,7 +55,15 @@ export default {
 
     }
   },
-
+  watch: {
+    "$store.state.dark": async function () {
+      if(this.$store.state.dark){
+        document.getElementsByTagName('html')[0].className="dark"
+      }else {
+        document.getElementsByTagName('html')[0].classList.remove('dark')
+      }
+    },
+  },
   methods: {
     ChangeRound() {
       this.$store.commit("ChangeRound", this.round);
@@ -67,6 +74,8 @@ export default {
   },
   mounted() {
     const round = localStorage.getItem("round");
+    const isDark = localStorage.getItem("dark");
+
     if (round === '6') {
       this.round = '5.5'
       this.$store.commit("ChangeRound", '5.5')
@@ -76,6 +85,24 @@ export default {
     }
     else {
       this.$store.commit("ChangeRound", this.round)
+    }
+
+    if (isDark === "false") {
+
+      this.$store.commit("ChangeTheme", false)
+    }
+    else {
+      this.$store.commit("ChangeTheme", isDark)
+    }
+
+    if(!this.$store.state.dark){
+
+      document.getElementsByTagName('html')[0].classList.remove('dark')
+    }
+    else {
+
+      document.getElementsByTagName('html')[0].className="dark"
+
     }
   }
 }
@@ -292,6 +319,68 @@ html{
   line-height: 1.4;
 }
 
+.dark{
+  background-color: #081524;
+  //.left-btn{
+  //  color: white;
+  //}
+  //.link{
+  //  color: #2ba1fe;
+  //}
+  //nav{
+  //  background-color: #313340 !important;
+  //  .navbar-brand{
+  //    color: white !important;
+  //  }
+  //  .nav-link{
+  //    color: #dedede !important;
+  //    &:hover{
+  //      color: #e3e3e3 !important;
+  //    }
+  //  }
+  //}
+  //#sidebar-nav{
+  //  background-color: #313340 !important;
+  //  .sidebar-link{
+  //    color: #dedede !important;
+  //  }
+  //  .router-link-exact-active{
+  //    color: #7885d2 !important;
+  //  }
+  //}
+  //div,.box{
+  //  color: #dedede !important;
+  //}
+  //.box{
+  //  background-color: #313340 !important ;
+  //  border-color: gray !important;
+  //  input,textarea{
+  //    background-color: #313340 !important;
+  //  }
+  //}
+  //input,textarea,select{
+  //  background-color: #5f6582 !important ;
+  //  color: lightgray;
+  //}
+  //.sheets:hover{
+  //  background-color: #656b8b;
+  //}
+  //.systems-title-tile:hover{
+  //  background-color: #757aa1 !important;
+  //}
+  //.tab-name:hover{
+  //  background-color: #757aa1 !important;
+  //}
+  //.active{
+  //  background-color: #5f6582 !important;
+  //}
+  //
+  //#footer{
+  //  background-color: #313340 !important;
+  //  color: #dedede !important;
+  //  border-top: #434a5c !important;
+  //}
+  filter: invert(100%) hue-rotate(180deg);
+}
+
 </style>
-
-
