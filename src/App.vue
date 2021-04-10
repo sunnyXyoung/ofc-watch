@@ -380,6 +380,7 @@ html{
   //  color: #dedede !important;
   //  border-top: #434a5c !important;
   //}
+  -webkit-filter: invert(100%) hue-rotate(180deg) contrast(3) brightness(2);
   filter: invert(100%) hue-rotate(180deg) contrast(3) brightness(2);
 
 }
