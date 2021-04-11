@@ -21,11 +21,11 @@
     </div>
     <div class="m-menu">
       <router-link class="m-btn" to="/"><p class="m-btn">OFC WATCH</p></router-link>
-      <router-link class="m-icon" to="/report"><img class="m-img" src="./assets/history.svg" alt="戰報"></router-link>
-      <router-link class="m-icon" to="/fighter"><img class="m-img"  src="./assets/man-with-two-swords.svg" alt="戰鬥員"></router-link>
-      <router-link class="m-icon" to="/faction"><img class="m-img"  src="./assets/flag.svg" alt="陣營"></router-link>
-      <router-link class="m-icon" to="/weapon"><img class="m-img" src="./assets/sword.svg" alt="裝備"></router-link>
-      <router-link class="m-icon" to="/about"><img class="m-img"  src="./assets/information.svg" alt="關於"></router-link>
+      <router-link class="m-icon" to="/report"><img class="m-img reverse" src="./assets/history.svg" alt="戰報"></router-link>
+      <router-link class="m-icon" to="/fighter"><img class="m-img reverse"  src="./assets/man-with-two-swords.svg" alt="戰鬥員"></router-link>
+      <router-link class="m-icon" to="/faction"><img class="m-img reverse"  src="./assets/flag.svg" alt="陣營"></router-link>
+      <router-link class="m-icon" to="/weapon"><img class="m-img reverse" src="./assets/sword.svg" alt="裝備"></router-link>
+      <router-link class="m-icon" to="/about"><img class="m-img reverse"  src="./assets/information.svg" alt="關於"></router-link>
     </div>
 
     <select id="round-selector" v-model="round" @change="ChangeRound">
@@ -110,6 +110,10 @@ export default {
 
 </script>
 <style lang="scss">
+
+a{
+  color: #0075c6;
+}
 
 .row-div {
   display: flex;
@@ -320,69 +324,35 @@ html{
 }
 
 .dark{
-  background-color: #081524;
-  //.left-btn{
-  //  color: white;
-  //}
-  //.link{
-  //  color: #2ba1fe;
-  //}
-  //nav{
-  //  background-color: #313340 !important;
-  //  .navbar-brand{
-  //    color: white !important;
-  //  }
-  //  .nav-link{
-  //    color: #dedede !important;
-  //    &:hover{
-  //      color: #e3e3e3 !important;
-  //    }
-  //  }
-  //}
-  //#sidebar-nav{
-  //  background-color: #313340 !important;
-  //  .sidebar-link{
-  //    color: #dedede !important;
-  //  }
-  //  .router-link-exact-active{
-  //    color: #7885d2 !important;
-  //  }
-  //}
-  //div,.box{
-  //  color: #dedede !important;
-  //}
-  //.box{
-  //  background-color: #313340 !important ;
-  //  border-color: gray !important;
-  //  input,textarea{
-  //    background-color: #313340 !important;
-  //  }
-  //}
-  //input,textarea,select{
-  //  background-color: #5f6582 !important ;
-  //  color: lightgray;
-  //}
-  //.sheets:hover{
-  //  background-color: #656b8b;
-  //}
-  //.systems-title-tile:hover{
-  //  background-color: #757aa1 !important;
-  //}
-  //.tab-name:hover{
-  //  background-color: #757aa1 !important;
-  //}
-  //.active{
-  //  background-color: #5f6582 !important;
-  //}
-  //
-  //#footer{
-  //  background-color: #313340 !important;
-  //  color: #dedede !important;
-  //  border-top: #434a5c !important;
-  //}
-  -webkit-filter: invert(100%) hue-rotate(180deg) contrast(3) brightness(2);
-  filter: invert(100%) hue-rotate(180deg) contrast(3) brightness(2);
+  background: black;
+  #app{
+    color: white;
+  }
+  .left-btn {
+    color: #3a96ff;
+  }
+  .m-menu{
+    box-shadow:3px 3px 5px 6px #000000;
+  }
 
+  a{
+    color: #24a7ff;
+  }
+
+  .m-btn{
+    color: white;
+  }
+
+  .left-btn.router-link-exact-active {
+    color: #9acaff;
+  }
+
+
+
+  .reverse{
+    filter: invert(1);
+    -webkit-filter: invert(1);
+  }
 }
 
 </style>

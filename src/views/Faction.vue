@@ -25,7 +25,7 @@
       </VueApexCharts>
     </div>
     <div class="row-div2">
-      <fusioncharts
+      <fusioncharts class="reverse"
           :dataFormat="dataFormat"
           :dataSource="dataSource"
           :height="height"
