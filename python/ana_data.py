@@ -50,14 +50,14 @@ global_kill_count = 0
 
 report_check_list = [1 for i in range(len(os.listdir(os.path.join(web_root, 'ofc', round))))]
 
-for file in os.listdir(os.path.join(web_root, 'ofc', round)):
+for i in range(1, len(os.listdir(os.path.join(web_root, 'ofc', round)))+1):
 
     try:
-        with open(os.path.join(web_root, 'ofc', round, file)) as f:
+        with open(os.path.join(web_root, 'ofc', round, str(i)+'.json')) as f:
             line_dict = json.loads(f.read().strip())
     except Exception as e:
         logging.error(e)
-        logging.warning(f'error: Can not jsonlize. file: {file}')
+        logging.warning(f'error: Can not jsonlize. id: {i}')
         logging.warning(f.read().strip())
         continue
 
