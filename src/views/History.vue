@@ -120,7 +120,7 @@ h1 {
   display: flex;
   text-align: left;
   flex-flow: column;
-  background-color: rgb(254, 255, 255);
+
   @include phone-width{
     width: 100%;
   }

@@ -348,6 +348,17 @@ html{
   }
 
 
+  .skill{
+    color: #00d2c2;
+  }
+
+  .info{
+    color: #009aea;
+  }
+
+  .critical{
+    color: #ff1200;
+  }
 
   .reverse{
     filter: invert(1);
