@@ -47,6 +47,16 @@ export default {
 
 <style scoped lang="scss">
 
+@keyframes m-move {
+  0%{
+    right: 0;
+  }
+  100%{
+    right: 45%;
+  }
+}
+
+
 .ranks-link {
   font-weight: bold;
   color: #2c3e50;
@@ -107,14 +117,7 @@ export default {
 
 }
 
-@keyframes m-move {
-  0%{
-    right: 0;
-  }
-  100%{
-    right: 45%;
-  }
-}
+
 
 .m-menu-btn-a {
   animation-duration: 0.4s;
@@ -144,6 +147,8 @@ export default {
 }
 
 #sidebar-nav {
+  animation-name: m-move !important;
+  animation-duration: 0.4s !important;
   position: fixed;
   top: 0;
   background: white;

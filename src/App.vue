@@ -324,9 +324,12 @@ html{
 }
 
 .dark{
-  background: black;
+  background-color: #000000;
+  .ranks-link{
+    color: #c4c4c4 !important;
+  }
   #app{
-    color: white;
+    color: #c4c4c4;
   }
   .left-btn {
     color: #3a96ff;
@@ -340,7 +343,7 @@ html{
   }
 
   .m-btn{
-    color: white;
+    color: #c4c4c4;
   }
 
   .left-btn.router-link-exact-active {
@@ -349,20 +352,33 @@ html{
 
 
   .skill{
-    color: #00d2c2;
+    color: #00d2c2 !important;
   }
 
   .info{
-    color: #009aea;
+    color: #009aea !important;
   }
 
   .critical{
-    color: #ff1200;
+    color: #ff1200 !important;
   }
 
   .reverse{
     filter: invert(1);
     -webkit-filter: invert(1);
+  }
+  .navbar-toggler {
+
+    background-color: #0c0c0c !important;
+    box-shadow: none !important;
+    border: white 1px solid !important;
+    border-right: black 1px solid !important;
+
+  }
+  #sidebar-nav {
+    background: #0c0c0c !important;
+    box-shadow: none !important;
+    border: white 1px solid;
   }
 }
 
