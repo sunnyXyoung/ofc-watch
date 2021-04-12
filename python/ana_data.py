@@ -280,13 +280,6 @@ with open(os.path.join(web_root, round, 'Weapon4.json'), 'w', encoding='utf8') a
         weapon_name_count[str([weapon['name'], weapon['faction'], weapon['type']])] = weapon_name_count.get(str([weapon['name'], weapon['faction'], weapon['type']]), 0) + 1
     f.write(str([{'name': eval(i[0])[0], 'faction': eval(i[0])[1], 'type': eval(i[0])[2], 'times': i[1]} for i in sorted(weapon_name_count.items(), key=lambda x: x[1], reverse=True)]).replace("'", '"'))
 
-with open(os.path.join(web_root, round, 'Weapon4.json'), 'w', encoding='utf8') as f:
-    a = 0
-    for weapon in global_weapon_list:
-        if weapon['name'] in loot_index:
-            a += 1
-    f.write(str([len(global_weapon_list) - a, a]).replace("'", '"'))
-
 with open(os.path.join(web_root, round, 'Xp.json'), 'w', encoding='utf8') as f:
     f.write(str([{'name': i[0], 'faction': player_db[i[0]]['faction'], 'xp': i[1]} for i in sorted(xp_count.items(), key=lambda x: x[1], reverse=True)]).replace("'", '"'))
 
