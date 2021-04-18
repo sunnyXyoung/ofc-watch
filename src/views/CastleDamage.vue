@@ -2,7 +2,7 @@
   <div v-if="loading">
 
     <RanksMenu></RanksMenu>
-    <p>只計算城牆的傷害。</p>
+    <p>計算任何玩家對城牆的傷害。</p>
     <div class="row-div2">
       <table cellpadding="3">
         <tr>

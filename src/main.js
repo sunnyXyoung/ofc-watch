@@ -5,7 +5,9 @@ import VueFusionCharts from "vue-fusioncharts";
 import FusionCharts from "fusioncharts";
 import TimeSeries from "fusioncharts/fusioncharts.timeseries";
 import store from './store';
+import vSelect from 'vue-select'
 
+Vue.component('v-select', vSelect)
 Vue.use(VueFusionCharts, FusionCharts, TimeSeries,);
 Vue.config.productionTip = false
 

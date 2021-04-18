@@ -13,7 +13,7 @@
             <tr><th>陣營</th><td>{{report.report.aFactionName}}</td></tr>
             <tr><th>玩家</th><td>{{report.report.messages.stats.a.name}}</td></tr>
             <tr><th>職業</th><td>{{report.report.messages.stats.a.role}}</td></tr>
-            <tr><th>副職</th><td>{{report.report.messages.stats.a.role2}}</td></tr>
+            <tr v-if="report.report.message.stats.a.role2"><th>副職</th><td>{{report.report.messages.stats.a.role2}}</td></tr>
             <tr><th>HP</th><td>{{report.report.messages.stats.a.hp}}</td></tr>
             <tr><th>熟練</th><td>{{report.report.messages.stats.a.fightExp}}</td></tr>
             <tr><th>ID</th><td>{{report.report.aId}}</td></tr>
@@ -29,7 +29,7 @@
             <tr><th>陣營</th><td>{{report.report.bFactionName}}</td></tr>
             <tr><th>玩家</th><td>{{report.report.messages.stats.b.name}}</td></tr>
             <tr><th>職業</th><td>{{report.report.messages.stats.b.role}}</td></tr>
-            <tr><th>副職</th><td>{{report.report.messages.stats.b.role2}}</td></tr>
+            <tr v-if="report.report.message.stats.b.role2"><th>副職</th><td>{{report.report.messages.stats.b.role2}}</td></tr>
             <tr><th>HP</th><td>{{report.report.messages.stats.b.hp}}</td></tr>
             <tr><th>熟練</th><td>{{report.report.messages.stats.b.fightExp}}</td></tr>
             <tr><th>ID</th><td>{{report.report.bId}}</td></tr>
@@ -198,10 +198,4 @@ p{
   margin: 15px;
 }
 
-//div{
-//  border: #b3b3b3 1px solid;
-//  padding: 10px;
-//  margin: 10px;
-//  background-color: rgba(128, 128, 128, 0.01);
-//}
 </style>

@@ -115,6 +115,43 @@ a{
   color: #0075c6;
 }
 
+
+.wide-table {
+  padding: 10px;
+  text-align: left;
+
+  @include phone-width {
+    overflow-x: scroll;
+    width: 100% ;
+
+    table {
+      width: 120%;
+
+      tr {
+        * {
+          flex-wrap: nowrap;
+          white-space: nowrap;
+        }
+      }
+    }
+  }
+  @include small-pad-width {
+    overflow-x: scroll;
+    width: 100% ;
+
+    table {
+      width: 120%;
+
+      tr {
+        * {
+          flex-wrap: nowrap;
+          white-space: nowrap;
+        }
+      }
+    }
+  }
+}
+
 .row-div {
   display: flex;
   flex-flow: row;
@@ -136,6 +173,7 @@ a {
 
 #app {
   width: 100%;
+  height: 100%;
   flex-direction: row-reverse;
 
   -webkit-font-smoothing: antialiased;
@@ -367,6 +405,8 @@ html{
     filter: invert(1);
     -webkit-filter: invert(1);
   }
+
+
   .navbar-toggler {
 
     background-color: #0c0c0c !important;
@@ -380,6 +420,11 @@ html{
     box-shadow: none !important;
     border: white 1px solid;
   }
+}
+
+body{
+  height: 100%;
+  width: 100%;
 }
 
 </style>

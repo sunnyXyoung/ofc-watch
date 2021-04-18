@@ -98,6 +98,16 @@ const routes = [
         name: 'Player',
         component: () => import('../views/Player.vue')
     },
+    {
+        path: '/match/:id',
+        name: 'MatchRecord',
+        component: () => import('../views/MatchRecord.vue')
+    },
+    {
+        path: '/match',
+        name: 'Match',
+        component: () => import('../views/Match.vue')
+    },
 ]
 
 const router = new VueRouter({

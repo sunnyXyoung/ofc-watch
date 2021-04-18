@@ -28,7 +28,7 @@
       </table>
     </div>
     <div class="row-div2">
-      <table cellpadding="3">
+      <table cellpadding="3" class="loot-table">
         <tr>
           <th>名次</th>
           <th>陣營（最終）</th>
