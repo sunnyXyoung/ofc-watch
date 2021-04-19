@@ -118,7 +118,7 @@
             >{{report.atk_name}}</router-link></td>
             <td v-bind:class="{died: report.dead.includes(report.def_name)}">{{report.def_f}} 的 <router-link class="player-link" v-if="report.def_name" v-bind:to="'/player/'+report.def_id">{{report.def_name}}</router-link>{{(report.def_name) ? none : "牆壁"}}</td>
             <td>{{report.remarks}}</td>
-            <td><router-link class="player-link" v-bind:to="'/history/'+$store.state.round+'/'+report.id">{{report.id}}</router-link></td>
+            <td><router-link class="player-link" v-bind:to="'/history/'+this.$store.state.round+'/'+report.id">{{report.id}}</router-link></td>
           </tr>
         </table>
       </div>

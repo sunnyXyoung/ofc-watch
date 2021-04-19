@@ -37,7 +37,7 @@
                 >{{summary.atk_name}}</a></td>
                 <td>{{summary.def_f}} 的 <a class="player-link" v-if="summary.def_name" :href="'/player/'+summary.def_id">{{summary.def_name}}</a>{{(summary.def_name) ? none : "牆壁"}}</td>
                 <td>{{(summary.floor === "衛兵") ? "衛兵": ("在"+summary.def_f)+"第"+summary.floor+"層"}}</td>
-                <td><router-link class="player-link" v-bind:to="'/history/'+$store.state.round+'/'+summary.id">{{summary.id}}</router-link></td>
+                <td><router-link class="player-link" v-bind:to="'/history/'+ this.$store.state.round +'/'+summary.id">{{summary.id}}</router-link></td>
               </tr>
             </table>
           </div>
