@@ -2,6 +2,16 @@
   <div style="line-height: 24px ; display: flex; flex-flow: column ; justify-content: center" v-if="loading">
     <div class="row-div2">
       <div>
+        <h3>更新日誌 3.0.0</h3>
+        <p style="text-align: left">三大功能一次推出！前所未有的大更新！<br>
+        * 戰鬥員個人戰報查詢 <br>
+        * 會戰記分板<br>
+        * 免費賽事分析
+        </p>
+      </div>
+    </div>
+    <div class="row-div2">
+      <div>
         <h1>關於網站</h1>
         <div>
           這是一個基於戰報分析做出來的遊戲攻略網站(如果這算攻略的話) <br>
@@ -50,7 +60,8 @@
 
         <hr align="center" width="20%" style="margin-bottom: 25px;margin-top: 25px;border-color: rgba(12, 34, 56, 0.5)">
         資料每分鐘更新一次，所以請適時搭配重新整理。<br>
-        上次更新時間： {{ aboutList[0] }}
+        上次更新時間： {{ aboutList[0] }} <br>
+        v3.0.0
         <hr align="center" width="20%" style="margin-bottom: 25px;margin-top: 25px;border-color: rgba(12, 34, 56, 0.5)">
         <div class="row-div2">
           <router-link class="link" to="/thanks">感謝素材提供</router-link>

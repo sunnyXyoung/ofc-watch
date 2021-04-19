@@ -117,9 +117,7 @@
             <td v-bind:class="{died: report.dead.includes(report.atk_name)}">{{report.atk_f}} 的 <router-link class="player-link" v-bind:to="'/player/'+report.atk_id"
             >{{report.atk_name}}</router-link></td>
             <td v-bind:class="{died: report.dead.includes(report.def_name)}">{{report.def_f}} 的 <router-link class="player-link" v-if="report.def_name" v-bind:to="'/player/'+report.def_id">{{report.def_name}}</router-link>{{(report.def_name) ? none : "牆壁"}}</td>
-            <td>{{report.atk}}</td>
-            <td>{{report.def}}</td>
-            <td>{{report.remarks}}}</td>
+            <td>{{report.remarks}}</td>
             <td><router-link class="player-link" v-bind:to="'/history/'+$store.state.round+'/'+report.id">{{report.id}}</router-link></td>
           </tr>
         </table>
@@ -205,13 +203,13 @@ export default {
   watch: {
     "$store.state.round": async function () {
       this.loading = false
-      this.match = await api.getData(this.$route.params.id + ".json")
+      this.match = await api.getData("match/"+this.$route.params.id + ".json")
     },
   },
   mounted: async function () {
-    alert(this.report.dead.includes(this.report.atk_name))
+
     this.loading = false
-    this.match = await api.getData(this.$route.params.id + ".json")
+    this.match = await api.getData("match/"+this.$route.params.id + ".json")
     this.loading = true
   },
   methods: {

@@ -16,11 +16,12 @@
       </div>
       <div class="pusher"></div>
       <div>
+        <router-link class="left-btn" to="/match">免費賽事分析</router-link>
         <router-link class="right-btn" to="/about">關於</router-link>
       </div>
     </div>
     <div class="m-menu">
-      <router-link class="m-btn" to="/"><p class="m-btn">OFC WATCH</p></router-link>
+      <router-link class="m-btn" to="/match"><p class="m-btn">免費賽事分析</p></router-link>
       <router-link class="m-icon" to="/report"><img class="m-img reverse" src="./assets/history.svg" alt="戰報"></router-link>
       <router-link class="m-icon" to="/fighter"><img class="m-img reverse"  src="./assets/man-with-two-swords.svg" alt="戰鬥員"></router-link>
       <router-link class="m-icon" to="/faction"><img class="m-img reverse"  src="./assets/flag.svg" alt="陣營"></router-link>
@@ -125,7 +126,7 @@ a{
     width: 100% ;
 
     table {
-      width: 120%;
+      //width: 120%;
 
       tr {
         * {
@@ -140,7 +141,7 @@ a{
     width: 100% ;
 
     table {
-      width: 120%;
+      //width: 120%;
 
       tr {
         * {

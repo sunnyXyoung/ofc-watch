@@ -1,39 +1,53 @@
 <template>
   <div>
-    <div class="row-div2">
-      <div v-for="faction in matchIndex" :key="faction">
-        <h3>{{faction.factionName}}</h3>
-        <table>
-          <tr>
-            <th>會戰編號</th>
-            <th>發生時間</th>
-            <th>持續時間</th>
-            <th>進攻人數</th>
-            <th>防守人數</th>
-            <th>初始狀態</th>
-            <th>結束狀態</th>
-          </tr>
-          <tr v-for="match in faction.matchList" :key="match">
-            <td><router-link class="player-link" v-bind:to="'/match/'+match.id">{{match.id}}</router-link></td>
-            <td>{{format_time(match.startTime)}}</td>
-            <td>{{format_past_time(match.endTime-match.startTime)}}</td>
-            <td>{{match.atk}}</td>
-            <td>{{match.def}}</td>
-            <td>第 <b>{{match.initCastle[0]}}</b> 層 <b>{{match.initCastle[1]}}</b></td>
-            <td>第 <b>{{match.finalCastle[0]}}</b> 層 <b>{{match.finalCastle[1]}}</b></td>
-          </tr>
-        </table>
+    <div  v-if="loading">
+      <div class="row-div2" v-for="faction in matchIndex" :key="faction">
+
+          <div class="wide-table">
+            <h3>{{faction.factionName}}</h3>
+            <horizontal-scroll class="horizontal-scroll">
+
+              <table>
+                <tr>
+                  <th>會戰編號</th>
+                  <th>發生時間</th>
+                  <th>持續時間</th>
+                  <th>進攻人數</th>
+                  <th>防守人數</th>
+                  <th>初始狀態</th>
+                  <th>結束狀態</th>
+                </tr>
+                <tr v-for="match in faction.matchList" :key="match">
+                  <td><router-link class="player-link" v-bind:to="'/match/'+match.id">{{match.id}}</router-link></td>
+                  <td>{{format_time(match.startTime)}}</td>
+                  <td>{{format_past_time(match.endTime-match.startTime)}}</td>
+                  <td>{{match.atk}}</td>
+                  <td>{{match.def}}</td>
+                  <td>第 <b>{{match.initCastle[0]}}</b> 層 <b>{{match.initCastle[1]}}</b></td>
+                  <td>第 <b>{{match.finalCastle[0]}}</b> 層 <b>{{match.finalCastle[1]}}</b></td>
+                </tr>
+              </table>
+            </horizontal-scroll>
+          </div>
+
+        </div>
+
       </div>
-    </div>
+
   </div>
 
 </template>
 
 <script>
 import api from "@/api";
+import HorizontalScroll from 'vue-horizontal-scroll'
+import 'vue-horizontal-scroll/dist/vue-horizontal-scroll.css'
 
 export default {
   name: "Match",
+  components: {
+    HorizontalScroll
+  },
   data() {
     return {
       loading: false,
@@ -62,9 +76,9 @@ export default {
     },
   },
   mounted: async function () {
-    alert(this.report.dead.includes(this.report.atk_name))
+
     this.loading = false
-    this.matchIndex = await api.getData( + "MatchIndex.json")
+    this.matchIndex = await api.getData( "MatchIndex.json")
     this.loading = true
   },
   methods: {
@@ -89,67 +103,18 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.match-report {
-  display: flex;
-  text-align: left;
-  padding: 10px;
-}
 
-.column-line {
-  min-height: 80%;
-  width: 0;
-
-  @include phone-width {
-    display: none;
-  }
-  @include small-pad-width {
-    display: none;
-  }
-}
-
-.wide-table {
-  padding: 10px;
-  text-align: left;
-
-  @include phone-width {
-    overflow-x: scroll;
-    width: 100% ;
-
-    table {
-      width: 120%;
-
-      tr {
-        * {
-          flex-wrap: nowrap;
-          white-space: nowrap;
-        }
-      }
-    }
-  }
-  @include small-pad-width {
-    overflow-x: scroll;
-    width: 100% ;
-
-    table {
-      width: 120%;
-
-      tr {
-        * {
-          flex-wrap: nowrap;
-          white-space: nowrap;
-        }
-      }
-    }
-  }
-}
-
-.died{
-  .player-link{
-    color: red;
-  }
+h3{
+  min-width: 100%;
 }
 
 .player-link:hover{
   text-decoration: underline;
+}
+
+.horizontal-scroll {
+  display: flex;
+  width: 100%;
+
 }
 </style>

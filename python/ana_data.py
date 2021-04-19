@@ -14,7 +14,7 @@ logging.basicConfig(level=logging.NOTSET)
 try:
     round = sys.argv[1]
 except IndexError:
-    round = '6'
+    round = '5.5'
 web_root = os.getenv('web-root')
 record_path = os.path.join(web_root, 'ofc', f'{round}.ofc')
 
@@ -52,6 +52,8 @@ report_check_list = [1 for i in range(len(os.listdir(os.path.join(web_root, 'ofc
 
 players = {}
 
+player_info = {}
+
 global_match_db = {}
 
 match_determinate_time = 600  # sec
@@ -59,12 +61,12 @@ match_determinate_time = 600  # sec
 for i in range(1, len(os.listdir(os.path.join(web_root, 'ofc', round))) + 1):
 
     try:
-        with open(os.path.join(web_root, 'ofc', round, str(i) + '.json')) as f:
+        with open(os.path.join(web_root, 'ofc', round, str(i) + '.json'), 'r', encoding='utf8') as f:
             line_dict = json.loads(f.read().strip())
     except Exception as e:
         logging.error(e)
         logging.warning(f'error: Can not jsonlize. id: {i}')
-        logging.warning(f.read().strip())
+        # logging.warning(f.read().strip())
         continue
 
     match_db[line_dict['report']['id']] = line_dict
@@ -86,6 +88,7 @@ for i in range(1, len(os.listdir(os.path.join(web_root, 'ofc', round))) + 1):
             fighter]
         player_db[line_dict['report']['messages']['stats'][fighter]['name']]['faction'] = line_dict['report'][
             f'{fighter}FactionName']
+        player_db[line_dict['report']['messages']['stats'][fighter]['name']]['id'] = line_dict['report'][fighter+"Id"]
 
     for message in line_dict['report']['messages']['messages']:
         if message.get('s') == 'critical' and '被擊殺身亡了，' in message['m']:
@@ -322,13 +325,34 @@ with open(os.path.join(web_root, round, 'Players.json'), 'w', encoding='utf8') a
 
 # The Grand Match Analysis
 
+for player in sorted(player_db.items()):
+    player_info[player[0]] = {
+        "name": player[0],
+        "id": player_db[player[0]]['id'],
+        "report_summary": []
+    }
+    # with open(os.path.join(web_root, round, 'player', str(player_db[player[0]]['id']) + '.json'), 'w', encoding='utf8') as f:
+    #     pass
+
 global_match_count = {}
 for i in faction_list:
     global_match_db[i] = {}
     global_match_count[i] = {
-        'lastTime': 0,
         'count': 0,
         'castle_status': [1, 1600]
+    }
+    global_match_db[i][0] = {
+        "startTime": 0,
+        "endTime": 9999999999999,
+        "location": i,
+        "initCastle": global_match_count[i]['castle_status'],
+        "finalCastle": global_match_count[i]['castle_status'],
+        "id": f'{i}_000',
+        "loot": [],
+        "player": {},
+        "atk_player": [],
+        "def_player": [],
+        "report_list": [],
     }
 
 for i in range(1, len(sorted(match_db)) + 1):
@@ -340,42 +364,82 @@ for i in range(1, len(sorted(match_db)) + 1):
                                                               'role2'] == '衛兵' else report['report']['bFactionName']
 
 
-    global_match_db[report_location][global_match_count[report_location]['count']]['endTime'] = report['report'][
-        'time']
     dead = []
-    remarks = ''
+    spe = ''
+    remarks = '衛兵' if report['report']['location'][:len(report['report']['aFactionName'])] == report['report']['aFactionName'] and \
+                                                          report['report']['messages']['stats']['a'][
+                                                              'role2'] == '衛兵' else ''
+
+    if global_match_db[report_location][global_match_count[report_location]['count']]['startTime'] == 0:
+        global_match_db[report_location][global_match_count[report_location]['count']]['startTime'] = report['report']['time']
+        global_match_db[report_location][global_match_count[report_location]['count']]['initCastle'] = global_match_count[report_location]['castle_status']
+        global_match_db[report_location][global_match_count[report_location]['count']]['finalCastle'] = \
+        global_match_count[report_location]['castle_status']
+
+    for name in report['report']['messages']['stats']:  # Player initialize
+        if report['report']['messages']['stats'][name]['name'] not in global_match_db[report_location][global_match_count[report_location]['count']]['player']:
+            global_match_db[report_location][global_match_count[report_location]['count']]['player'][report['report']['messages']['stats'][name]['name']] = {
+                'name': report['report']['messages']['stats'][name]['name'],
+                'role': report['report']['messages']['stats'][name]['role'],
+                'role2': report['report']['messages']['stats'][name].get('role2', None),
+                'faction': report['report'][name+'FactionName'],
+                'kill': 0,
+                'killed': 0,
+                'assist': [0, {None}],
+                'castleDamage': 0,
+                'damage': 0,
+                'damaged': 0
+            }
+
+    if report['report']['bName']:  # Count assist
+        global_match_db[report_location][global_match_count[report_location]['count']]['player'][report['report']['aName']]['assist'][1].add(report['report']['bName'])
+        global_match_db[report_location][global_match_count[report_location]['count']]['player'][report['report']['bName']]['assist'][1].add(report['report']['aName'])
+
     for message in report['report']['messages']['messages']:
         message_list = message['m'].split(' ')
         try:
-            castle_status = [message_list.pop(1), message_list.pop(3)]
+            castle_status = [message_list.pop(1), message_list.pop(2)]
+
             if message_list == ['第', '層還有', '點血量']:
+
                 global_match_db[report_location][global_match_count[report_location]['count']]['finalCastle'] = \
                     castle_status
+                global_match_count[report_location]['castle_status'] = castle_status
         except IndexError:
             pass
         if message.get('s') == 'critical' and '被擊殺身亡了，' in message['m']:
-            killed_name, kill_name = (line_dict['report']['aName'], line_dict['report']['bName']) if \
-                message['m'].split('被擊殺身亡了，')[0] == line_dict['report']['aName'] else (
-                line_dict['report']['bName'], line_dict['report']['aName'])
+            spe = 'kill'
+            killed_name, kill_name = (report['report']['aName'], report['report']['bName']) if \
+                message['m'].split('被擊殺身亡了，')[0] == report['report']['aName'] else (
+                report['report']['bName'], report['report']['aName'])
             dead.append(killed_name)
-            if kill_name in global_match_db[report_location][global_match_count[report_location]['count']][
-                'atk_player']:
-                global_match_db[report_location][global_match_count[report_location]['count']]['player'][kill_name][
-                    'kill'] += 1
-                global_match_db[report_location][global_match_count[report_location]['count']]['player'][
-                    killed_name]['killed'] += 1
-            else:
-                global_match_db[report_location][global_match_count[report_location]['count']]['player'][kill_name][
-                    'kill'] += 1
-                global_match_db[report_location][global_match_count[report_location]['count']]['player'][
-                    killed_name]['killed'] += 1
+            player = ''
+            for player in global_match_db[report_location][global_match_count[report_location]['count']]['player']:
+
+                if kill_name == player:
+
+                    global_match_db[report_location][global_match_count[report_location]['count']]['player'][kill_name]['kill'] = global_match_db[report_location][global_match_count[report_location]['count']]['player'][kill_name]['kill'] + 1
+                    pass
+                else:
+                    if killed_name in global_match_db[report_location][global_match_count[report_location]['count']]['player'][player]['assist'][1]:
+                        global_match_db[report_location][global_match_count[report_location]['count']]['player'][
+                            player]['assist'][1].remove(killed_name)
+                        global_match_db[report_location][global_match_count[report_location]['count']]['player'][
+                            player]['assist'][0] += 1
+
+            global_match_db[report_location][global_match_count[report_location]['count']]['player'][
+                killed_name]['killed'] += 1
+
         if message['m'][-3:] == '點傷害':
             p = re.compile(r'\d+')
             if message['m'][:len(report['report']['aName'])] == report['report']['aName']:
                 if report['report']['bName']:
+                    a = global_match_db[report_location][global_match_count[report_location]['count']][
+                        'player'][report['report']['aName']]['damage']
                     global_match_db[report_location][global_match_count[report_location]['count']][
                         'player'][report['report']['aName']]['damage'] += int(
                         p.findall(message['m'])[-1])
+                    
                     global_match_db[report_location][global_match_count[report_location]['count']][
                         'player'][report['report']['bName']]['damaged'] += int(
                         p.findall(message['m'])[-1])
@@ -395,14 +459,19 @@ for i in range(1, len(sorted(match_db)) + 1):
         #     xp_count[message['m'].split('獲得了')[-2]] = xp_count.get(message['m'].split('獲得了')[-2], 0) + int(
         #         message['m'].split(' ')[-2])
         if message.get('s') == 'critical' and message['m'][:3] == '獲得了':
-            global_match_db[report_location][global_match_count[report_location]['count']][
-                'loot'].append({"name": message['m'].split(' ')[3], "owner": report['report']['aName']})
-        if message.split(' ')[0][-1 * len('在攻城過程中消耗了'):] == '在攻城過程中消耗了':
-            if int(message.split(' ')[1]) > report['report']['messages']['stats']['a']['hp']:
+            spe = 'loot'
+            for weapon in laList:
+                if weapon['name'] == message['m'].split(' ')[3]:
+                    weapon['owner'] = report['report']['aName']
+                    global_match_db[report_location][global_match_count[report_location]['count']][
+                        'loot'].append(weapon)
+        if message['m'].split(' ')[0][-1 * len('在攻城過程中消耗了'):] == '在攻城過程中消耗了':
+            if int(message['m'].split(' ')[1]) > report['report']['messages']['stats']['a']['hp']:
                 dead.append(report['report']['aName'])
-        if message.get('s') == 'critical' and message['m'].split(' ')[0] == '第' and message['m'].split(' ')[
-            -1] == '層被摧毀了':
+        if message.get('s') == 'critical' and message['m'].split(' ')[0] == '第' and message['m'].split(' ')[-1] == '層被摧毀了':
+            spe = 'floor'
             remarks = message['m']
+
     global_match_db[report_location][global_match_count[report_location]['count']]['report_list'].append({
         "atk_f": report['report']['aFactionName'],
         "def_f": report['report']['bFactionName'],
@@ -416,70 +485,53 @@ for i in range(1, len(sorted(match_db)) + 1):
         "id": report['report']['id']
     })
 
-    if (report['time'] / 1000) - global_match_db[report_location][global_match_count[report_location]['count']][
-        'endTime'] > match_determinate_time:
+    for name in report['report']['messages']['stats']:  # Player report summary list.
+        player_info[report['report']['messages']['stats'][name]['name']]['report_summary'].append({
+            "atk_f": report['report']['aFactionName'],
+            "def_f": report['report']['bFactionName'],
+            "atk_name": report['report']['aName'],
+            "atk_id": report['report']['aId'],
+            "def_name": report['report']['bName'],
+            "def_id": report['report']['bId'],
+            "dead": dead,
+            "spe": spe,
+            "floor": global_match_count[report_location]['castle_status'][0],
+            "remarks": remarks,
+            "time": report['report']['time'],
+            "id": report['report']['id'],
+            "match_id": global_match_db[report_location][global_match_count[report_location]['count']]['id']
+        })
+
+    # print(report['report']['time'] - global_match_db[report_location][global_match_count[report_location]['count']][
+    #     'endTime'])
+
+    # the match end
+    # print("endtime", global_match_db[report_location][global_match_count[report_location]['count']]['endTime'])
+    if (report['report']['time']) - global_match_db[report_location][global_match_count[report_location]['count']][
+        'endTime'] > (match_determinate_time * 1000):
+        for player in global_match_db[report_location][global_match_count[report_location]['count']]['player']:
+            global_match_db[report_location][global_match_count[report_location]['count']]['player'][player]['assist'] = global_match_db[report_location][global_match_count[report_location]['count']]['player'][player]['assist'][0]
+            if global_match_db[report_location][global_match_count[report_location]['count']]['player'][player]['faction'] == report_location:
+                global_match_db[report_location][global_match_count[report_location]['count']]['def_player'].append(global_match_db[report_location][global_match_count[report_location]['count']]['player'][player])
+            else:
+                global_match_db[report_location][global_match_count[report_location]['count']]['atk_player'].append(
+                    global_match_db[report_location][global_match_count[report_location]['count']]['player'][player])
+
         global_match_count[report_location]['count'] += 1
+
+        # Initialize new match.
         global_match_db[report_location][global_match_count[report_location]['count']] = {
             "startTime": 0,
-            "endTime": 0,
+            "endTime": 9999999999999,
             "location": report_location,
-            "initCastle": castle_status,
-            "finalCastle": castle_status,
-            "id": "B_02",
-            "loot": [
-                {
-                    "floor": 1,
-                    "name": "火龍頭",
-                    "quality": "垃圾般的",
-                    "type": "水龍頭",
-                    "atk": "8787",
-                    "def": "7414",
-                    "minePower": "400",
-                    "owner": "Kulimi"
-                }
-            ],
-            "atk_player": [
-                {
-                    "name": "Kulimi",
-                    "role": "鍛造師",
-                    "role2": "將軍",
-                    "faction": "j6",
-                    "kill": 456,
-                    "killed": 0,
-                    "assist": 2345,
-                    "castleDamage": 4567,
-                    "damage": 23414,
-                    "damaged": 12456,
-                }
-            ],
-            "def_player": [
-                {
-                    "name": "Kulimi456",
-                    "role": "戰鬥員",
-                    "role2": "將軍",
-                    "faction": "j6",
-                    "kill": 456,
-                    "killed": 0,
-                    "assist": 2345,
-                    "damage": 23414,
-                    "damaged": 12456,
-                }
-            ],
-            "report_list": [
-                {
-                    "atk_f": "艾基爾",
-                    "def_f": "吳",
-                    "atk_name": "Kulimi2",
-                    "atk_id": 20,
-                    "def_name": "Kulimi",
-                    "def_id": 1,
-                    "dead": ["Kulimi2"],
-                    "remarks": "城牆耗損了200點血量",
-                    "time": 1617653222268.1222,
-                    "id": 2
-                }
-            ],
-
+            "initCastle": global_match_count[report_location]['castle_status'],
+            "finalCastle": global_match_count[report_location]['castle_status'],
+            "id": f'{report_location}_{str(global_match_count[report_location]["count"]).zfill(3)}',
+            "loot": [],
+            "player": {},
+            "atk_player": [],
+            "def_player": [],
+            "report_list": [],
         }
         # {
         #     'id': f'{report_location}_{str(global_match_count[report_location]["count"]).zfill(3)}',
@@ -489,3 +541,50 @@ for i in range(1, len(sorted(match_db)) + 1):
         # global_match_db[report_location][global_match_count[report_location]['count']] = {
         #
         # }
+    else:
+        global_match_db[report_location][global_match_count[report_location]['count']]['endTime'] = report['report'][
+            'time']
+        # print(global_match_db[report_location][global_match_count[report_location]['count']]['endTime'])
+
+
+for player in sorted(player_db.items()):
+    with open(os.path.join(web_root, round, 'player', str(player_db[player[0]]['id']) + '.json'), 'w', encoding='utf8') as f:
+        player_info[player[0]]["times"] = len(player_info[player[0]]["report_summary"])
+        f.write(str(player_info[player[0]]).replace("'", '"').replace('None', 'null'))
+
+for faction in faction_list:
+    for player in global_match_db[faction][global_match_count[faction]['count']]['player']:
+        global_match_db[faction][global_match_count[faction]['count']]['player'][player]['assist'] = \
+        global_match_db[faction][global_match_count[faction]['count']]['player'][player]['assist'][0]
+        if global_match_db[faction][global_match_count[faction]['count']]['player'][player][
+            'faction'] == faction:
+            global_match_db[faction][global_match_count[faction]['count']]['def_player'].append(
+                global_match_db[faction][global_match_count[faction]['count']]['player'][player])
+        else:
+            global_match_db[faction][global_match_count[faction]['count']]['atk_player'].append(
+                global_match_db[faction][global_match_count[faction]['count']]['player'][player])
+    for match in global_match_db[faction]:
+        with open(os.path.join(web_root, round, 'match', global_match_db[faction][match]['id'] + '.json'), 'w',
+                  encoding='utf8') as f:
+            f.write(str(global_match_db[faction][match]).replace("'", '"').replace('None', 'null').replace('False', 'false'))
+
+with open(os.path.join(web_root, round, 'MatchIndex.json'), 'w', encoding='utf8') as f:
+    match_index = []
+    for faction in faction_list:
+        for i in global_match_db[faction]:
+            del global_match_db[faction][i]["location"]
+            global_match_db[faction][i]["atk"] = len(global_match_db[faction][i]["atk_player"])
+            global_match_db[faction][i]["def"] = len(global_match_db[faction][i]["def_player"])
+            del global_match_db[faction][i]["atk_player"]
+            del global_match_db[faction][i]["def_player"]
+            del global_match_db[faction][i]["loot"]
+            del global_match_db[faction][i]["report_list"]
+            del global_match_db[faction][i]["player"]
+        match_index.append({
+            "factionName": faction,
+            "matchList": [global_match_db[faction][i] for i in global_match_db[faction]]
+        })
+
+    f.write(str(match_index).replace("'", '"').replace('None', 'null'))
+
+
