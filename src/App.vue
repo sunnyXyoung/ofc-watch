@@ -73,6 +73,7 @@ export default {
       this.sidebar = (!this.sidebar);
     }
   },
+
   mounted() {
     const round = localStorage.getItem("round");
     const isDark = localStorage.getItem("dark");
