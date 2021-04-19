@@ -439,7 +439,7 @@ for i in range(1, len(sorted(match_db)) + 1):
                     global_match_db[report_location][global_match_count[report_location]['count']][
                         'player'][report['report']['aName']]['damage'] += int(
                         p.findall(message['m'])[-1])
-                    
+
                     global_match_db[report_location][global_match_count[report_location]['count']][
                         'player'][report['report']['bName']]['damaged'] += int(
                         p.findall(message['m'])[-1])
@@ -470,6 +470,7 @@ for i in range(1, len(sorted(match_db)) + 1):
                 dead.append(report['report']['aName'])
         if message.get('s') == 'critical' and message['m'].split(' ')[0] == '第' and message['m'].split(' ')[-1] == '層被摧毀了':
             spe = 'floor'
+            global_match_count[report_location]['castle_status'] = [message['m'].split(' ')[1], '0']
             remarks = message['m']
 
     global_match_db[report_location][global_match_count[report_location]['count']]['report_list'].append({
@@ -495,8 +496,7 @@ for i in range(1, len(sorted(match_db)) + 1):
             "def_id": report['report']['bId'],
             "dead": dead,
             "spe": spe,
-            "floor": global_match_count[report_location]['castle_status'][0],
-            "remarks": remarks,
+            "floor": '衛兵' if remarks == '衛兵' else global_match_count[report_location]['castle_status'][0],
             "time": report['report']['time'],
             "id": report['report']['id'],
             "match_id": global_match_db[report_location][global_match_count[report_location]['count']]['id']
