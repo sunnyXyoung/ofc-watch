@@ -33,6 +33,9 @@
         </div>
 
       </div>
+    <div v-if="!loading">
+      資料載入中，若等候過久請嘗試重新整理頁面
+    </div>
 
   </div>
 
