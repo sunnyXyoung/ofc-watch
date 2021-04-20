@@ -76,11 +76,13 @@ export default {
     "$store.state.round": async function () {
       this.loading = false
       this.matchIndex = await api.getData(  "MatchIndex.json")
+      this.loading = true
+
     },
   },
   mounted: async function () {
 
-    this.loading = false
+
     this.matchIndex = await api.getData( "MatchIndex.json")
     this.loading = true
   },
