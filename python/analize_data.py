@@ -47,15 +47,56 @@ faction_loot = {}
 
 faction_list = []
 
-global_kill_count = 0
-report_check_list = [1 for i in range(len(os.listdir(os.path.join(web_root, 'ofc', round))))]
-
 players = {}
 player_info = {}
 global_match_db = {}
+
+
+report_check_list = [1 for i in range(len(os.listdir(os.path.join(web_root, 'ofc', round))))]
+global_kill_count = 0
 match_determinate_time = 600  # sec
 
-ofc_db = {}
+ofc_db = {
+    "report_line_graph": {},
+    "floor_line_graph": [],
+    "kill_count": {},
+    "killed_count": {},
+    "weapon_count": {},
+    "hour_count": {},
+    "times_count": {},
+    "damage_count": {},
+    "damaged_count": {},
+    "loot_index": [],
+    "xp_count": {},
+    "loot_count": {},
+    "loot_list": {},
+    "weapon_list": [],
+    "castle_damage": {},
+    "global_weapon_list": [],
+    "match_db": {},
+    "player_db": {},
+    "faction_damage": {},
+    "faction_damaged": {},
+    "faction_times": {},
+    "faction_loot": {},
+    "faction_list": [],
+    "player": {
+        1: {
+            "name": "Kulimi",
+                'role': '',
+                'role2': '',
+                'faction': '',
+                'kill': 0,
+                'killed': 0,
+                'assist': [0, {None}],
+                'castleDamage': 0,
+                'damage': 0,
+                'damaged': 0
+            }
+    },
+    "player_info": {},
+    "global_match_db": {}
+}
 
 for i in range(1, len(os.listdir(os.path.join(web_root, 'ofc', round))) + 1):
     try:
