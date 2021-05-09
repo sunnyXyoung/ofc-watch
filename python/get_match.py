@@ -38,10 +38,10 @@ for i in os.listdir(os.path.join(webroot, 'ofc', round)):
     if '.json' in i: exist_report[int(i[:-5])] = i
 
 try:
-    for i in range(1, sorted(exist_report.items())[-1]+1):
+    for i in range(1, sorted(exist_report.items())[-1][0]+1):
         if f'{i}.json' != exist_report.get(i, ''):
             with open(os.path.join(webroot, 'ofc', round, f'{i}.json'), 'a', encoding="utf-8") as f:
-                f.write(json.dumps(json.loads(get_report(i)), ensure_ascii=False))
+                f.write(json.dumps(json.loads(get_report(i).text), ensure_ascii=False))
     i = sorted(exist_report.items())[-1]
 except IndexError:
     i = 1
