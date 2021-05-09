@@ -259,7 +259,7 @@ with open(os.path.join(web_root, round, 'laList.json'), 'w', encoding='utf8') as
                             true_la = (json.dumps(unknown_la, ensure_ascii=False), 0)
                             break
             except:
-                true_la = f'{{"name": "{la[0]}"}}'
+                true_la = f'[{{"name": "{la[0]}"}}]'
         true_la_dict = json.loads(true_la[0].replace("'", '"'))
         laList.append(
             {'floor': la[1]['floor'], 'name': true_la_dict['name'], 'quality': true_la_dict.get('quality', "未知"),
