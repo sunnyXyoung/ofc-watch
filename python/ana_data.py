@@ -24,7 +24,7 @@ floor_line_graph = []
 kill_count = {}
 killed_count = {}
 weapon_count = {}
-hour_count = {}
+hour_count = [0 for i in range(24)]
 times_count = {}
 damage_count = {}
 damaged_count = {}
@@ -149,7 +149,7 @@ for i in range(1, len(os.listdir(os.path.join(web_root, 'ofc', round))) + 1):
                 [line_dict['report']['time'], line_dict['report']['bFactionName'], message['m'].split(' ')[1]])
 
     this_hour = time.localtime(int(line_dict['report']['time']) / 1000).tm_hour
-    hour_count[this_hour] = hour_count.get(this_hour, 0) + 1
+    hour_count[this_hour] += 1
 
     for weapon in line_dict['report']['messages']['stats']['a']['equipments']:
         weapon['faction'] = line_dict['report']['aFactionName']
@@ -249,14 +249,17 @@ with open(os.path.join(web_root, round, 'laList.json'), 'w', encoding='utf8') as
         try:
             true_la = sorted(la_db.items(), key=lambda x: x[1], reverse=True)[0]
         except IndexError:
-            with open(os.path.join(pathlib.Path(__file__).parent.absolute(), round, 'Unknown.json'), 'r',
-                      encoding='utf8') as unknown_f:
-                unknown_las = json.loads(unknown_f.read())
-                for unknown_la in unknown_las:
-                    if unknown_la['name'] == la[0]:
-                        unknown_la['isUnknown'] = True
-                        true_la = (json.dumps(unknown_la, ensure_ascii=False), 0)
-                        break
+            try:
+                with open(os.path.join(pathlib.Path(__file__).parent.absolute(), round, 'Unknown.json'), 'r',
+                          encoding='utf8') as unknown_f:
+                    unknown_las = json.loads(unknown_f.read())
+                    for unknown_la in unknown_las:
+                        if unknown_la['name'] == la[0]:
+                            unknown_la['isUnknown'] = True
+                            true_la = (json.dumps(unknown_la, ensure_ascii=False), 0)
+                            break
+            except:
+                true_la = f'{"name": "{la[0]}"}'
         true_la_dict = json.loads(true_la[0].replace("'", '"'))
         laList.append(
             {'floor': la[1]['floor'], 'name': true_la_dict['name'], 'quality': true_la_dict.get('quality', "未知"),
