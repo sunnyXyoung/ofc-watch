@@ -16,8 +16,8 @@
 <style>
 #app{
   margin: 5% 10% 0;
-
-  background: hsla(0,0%,100%,.3);
+  border: 10px rgb(23, 23, 23);
+  background: rgba(12, 12, 12, 0.8);
 
   position: relative;
   overflow: hidden;
@@ -40,17 +40,4 @@ html{
 
 }
 
-#app::before {
-  content: '';
-  background: hsla(0,0%,100%,.3);
-  position: absolute;
-  left: 0;top: 0;right: 0;bottom: 0;
-  height: 100%;
-  width: 100% ;
-  filter: blur(20px);
-  -webkit-filter: blur(20px);
-  z-index: -1;
-  margin: -30px ;
-
-}
 </style>
