@@ -76,10 +76,13 @@ export default {
   },
 
   mounted() {
-
+    const round = localStorage.getItem("round");
     const isDark = localStorage.getItem("dark");
 
-
+    if (round){
+      this.$store.commit("ChangeRound", round);
+      this.round = round
+    }
 
     if (isDark === "false") {
 
