@@ -24,6 +24,12 @@ export default {
   components: {
     RanksMenu
   },
+  watch: {
+    "$store.state.round": async function () {
+      this.loading = false
+      this.players = await api.getData("Players.json")
+    },
+  },
   data() {
     return {
       loading: true,
