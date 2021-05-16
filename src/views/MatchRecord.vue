@@ -204,6 +204,7 @@ export default {
     "$store.state.round": async function () {
       this.loading = false
       this.match = await api.getData("match/"+this.$route.params.id + ".json")
+      this.loading = true
     },
   },
   mounted: async function () {

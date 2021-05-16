@@ -28,6 +28,7 @@ export default {
     "$store.state.round": async function () {
       this.loading = false
       this.players = await api.getData("Players.json")
+      this.loading = true
     },
   },
   data() {
