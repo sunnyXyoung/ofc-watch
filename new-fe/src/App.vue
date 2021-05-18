@@ -7,8 +7,19 @@
     <router-view/>
   </div>
 </template>
-
+<script>
+export default {
+  data() {
+    return {
+      login: false
+    }
+  }
+}
+</script>
 <style>
+html{
+
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -18,7 +29,8 @@
 }
 
 #nav {
-  padding: 30px;
+  padding-top: 30px;
+  width: 100%;
 }
 
 #nav a {
