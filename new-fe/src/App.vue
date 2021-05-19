@@ -26,7 +26,6 @@
 export default {
   data() {
     return {
-      login: false,
       round: 6,
       options: [
         {text: '第四輪', value: '4'},
@@ -35,7 +34,8 @@ export default {
         {text: '第六輪', value: '6'}
       ],
     }
-  }
+  },
+
 }
 </script>
 <style>
