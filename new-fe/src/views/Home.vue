@@ -4,13 +4,10 @@
       links <br>links <br>vlinks <br>links <br>links <br>
     </div>
     <div class="home">
-      <img alt="ofc logo" id="logo" src="../assets/big-eye.png">
-      <h1>歡迎來到 OFC Watch</h1>
-      今日戰報數：{{news.count}}，第{{news.day}}天。
-      <div>
-        近期事件：
 
-      </div>
+      <h1>歡迎來到 OFC Watch</h1>
+      最新會戰： <router-link to="/"> {{ this.news.latest_match.id }} </router-link>
+
 
     </div>
   </div>
@@ -25,6 +22,9 @@ export default {
   data(){
     return{
       news:{
+        latest_match:{
+          id: "民進黨001",
+        },
         count: 0,
         day: 1
       }
@@ -41,19 +41,13 @@ export default {
   justify-content: space-around;
 }
 
-#logo{
-  width: 70%;
-}
-
 .home{
   width: 60%;
 }
-
 #side-bar{
   position: fixed;
   width: 20%;
   left: 0;
   top: 60px;
-
 }
 </style>

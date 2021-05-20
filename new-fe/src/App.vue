@@ -2,6 +2,7 @@
   <div id="app">
     <div id="nav">
       <div id="menu">
+        <img alt="ofc logo" id="logo" src="@/assets/big-eye.png">
         <router-link class="router-link-btn" to="/">OFC Watch</router-link>
         <router-link class="router-link-btn" to="/leaderboard">排行榜</router-link>
         <router-link class="router-link-btn" to="/about">關於</router-link>
@@ -35,22 +36,18 @@ export default {
       ],
     }
   },
-
 }
 </script>
 <style>
 html {
-
 }
-
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Helvetica", "Arial","LiHei Pro","黑體-繁","微軟正黑體", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
 }
-
 #nav {
   display: flex;
   flex-flow: row;
@@ -59,21 +56,23 @@ html {
   padding-bottom: 30px;
   width: 100%;
 }
-
 #menu{
   display: flex;
   flex-flow: row;
   justify-content: space-around;
+  align-items: center;
   width: 50%;
 }
-
 .router-link-btn {
   font-weight: bold;
   color: #0c0c0c;
   text-decoration: none;
 }
-
 .router-link-btn.router-link-exact-active {
   text-decoration: underline;
 }
+#logo{
+  width: 100px;
+}
+
 </style>
