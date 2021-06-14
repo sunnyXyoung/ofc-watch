@@ -16,7 +16,6 @@ try:
 except IndexError:
     round = '5.5'
 web_root = os.getenv('web-root')
-record_path = os.path.join(web_root, 'ofc', f'{round}.ofc')
 
 # =======Initialize=======
 report_line_graph = {}
