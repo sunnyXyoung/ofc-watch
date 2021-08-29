@@ -2,12 +2,8 @@
   <div style="line-height: 24px ; display: flex; flex-flow: column ; justify-content: center" v-if="loading">
     <div class="row-div2">
       <div>
-        <h3>更新日誌 3.0.0</h3>
-        <p style="text-align: left">三大功能一次推出！前所未有的大更新！<br>
-        * 戰鬥員個人戰報查詢 <br>
-        * 會戰記分板<br>
-        * 免費賽事分析
-        </p>
+        <h3>Discord 群組！</h3>
+        <p style="text-align: left">我只是想要讓我的Discord機器人有人玩</p><a class="link" href="https://discord.gg/wKK89FRHku" style="size: A4;text-decoration: #2c3e50">https://discord.gg/wKK89FRHku</a>
       </div>
     </div>
     <div class="row-div2">

@@ -2,6 +2,7 @@ import random
 import math as m
 
 
+
 def bias(arg, dataset='train', batch=32):
     global train_data, validate_data, test_data
     if dataset in ['vali', 'test']:
@@ -16,9 +17,9 @@ def bias(arg, dataset='train', batch=32):
     bias_list = []
     for data in dataset:
         y = arg[0] * m.pow(data[0], arg[1]) + arg[2] * m.pow(data[1], arg[3]) + arg[4] * m.pow(data[2], arg[5]) + arg[6] * m.pow(data[3], arg[7])
-        bias_list.append(y - data[4])
+        bias_list.append(m.pow(y - data[4], 2))
 
-    return sum(bias_list) / len(bias_list)
+    return abs(sum(bias_list) / len(bias_list))
 
 
 input_file = 'output'
@@ -49,21 +50,32 @@ lr = 0.9
 
 args = [1, 1, 1, 1, -1, 1, -1, 1]
 # args = [2.0 for i in range(8)]
-noise_args = [0, 0, 0, 0, 0, 0, 0, 0]
 
-t1_epoch = 30
-t2_epoch = 1000
-for epoch_count in range(t1_epoch):
+epoch = 10000
+guess_num = 10
 
+guess_range = 0.001
+a = [1.2888651990613034, 0.4990590944716508, 1.606767034809324, -1.2818963712136153, 0.5968756446348785, 0.5203989935284624, -1.669339091738711, -0.120899381480995]
+for i in range(20):
+    data = random.choice(test_data)
+    arg = a
+    y = arg[0] * m.pow(data[0], arg[1]) + arg[2] * m.pow(data[1], arg[3]) + arg[4] * m.pow(data[2], arg[5]) + arg[6] * m.pow(data[3], arg[7])
+    print(data, y)
+for epoch_count in range(epoch):
     for n, i in enumerate(args):
-        print(epoch_count, n)
-        b1 = bias(args)
-        args2 = [noise_args[m] if m == n else args[m] for m, _ in enumerate(args)]
-        b2 = bias(args2)
-        if b1 - b2 == 0:
-            continue
-        else:
-            args[n] = args[n] - (args2[n] - args[n])/(b2 - b1) * b1 * lr
+        result = []
+        arg_guess = [args[n]]
+        for _ in range(guess_num):
+            arg_guess.append(args[n] + (2 * guess_range * random.random() - guess_range))
+
+        for j in arg_guess:
+            args2 = [j if m == n else args[m] for m, _ in enumerate(args)]
+            result.append(bias(args2))
+
+        args[n] = arg_guess[result.index(min(result))]
+
+    if epoch_count % 10 == 0:
+        print(epoch_count, args, bias(args))
 
 
 print(args)
@@ -75,4 +87,4 @@ for i in range(20):
     y = arg[0] * m.pow(data[0], arg[1]) + arg[2] * m.pow(data[1], arg[3]) + arg[4] * m.pow(data[2], arg[5]) + arg[6] * m.pow(data[3], arg[7])
     print(data, y)
 
-# Will explode, no use.
+breakpoint()

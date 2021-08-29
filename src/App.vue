@@ -54,6 +54,7 @@ export default {
         {text: '第六輪', value: '6'},
         {text: '第七輪 端午亂鬥', value: '7'},
         {text: '第八輪 疫苗亂鬥', value: '8'},
+        {text: '第九輪 中秋亂鬥', value: '9'},
       ],
       sidebar: false
 
