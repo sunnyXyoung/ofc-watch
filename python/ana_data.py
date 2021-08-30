@@ -466,6 +466,7 @@ for i in range(1, len(sorted(match_db)) + 1):
                     print(weapon['owner'], report['report']['aName'])
                     global_match_db[report_location][global_match_count[report_location]['count']][
                         'loot'].append(weapon)
+                    break
 
         if message['m'].split(' ')[0][-1 * len('在攻城過程中消耗了'):] == '在攻城過程中消耗了':
             if int(message['m'].split(' ')[1]) > report['report']['messages']['stats']['a']['hp']:
@@ -568,7 +569,7 @@ for faction in faction_list:
     for match in global_match_db[faction]:
         with open(os.path.join(web_root, round, 'match', global_match_db[faction][match]['id'] + '.json'), 'w',
                   encoding='utf8') as f:
-            print([i["owner"] for i in global_match_db[faction][match]["loot"]])
+            # print([i["owner"] for i in global_match_db[faction][match]["loot"]])
             f.write(str(global_match_db[faction][match]).replace("'", '"').replace('None', 'null').replace('False', 'false'))
 
 with open(os.path.join(web_root, round, 'MatchIndex.json'), 'w', encoding='utf8') as f:
