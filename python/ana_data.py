@@ -463,9 +463,8 @@ for i in range(1, len(sorted(match_db)) + 1):
             for weapon in laList:
                 if weapon['name'] == message['m'].split(' ')[3]:
                     weapon['owner'] = report['report']['aName']
-                    print(weapon['owner'], report['report']['aName'])
-
-                    print(weapon)
+                    # print(weapon['owner'], report['report']['aName'])
+                    # print(weapon)
                     global_match_db[report_location][global_match_count[report_location]['count']][
                         'loot'].append(weapon)
                     break
@@ -521,7 +520,7 @@ for i in range(1, len(sorted(match_db)) + 1):
             else:
                 global_match_db[report_location][global_match_count[report_location]['count']]['atk_player'].append(
                     global_match_db[report_location][global_match_count[report_location]['count']]['player'][player])
-
+        print(global_match_db[report_location][global_match_count[report_location]['count']])
         global_match_count[report_location]['count'] += 1
 
         # Initialize new match.
