@@ -466,7 +466,7 @@ for i in range(1, len(sorted(match_db)) + 1):
                     # print(weapon['owner'], report['report']['aName'])
                     # print(weapon)
                     global_match_db[report_location][global_match_count[report_location]['count']][
-                        'loot'].append(weapon)
+                        'loot'] = global_match_db[report_location][global_match_count[report_location]['count']]['loot'] + [weapon]
                     print(global_match_db[report_location][global_match_count[report_location]['count']][
                         'loot'])
                     break
