@@ -339,7 +339,7 @@ for i in faction_list:
     global_match_db[i] = {}
     global_match_count[i] = {
         'count': 0,
-        'castle_status': [1, 1600]
+        'castle_status': [1, 0]
     }
     global_match_db[i][0] = {
         "startTime": 0,
@@ -467,6 +467,8 @@ for i in range(1, len(sorted(match_db)) + 1):
                     # print(weapon)
                     global_match_db[report_location][global_match_count[report_location]['count']][
                         'loot'].append(weapon)
+                    print(global_match_db[report_location][global_match_count[report_location]['count']][
+                        'loot'])
                     break
 
         if message['m'].split(' ')[0][-1 * len('在攻城過程中消耗了'):] == '在攻城過程中消耗了':
@@ -520,7 +522,7 @@ for i in range(1, len(sorted(match_db)) + 1):
             else:
                 global_match_db[report_location][global_match_count[report_location]['count']]['atk_player'].append(
                     global_match_db[report_location][global_match_count[report_location]['count']]['player'][player])
-        print(global_match_db[report_location][global_match_count[report_location]['count']]['loot'])
+        # print(global_match_db[report_location][global_match_count[report_location]['count']]['loot'])
         global_match_count[report_location]['count'] += 1
 
         # Initialize new match.
