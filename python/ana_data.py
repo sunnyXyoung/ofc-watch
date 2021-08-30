@@ -598,4 +598,5 @@ with open(os.path.join(web_root, round, 'MatchIndex.json'), 'w', encoding='utf8'
 
     f.write(str(match_index).replace("'", '"').replace('None', 'null'))
 
+print(time.ctime())
 
