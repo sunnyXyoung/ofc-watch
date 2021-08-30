@@ -468,8 +468,8 @@ for i in range(1, len(sorted(match_db)) + 1):
                     global_match_db[report_location][global_match_count[report_location]['count']][
                         'loot'] = global_match_db[report_location][global_match_count[report_location]['count']][
                         'loot'] + [eval(str(weapon))]
-                    print(global_match_db[report_location][global_match_count[report_location]['count']][
-                        'loot'])
+                    # print(global_match_db[report_location][global_match_count[report_location]['count']][
+                    #     'loot'])
                     break
 
         if message['m'].split(' ')[0][-1 * len('在攻城過程中消耗了'):] == '在攻城過程中消耗了':
@@ -477,6 +477,8 @@ for i in range(1, len(sorted(match_db)) + 1):
                 dead.append(report['report']['aName'])
         if message.get('s') == 'critical' and message['m'].split(' ')[0] == '第' and message['m'].split(' ')[-1] == '層被摧毀了':
             spe = 'floor'
+            global_match_db[report_location][global_match_count[report_location]['count']]['finalCastle'] = [message['m'].split(' ')[1], '0']
+
             global_match_count[report_location]['castle_status'] = [message['m'].split(' ')[1], '0']
             remarks = message['m']
 
