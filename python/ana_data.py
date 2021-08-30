@@ -520,7 +520,7 @@ for i in range(1, len(sorted(match_db)) + 1):
             else:
                 global_match_db[report_location][global_match_count[report_location]['count']]['atk_player'].append(
                     global_match_db[report_location][global_match_count[report_location]['count']]['player'][player])
-        print(global_match_db[report_location][global_match_count[report_location]['count']])
+        print(global_match_db[report_location][global_match_count[report_location]['count']]['loot'])
         global_match_count[report_location]['count'] += 1
 
         # Initialize new match.
