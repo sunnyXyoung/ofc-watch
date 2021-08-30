@@ -463,8 +463,10 @@ for i in range(1, len(sorted(match_db)) + 1):
             for weapon in laList:
                 if weapon['name'] == message['m'].split(' ')[3]:
                     weapon['owner'] = report['report']['aName']
+                    print(weapon['owner'], report['report']['aName'])
                     global_match_db[report_location][global_match_count[report_location]['count']][
                         'loot'].append(weapon)
+
         if message['m'].split(' ')[0][-1 * len('在攻城過程中消耗了'):] == '在攻城過程中消耗了':
             if int(message['m'].split(' ')[1]) > report['report']['messages']['stats']['a']['hp']:
                 dead.append(report['report']['aName'])
