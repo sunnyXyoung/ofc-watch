@@ -74,6 +74,7 @@ async def on_ready():
 
                 text = json.dumps(line_dict, indent=4) + f"\nhttps://ofc-watch.kulimi.tw/history/{_round}/{i}"
                 if len(text) > 2000:
+                    print(text)
                     text = "戰報過長" + f"\nhttps://ofc-watch.kulimi.tw/history/{_round}/{i}"
                 await lastest_report_c.send(text)
                 i += 1
