@@ -72,10 +72,7 @@ async def on_ready():
                 with open(os.path.join(webroot, 'ofc', _round, f'{i}.json'), 'w', encoding="utf-8") as f:
                     f.write(json.dumps(line_dict, ensure_ascii=False))
 
-                text = json.dumps(line_dict, indent=4) + f"\nhttps://ofc-watch.kulimi.tw/history/{_round}/{i}"
-                if len(text) > 2000:
-                    print(text)
-                    text = "戰報過長" + f"\nhttps://ofc-watch.kulimi.tw/history/{_round}/{i}"
+                text = f"https://ofc-watch.kulimi.tw/history/{_round}/{i}"
                 await lastest_report_c.send(text)
                 i += 1
                 wait_time = initial_wait_time
