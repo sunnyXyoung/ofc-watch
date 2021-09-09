@@ -71,7 +71,11 @@ async def on_ready():
                 line_dict = json.loads(response.text)
                 with open(os.path.join(webroot, 'ofc', _round, f'{i}.json'), 'w', encoding="utf-8") as f:
                     f.write(json.dumps(line_dict, ensure_ascii=False))
-                await lastest_report_c.send(f"https://ofc-watch.kulimi.tw/history/{_round}/{i}")
+
+                text = json.dumps(line_dict, indent=4) + f"\nhttps://ofc-watch.kulimi.tw/history/{_round}/{i}"
+                if len(text) > 2000:
+                    text = "戰報過長" + f"\nhttps://ofc-watch.kulimi.tw/history/{_round}/{i}"
+                await lastest_report_c.send(text)
                 i += 1
                 wait_time = initial_wait_time
                 continue
@@ -92,4 +96,4 @@ async def on_ready():
         if wait_time > max_wait_time:
             wait_time = max_wait_time
 
-client.run(os.getenv('autokulimi-token'))
+client.run(os.getenv('autokulimi-token'))《》
