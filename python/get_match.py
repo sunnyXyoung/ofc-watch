@@ -1,3 +1,4 @@
+import asyncio
 import requests
 import time
 import os
@@ -85,7 +86,8 @@ async def on_ready():
         time_use = time.time() - initial_time
         print(f'use {time_use}sec')
 
-        time.sleep(wait_time)
+        # time.sleep(wait_time)
+        await asyncio.sleep(wait_time)
         wait_time = wait_time * wait_time_rate
         if wait_time > max_wait_time:
             wait_time = max_wait_time
