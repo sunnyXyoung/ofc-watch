@@ -90,4 +90,4 @@ async def on_ready():
         if wait_time > max_wait_time:
             wait_time = max_wait_time
 
-client.run("NjkxNjA5NjQzMzMxNDg1NzY3.XnidrA.HPmCdPi2rOsji6uugRs5N9KiCO8")
+client.run(os.getenv('autokulimi-token'))
