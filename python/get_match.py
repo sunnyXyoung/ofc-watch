@@ -73,7 +73,7 @@ async def on_ready():
                     f.write(json.dumps(line_dict, ensure_ascii=False))
 
                 text = f"https://ofc-watch.kulimi.tw/history/{_round}/{i}"
-
+                red = discord.Colour.from_rgb(255, 0, 0)
                 t = discord.Embed(title="***Hello World***", colour=red)
                 await lastest_report_c.send(text, embed=t)
                 i += 1
