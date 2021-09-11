@@ -7,6 +7,7 @@ import sys
 import json
 import logging
 import discord
+import datetime
 load_dotenv()
 
 client = discord.Client()
