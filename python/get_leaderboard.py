@@ -122,13 +122,13 @@ async def on_ready():
                     
                 if p.get('role2') != prev_p.get('role2'):
                     p['roles_last_update'] = time.time()
-                    text['role2'] = text[stat] = f'【{p.get("factionName")}】{p.get("nickname")}[{p.get("role")}]({p.get("role2")}) 在{sec_to_text(p.get("role2_last_update", 0) - prev_p.get("role2_last_update", 0))}內更換了副職業 ({prev_p['role2']} --> {p['role2']})'
+                    text['role2'] = text[stat] = f'【{p.get("factionName")}】{p.get("nickname")}[{p.get("role")}]({p.get("role2")}) 在{sec_to_text(p.get("role2_last_update", 0) - prev_p.get("role2_last_update", 0))}內更換了副職業 ({prev_p["role2"]} --> {p["role2"]})'
                 prev_leaderboard.pop(p.id)
             else:
                 for stat in p['board']:
                     if stat == 'kill':
                         continue
-                    text[stat] = f'【{p.get("factionName")}】{p.get("nickname")}[{p.get("role")}]({p.get("role2")}) 登上了{"、".join(p['board'])}榜 ({p[stat]}{nl_dict[stat]})'
+                    text[stat] = f'【{p.get("factionName")}】{p.get("nickname")}[{p.get("role")}]({p.get("role2")}) 登上了{"、".join(p["board"])}榜 ({p[stat]}{nl_dict[stat]})'
 
             back_leaderboard_dict[p.id] = p.copy()
             for c in g.text_channels:
@@ -139,7 +139,7 @@ async def on_ready():
             for stat in prev_p['board']:
                 if stat == 'kill':
                     continue
-                text[stat] = f'【{prev_p.get("factionName")}】{prev_p.get("nickname")}[{prev_p.get("role")}]({prev_p.get("role2")}) 從{"、".join(prev_p['board'])}榜上消失了 (原本有{p[stat]}{nl_dict[stat]})'
+                text[stat] = f'【{prev_p.get("factionName")}】{prev_p.get("nickname")}[{prev_p.get("role")}]({prev_p.get("role2")}) 從{"、".join(prev_p["board"])}榜上消失了 (原本有{p[stat]}{nl_dict[stat]})'
             prev_p['board'] = []
             back_leaderboard_dict[prev_p.id] = prev_p.copy()
 
