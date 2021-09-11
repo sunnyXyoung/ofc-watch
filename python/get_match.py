@@ -178,9 +178,9 @@ async def on_ready():
             except Exception as e:
                 logging.error(e)
                 logging.warning(f'Error occur while downloading report. : {i}')
-                logging.warning(response.text)
+                logging.warning(_response.text)
 
-        elif response.status_code == 400:
+        elif _response.status_code == 400:
             print(f'Last report: {i}')
 
         time_use = time.time() - initial_time
