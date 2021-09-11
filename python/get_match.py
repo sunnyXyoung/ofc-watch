@@ -85,9 +85,10 @@ async def on_ready():
             if f'{i}.json' != exist_report.get(i, ''):
                 with open(os.path.join(webroot, 'ofc', _round, f'{i}.json'), 'w', encoding="utf-8") as f:
                     f.write(json.dumps(json.loads(get_report(i).text), ensure_ascii=False))
-        i = sorted(exist_report.items())[-1][0]
+        i = sorted(exist_report.items())[-1][0] + 1
     except IndexError:
         i = 1
+
 
     while True:
         logging.info(i)
@@ -169,7 +170,9 @@ async def on_ready():
                 t.add_field(name="**防守方**", value=text, inline=True)
                 report_message = await lastest_report_c.send(embed=t)
                 
-
+                for c in g.text_channels:
+                    if c.name == factionL:
+                        await c.send(embed=t)
 
 
                 i += 1
