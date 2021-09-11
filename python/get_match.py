@@ -143,7 +143,7 @@ async def on_ready():
                     elif m.get('s') == 'info' and m['m'].startswith('雙方大戰 16 回合不分勝負！'):
                         summary = m['m']
                         break
-                    elif m.get('s') == 'info' and [a[0], a[2]] == [f'{line_dict['bName']}被打得落荒而逃了，{line_dict['aName']}還有', '點體力']
+                    elif m.get('s') == 'info' and [a[0], a[2]] == [f"{line_dict['bName']}被打得落荒而逃了，{line_dict['aName']}還有", '點體力']
 
 
                 t = discord.Embed(title=summary, description=f"在 **{line_dict['location']}**", colour=(int(faction_dict[faction]['color'].replace('#', ''), 16)), timestamp=datetime.datetime.utcfromtimestamp(line_dict['time'] / 1000))
