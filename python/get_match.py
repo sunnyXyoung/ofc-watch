@@ -125,21 +125,21 @@ async def on_ready():
 
                 for m in line_dict['messages']['messages']:
                     a = m['m'].split(' ')
-                    if m['s'] == 'critical' and ([a[0], a[2]] == [f"{line_dict['aName']}被擊殺身亡了，{line_dict.get('bName', '')}還有", "點體力"] or [a[0], a[2]] == [f"{line_dict.get('bName', '')}被擊殺身亡了，{line_dict['aName']}還有", "點體力"]) and faction == line_dict['aFactionName']:
+                    if m.get('s') == 'critical' and ([a[0], a[2]] == [f"{line_dict['aName']}被擊殺身亡了，{line_dict.get('bName', '')}還有", "點體力"] or [a[0], a[2]] == [f"{line_dict.get('bName', '')}被擊殺身亡了，{line_dict['aName']}還有", "點體力"]) and faction == line_dict['aFactionName']:
                         summary = '[衛兵] ' + m['m']
-                    elif m['s'] == 'critical' and ([a[0], a[2]] == [f"{line_dict['aName']}被擊殺身亡了，{line_dict.get('bName', '')}還有", "點體力"] or [a[0], a[2]] == [f"{line_dict.get('bName', '')}被擊殺身亡了，{line_dict['aName']}還有", "點體力"]):
+                    elif m.get('s') == 'critical' and ([a[0], a[2]] == [f"{line_dict['aName']}被擊殺身亡了，{line_dict.get('bName', '')}還有", "點體力"] or [a[0], a[2]] == [f"{line_dict.get('bName', '')}被擊殺身亡了，{line_dict['aName']}還有", "點體力"]):
                         summary = m['m']
                         break
-                    elif m['s'] == 'critical' and a[:-1] == f"獲得了{line_dict['location'][len(faction):]}獎勵".split(' '):
+                    elif m.get('s') == 'critical' and a[:-1] == f"獲得了{line_dict['location'][len(faction):]}獎勵".split(' '):
                         summary = m['m']
                         break
-                    elif m['s'] == 'critical' and m['m'] == f"{line_dict['location'][len(faction):]}被摧毀了":
+                    elif m.get('s') == 'critical' and m['m'] == f"{line_dict['location'][len(faction):]}被摧毀了":
                         summary = m['m']
                         break
                     elif a[0] == f'{line_dict["aName"]}直接攻擊城堡，造成' and a[2] == '點傷害':
                         summary = m['m']
                         break
-                    elif m['s'] == 'info' and m['m'].startswith('雙方大戰 16 回合不分勝負！'):
+                    elif m.get('s') == 'info' and m['m'].startswith('雙方大戰 16 回合不分勝負！'):
                         summary = m['m']
                         break
 
@@ -149,7 +149,7 @@ async def on_ready():
 
                 equip_list = '\n'.join([f"{weapon['quality']}的 **{weapon['name']}**（{weapon['type']}）攻擊{weapon['atk']}、防禦{weapon['def']}、礦力{weapon['minePower']}" for weapon in line_dict['messages']['stat']['a']])
                 text = f"陣營：**{line_dict['aFactionName']}**\n玩家：**{line_dict['aName']}**\n職業：**{line_dict['messages']['stat']['a']['role']}**\n副職：**{line_dict['messages']['stat']['a']['role2']}**\nHP：**{line_dict['messages']['stat']['a']['hp']}**\n熟練：**{line_dict['messages']['stat']['a']['fightExp']}**\nID：**{line_dict['aId']}**\n裝備：\n{equip_list}"
-                t.add_field(name="**攻擊方**", value="", inline=True)
+                t.add_field(name="**攻擊方**", value=text, inline=True)
                 
                 if line_dict.get('bName'):
                     equip_list = '\n'.join([f"{weapon['quality']}的 **{weapon['name']}**（{weapon['type']}）攻擊{weapon['atk']}、防禦{weapon['def']}、礦力{weapon['minePower']}" for weapon in line_dict['messages']['stat']['b']])
