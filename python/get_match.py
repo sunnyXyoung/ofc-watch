@@ -47,7 +47,7 @@ async def on_ready():
     for g in client.guilds:
         if g.id == 881543633290035211:
             for c in g.text_channels:
-                if c.id == 881554191712124989:
+                if c.id == 886207121685901322:
                     lastest_report_c = c
                     break
             else:
@@ -148,13 +148,13 @@ async def on_ready():
                 t = discord.Embed(title=summary, description=f"在 **{line_dict['location']}**", colour=(int(faction_dict[faction]['color'].replace('#', ''), 16)), timestamp=datetime.datetime.utcfromtimestamp(line_dict['time'] / 1000))
                 t.set_author(name=f"戰報編號{i}", url=f"https://ofc-watch.kulimi.tw/history/{_round}/{i}")
 
-                equip_list = '\n'.join([f"{weapon['quality']}的 **{weapon['name']}**（{weapon['type']}）攻擊{weapon['atk']}、防禦{weapon['def']}、礦力{weapon['minePower']}" for weapon in line_dict['messages']['stat']['a']])
-                text = f"陣營：**{line_dict['aFactionName']}**\n玩家：**{line_dict['aName']}**\n職業：**{line_dict['messages']['stat']['a']['role']}**\n副職：**{line_dict['messages']['stat']['a']['role2']}**\nHP：**{line_dict['messages']['stat']['a']['hp']}**\n熟練：**{line_dict['messages']['stat']['a']['fightExp']}**\nID：**{line_dict['aId']}**\n裝備：\n{equip_list}"
+                equip_list = '\n'.join([f"{weapon['quality']}的 **{weapon['name']}**（{weapon['type']}）攻擊{weapon['atk']}、防禦{weapon['def']}、礦力{weapon['minePower']}" for weapon in line_dict['messages']['stats']['a']])
+                text = f"陣營：**{line_dict['aFactionName']}**\n玩家：**{line_dict['aName']}**\n職業：**{line_dict['messages']['stats']['a']['role']}**\n副職：**{line_dict['messages']['stats']['a']['role2']}**\nHP：**{line_dict['messages']['stats']['a']['hp']}**\n熟練：**{line_dict['messages']['stats']['a']['fightExp']}**\nID：**{line_dict['aId']}**\n裝備：\n{equip_list}"
                 t.add_field(name="**攻擊方**", value=text, inline=True)
                 
                 if line_dict.get('bName'):
-                    equip_list = '\n'.join([f"{weapon['quality']}的 **{weapon['name']}**（{weapon['type']}）攻擊{weapon['atk']}、防禦{weapon['def']}、礦力{weapon['minePower']}" for weapon in line_dict['messages']['stat']['b']])
-                    text = f"陣營：**{line_dict['bFactionName']}**\n玩家：**{line_dict['bName']}**\n職業：**{line_dict['messages']['stat']['b']['role']}**\n副職：**{line_dict['messages']['stat']['b']['role2']}**\nHP：**{line_dict['messages']['stat']['b']['hp']}**\n熟練：**{line_dict['messages']['stat']['b']['fightExp']}**\nID：**{line_dict['bId']}**\n裝備：\n{equip_list}"
+                    equip_list = '\n'.join([f"{weapon['quality']}的 **{weapon['name']}**（{weapon['type']}）攻擊{weapon['atk']}、防禦{weapon['def']}、礦力{weapon['minePower']}" for weapon in line_dict['messages']['stats']['b']])
+                    text = f"陣營：**{line_dict['bFactionName']}**\n玩家：**{line_dict['bName']}**\n職業：**{line_dict['messages']['stats']['b']['role']}**\n副職：**{line_dict['messages']['stats']['b']['role2']}**\nHP：**{line_dict['messages']['stats']['b']['hp']}**\n熟練：**{line_dict['messages']['stats']['b']['fightExp']}**\nID：**{line_dict['bId']}**\n裝備：\n{equip_list}"
                 else:
                     text = faction_dict['location'] + '的城牆'
                 t.add_field(name="**防守方**", value=text, inline=True)
