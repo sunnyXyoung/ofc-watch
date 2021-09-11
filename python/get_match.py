@@ -93,12 +93,12 @@ async def on_ready():
         logging.info(i)
         initial_time = time.time()  # Record initial time.
 
-        response = await client.loop.run_in_executor(get_report, i)
-        logging.info(response.text)
+        _response = await client.loop.run_in_executor(get_report, i)
+        logging.info(_response.text)
 
-        if response.status_code == 200:
+        if _response.status_code == 200:
             try:
-                line_dict = json.loads(response.text)
+                line_dict = json.loads(_response.text)
                 with open(os.path.join(webroot, 'ofc', _round, f'{i}.json'), 'w', encoding="utf-8") as f:
                     f.write(json.dumps(line_dict, ensure_ascii=False))
 
