@@ -101,7 +101,7 @@ async def on_ready():
                     f.write(json.dumps(line_dict, ensure_ascii=False))
 
                 text = f"https://ofc-watch.kulimi.tw/history/{_round}/{i}"
-
+                line_dict = line_dict['report']
                 while True:
                     for faction in faction_dict:
                         if line_dict['location'].startswith(faction):
