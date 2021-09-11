@@ -100,7 +100,7 @@ async def on_ready():
                 with open(os.path.join(webroot, 'ofc', _round, f'{i}.json'), 'w', encoding="utf-8") as f:
                     f.write(json.dumps(line_dict, ensure_ascii=False))
 
-                text = f"https://ofc-watch.kulimi.tw/history/{_round}/{i}"
+                # text = f"https://ofc-watch.kulimi.tw/history/{_round}/{i}"
                 line_dict = line_dict['report']
                 while True:
                     for faction in faction_dict:
@@ -121,8 +121,45 @@ async def on_ready():
                         continue
                     break
                 
-                t = discord.Embed(title="***Hello World***", colour=(int(faction_dict[faction]['color'].replace('#', ''), 16)))
-                await lastest_report_c.send(text, embed=t)
+                summary = '戰報'
+
+                for m in line_dict['messages']['messages']:
+                    a = m['m'].split(' ')
+                    if m['s'] == 'critical' and ([a[0], a[2]] == [f"{line_dict['aName']}被擊殺身亡了，{line_dict.get('bName', '')}還有", "點體力"] or [a[0], a[2]] == [f"{line_dict.get('bName', '')}被擊殺身亡了，{line_dict['aName']}還有", "點體力"]) and faction == line_dict['aFactionName']:
+                        summary = '[衛兵] ' + m['m']
+                    elif m['s'] == 'critical' and ([a[0], a[2]] == [f"{line_dict['aName']}被擊殺身亡了，{line_dict.get('bName', '')}還有", "點體力"] or [a[0], a[2]] == [f"{line_dict.get('bName', '')}被擊殺身亡了，{line_dict['aName']}還有", "點體力"]):
+                        summary = m['m']
+                        break
+                    elif m['s'] == 'critical' and a[:-1] == f"獲得了{line_dict['location'][len(faction):]}獎勵".split(' '):
+                        summary = m['m']
+                        break
+                    elif m['s'] == 'critical' and m['m'] == f"{line_dict['location'][len(faction):]}被摧毀了":
+                        summary = m['m']
+                        break
+                    elif a[0] == f'{line_dict["aName"]}直接攻擊城堡，造成' and a[2] == '點傷害':
+                        summary = m['m']
+                        break
+                    elif m['s'] == 'info' and m['m'].startswith('雙方大戰 16 回合不分勝負！'):
+                        summary = m['m']
+                        break
+
+
+                t = discord.Embed(title=summary, description=f"在 **{line_dict['location']}**", colour=(int(faction_dict[faction]['color'].replace('#', ''), 16)), timestamp=datetime.datetime.utcfromtimestamp(line_dict['time'] / 1000))
+                t.set_author(name=f"戰報編號{i}", url=f"https://ofc-watch.kulimi.tw/history/{_round}/{i}")
+
+                equip_list = '\n'.join([f"{weapon['quality']}的 **{weapon['name']}**（{weapon['type']}）攻擊{weapon['atk']}、防禦{weapon['def']}、礦力{weapon['minePower']}" for weapon in line_dict['messages']['stat']['a']])
+                text = f"陣營：**{line_dict['aFactionName']}**\n玩家：**{line_dict['aName']}**\n職業：**{line_dict['messages']['stat']['a']['role']}**\n副職：**{line_dict['messages']['stat']['a']['role2']}**\nHP：**{line_dict['messages']['stat']['a']['hp']}**\n熟練：**{line_dict['messages']['stat']['a']['fightExp']}**\nID：**{line_dict['aId']}**\n裝備：\n{equip_list}"
+                t.add_field(name="**攻擊方**", value="", inline=True)
+                
+                if line_dict.get('bName'):
+                    equip_list = '\n'.join([f"{weapon['quality']}的 **{weapon['name']}**（{weapon['type']}）攻擊{weapon['atk']}、防禦{weapon['def']}、礦力{weapon['minePower']}" for weapon in line_dict['messages']['stat']['b']])
+                    text = f"陣營：**{line_dict['bFactionName']}**\n玩家：**{line_dict['bName']}**\n職業：**{line_dict['messages']['stat']['b']['role']}**\n副職：**{line_dict['messages']['stat']['b']['role2']}**\nHP：**{line_dict['messages']['stat']['b']['hp']}**\n熟練：**{line_dict['messages']['stat']['b']['fightExp']}**\nID：**{line_dict['bId']}**\n裝備：\n{equip_list}"
+                else:
+                    text = faction_dict['location'] + '的城牆'
+                t.add_field(name="**防守方**", value=text, inline=True)
+                await lastest_report_c.send(embed=t)
+
+
                 i += 1
                 wait_time = initial_wait_time
                 continue
