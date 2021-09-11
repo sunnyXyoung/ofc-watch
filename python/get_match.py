@@ -11,6 +11,7 @@ load_dotenv()
 
 client = discord.Client()
 
+
 def get_report(report_id):
     headers = {
         'User-Agent': 'I just wanna know all the secret data',
@@ -24,6 +25,21 @@ def get_report(report_id):
     get_response = requests.get(f'https://api.ourfloatingcastle.com/api/report/{report_id}', headers=headers)
     return get_response
 
+
+def get_faction():
+    headers = {
+        'User-Agent': 'I just wanna know all the secret data',
+        'Accept': '*/*',
+        'Accept-Language': 'zh-TW,zh;q=0.8,en-US;q=0.5,en;q=0.3',
+        
+        'Origin': 'https://ourfloatingcastle.com',
+        'Connection': 'keep-alive',
+        'TE': 'Trailers',
+    }
+    get_response = requests.get('https://api.ourfloatingcastle.com/api/factions/overview', headers=headers)
+    return get_response
+
+
 @client.event
 async def on_ready():
     print(f'{client.user} online')
@@ -36,6 +52,18 @@ async def on_ready():
             else:
                 continue
             break
+
+    faction_dict = get_faction()
+    if faction_dict.status_code != 200:
+        logging.error(faction_dict, faction_dict.text, faction_dict.status_code)
+        exit()
+    faction_dict = json.loads(faction_dict.text)
+
+    faction_list= faction_dict['factions']
+    faction_dict = {}
+    for faction in faction_list:
+        faction_dict[faction.name] = faction
+
     logging.basicConfig(level=logging.NOTSET)
     try: _round = sys.argv[1]
     except IndexError: _round = '6'
@@ -73,8 +101,27 @@ async def on_ready():
                     f.write(json.dumps(line_dict, ensure_ascii=False))
 
                 text = f"https://ofc-watch.kulimi.tw/history/{_round}/{i}"
-                red = discord.Colour.from_rgb(255, 0, 0)
-                t = discord.Embed(title="***Hello World***", colour=red)
+
+                while True:
+                    for faction in faction_dict:
+                        if line_dict['location'].startswith(faction):
+                            break
+                        else:
+                            logging.error('unknown faction')
+                    else:
+                        _faction_dict = get_faction()
+                        if _faction_dict.status_code != 200:
+                            logging.error(_faction_dict, _faction_dict.text, _faction_dict.status_code)
+                            exit()
+                        _faction_dict = json.loads(faction_dict.text)
+                        _faction_list = _faction_dict['factions']
+                        faction_dict = {}
+                        for faction in _faction_list:
+                            faction_dict[faction.name] = faction
+                        continue
+                    break
+                
+                t = discord.Embed(title="***Hello World***", colour=(int(faction_dict[faction]['color'].replace('#', ''), 16)))
                 await lastest_report_c.send(text, embed=t)
                 i += 1
                 wait_time = initial_wait_time
