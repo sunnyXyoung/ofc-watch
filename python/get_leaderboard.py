@@ -90,7 +90,7 @@ client = discord.Client()
 async def on_ready():
     print(f'{client.user} online')
     for g in client.guilds:
-        if g['id'] == 885550088410255392:
+        if g.id == 885550088410255392:
             break
 
 
