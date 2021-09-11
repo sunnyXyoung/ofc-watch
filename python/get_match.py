@@ -92,7 +92,8 @@ async def on_ready():
     while True:
         logging.info(i)
         initial_time = time.time()  # Record initial time.
-        response = get_report(i)
+
+        response = await client.loop.run_in_executor(get_report, i)
         logging.info(response.text)
 
         if response.status_code == 200:
@@ -111,7 +112,8 @@ async def on_ready():
                             
                     else:
                         logging.error('unknown faction')
-                        _faction_dict = get_faction()
+                        
+                        _faction_dict = await client.loop.run_in_executor(get_faction)
                         if _faction_dict.status_code != 200:
                             logging.error(_faction_dict, _faction_dict.text, _faction_dict.status_code)
                             exit()
