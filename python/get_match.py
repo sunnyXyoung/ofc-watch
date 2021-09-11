@@ -47,7 +47,7 @@ async def on_ready():
     for g in client.guilds:
         if g.id == 881543633290035211:
             for c in g.text_channels:
-                if c.id == 886207121685901322:
+                if c.id == 886220694793379841:
                     lastest_report_c = c
                     break
             else:
