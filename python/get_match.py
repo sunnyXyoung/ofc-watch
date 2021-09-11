@@ -62,7 +62,7 @@ async def on_ready():
     faction_list= faction_dict['factions']
     faction_dict = {}
     for faction in faction_list:
-        faction_dict[faction.name] = faction
+        faction_dict[faction['name']] = faction
 
     logging.basicConfig(level=logging.NOTSET)
     try: _round = sys.argv[1]
@@ -117,7 +117,7 @@ async def on_ready():
                         _faction_list = _faction_dict['factions']
                         faction_dict = {}
                         for faction in _faction_list:
-                            faction_dict[faction.name] = faction
+                            faction_dict[faction['name']] = faction
                         continue
                     break
                 
