@@ -107,9 +107,10 @@ async def on_ready():
                     for faction in faction_dict:
                         if line_dict['location'].startswith(faction):
                             break
-                        else:
-                            logging.error('unknown faction')
+                        
+                            
                     else:
+                        logging.error('unknown faction')
                         _faction_dict = get_faction()
                         if _faction_dict.status_code != 200:
                             logging.error(_faction_dict, _faction_dict.text, _faction_dict.status_code)
