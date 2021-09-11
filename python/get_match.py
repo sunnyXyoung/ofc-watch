@@ -159,7 +159,7 @@ async def on_ready():
                     equip_list = '\n'.join([f"{weapon['quality']}的 **{weapon['name']}**（{weapon['type']}）攻擊{weapon['atk']}、防禦{weapon['def']}、礦力{weapon['minePower']}" for weapon in line_dict['messages']['stats']['b']['equipments']])
                     text = f"陣營：**{line_dict['bFactionName']}**\n玩家：**{line_dict['bName']}**\n職業：**{line_dict['messages']['stats']['b']['role']}**\n副職：**{line_dict['messages']['stats']['b']['role2']}**\nHP：**{line_dict['messages']['stats']['b']['hp']}**\n熟練：**{line_dict['messages']['stats']['b']['fightExp']}**\nID：**{line_dict['bId']}**\n裝備：\n{equip_list}"
                 else:
-                    text = faction_dict['location'] + '的城牆'
+                    text = line_dict['location'] + '的城牆'
                 t.add_field(name="**防守方**", value=text, inline=True)
                 await lastest_report_c.send(embed=t)
 
