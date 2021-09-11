@@ -161,8 +161,8 @@ async def on_ready():
                 else:
                     text = line_dict['location'] + '的城牆'
                 t.add_field(name="**防守方**", value=text, inline=True)
-                report_message = await lastest_report_c.send(embed=t)
-                await report_message.publish()
+                # report_message = await lastest_report_c.send(embed=t)
+                
 
 
 
