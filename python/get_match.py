@@ -131,9 +131,9 @@ async def on_ready():
                 for m in line_dict['messages']['messages']:
                     a = m['m'].split(' ')
                     try:
-                        if m.get('s') == 'critical' and ([a[0], a[2]] == [f"{line_dict['aName']}被擊殺身亡了，{line_dict.get('bName', '')}還有", "點體力"] or [a[0], a[2]] == [f"{line_dict.get('bName', '')}被擊殺身亡了，{line_dict['aName']}還有", "點體力"]) and faction == line_dict['aFactionName']:
+                        if m.get('s') == 'critical' and ((m['m'].startswith(f"{line_dict['aName']}被擊殺身亡了，{line_dict.get('bName', '')}還有") and m['m'].endswith("點體力")) or (m['m'].startswith(f"{line_dict.get('bName', '')}被擊殺身亡了，{line_dict['aName']}還有") and m['m'].endswith("點體力"))) and faction == line_dict['aFactionName']:
                             summary = '[衛兵] ' + m['m']
-                        elif m.get('s') == 'critical' and ([a[0], a[2]] == [f"{line_dict['aName']}被擊殺身亡了，{line_dict.get('bName', '')}還有", "點體力"] or [a[0], a[2]] == [f"{line_dict.get('bName', '')}被擊殺身亡了，{line_dict['aName']}還有", "點體力"]):
+                        if m.get('s') == 'critical' and ((m['m'].startswith(f"{line_dict['aName']}被擊殺身亡了，{line_dict.get('bName', '')}還有") and m['m'].endswith("點體力")) or (m['m'].startswith(f"{line_dict.get('bName', '')}被擊殺身亡了，{line_dict['aName']}還有") and m['m'].endswith("點體力"))):
                             summary = m['m']
                             break
                         elif m.get('s') == 'critical' and a[:-1] == f"獲得了{line_dict['location'][len(faction):]}獎勵".split(' '):
@@ -142,13 +142,13 @@ async def on_ready():
                         elif m.get('s') == 'critical' and m['m'] == f"{line_dict['location'][len(faction):]}被摧毀了":
                             summary = m['m']
                             break
-                        elif a[0] == f'{line_dict["aName"]}直接攻擊城堡，造成' and a[2] == '點傷害':
+                        elif m['m'].startswith(f'{line_dict["aName"]}直接攻擊城堡，造成') and m['m'].endsqwith('點傷害'):
                             summary = m['m']
                             break
                         elif m.get('s') == 'info' and m['m'].startswith('雙方大戰 16 回合不分勝負！'):
                             summary = m['m']
                             break
-                        elif m.get('s') == 'info' and [a[0], a[2]] == [f"{line_dict['bName']}被打得落荒而逃了，{line_dict['aName']}還有", '點體力']:
+                        elif m.get('s') == 'info' and m['m'].startswith(f"{line_dict['bName']}被打得落荒而逃了，{line_dict['aName']}還有") and m['m'].endswith('點體力'):
                             summary = m['m']
                             break
                     except IndexError:
