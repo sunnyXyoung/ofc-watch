@@ -128,10 +128,13 @@ async def on_ready():
         back_prev_leaderboard = prev_leaderboard.copy()
         for p_id in new_leaderboard_dict:
             if prev_leaderboard.get(p_id) and prev_leaderboard.get(p_id)['board'] != []:
+                p = new_leaderboard_dict[p_id]
                 prev_p = prev_leaderboard[p_id]
+                text = {}
+
                 for stat in nl_dict:
                     if p[topic_to_stat[stat]] != prev_p[topic_to_stat[stat]]:
-                        p[stat+'_last_update'] = time.time()
+                        new_leaderboard_dict[p_id][stat+'_last_update'] = time.time()
                         if p[topic_to_stat[stat]] > prev_p[topic_to_stat[stat]]: 
                             text[stat] = f'【{p.get("factionName")}】{p.get("nickname")}[{p.get("role")}]({p.get("role2")}) 在{sec_to_text(p.get(stat+"_last_update", 0) - prev_p.get(stat+"_last_update", 0))}內增加了 **{p[topic_to_stat[stat]] - prev_p[topic_to_stat[stat]]}** {nl_dict[stat]} ({prev_p[topic_to_stat[stat]]} --> {p[topic_to_stat[stat]]})'
                         else:
@@ -139,71 +142,124 @@ async def on_ready():
                             text[stat] = f'【{p.get("factionName")}】{p.get("nickname")}[{p.get("role")}]({p.get("role2")}) 在{sec_to_text(p.get(stat+"_last_update", 0) - prev_p.get(stat+"_last_update", 0))}內減少了 **{prev_p[topic_to_stat[stat]] - p[topic_to_stat[stat]]}** {nl_dict[stat]} ({prev_p[topic_to_stat[stat]]} --> {p[topic_to_stat[stat]]})'
                     
                 if p.get('role2') != prev_p.get('role2'):
-                    p['roles_last_update'] = time.time()
+                    new_leaderboard_dict[p_id]['roles_last_update'] = time.time()
                     text['role2'] = f'【{p.get("factionName")}】{p.get("nickname")}[{p.get("role")}]({p.get("role2")}) 在{sec_to_text(p.get("role2_last_update", 0) - prev_p.get("role2_last_update", 0))}內更換了副職業 ({prev_p["role2"]} --> {p["role2"]})'
                 
-
+                for c in g.text_channels:
+                    if c.name in channel_to_board:
+                        if text.get(channel_to_board[c.name]):
+                            await c.send(text[channel_to_board[c.name]])
                 prev_leaderboard.pop(p_id)
             elif prev_leaderboard.get(p_id) and prev_leaderboard.get(p_id)['board'] == []:
+                p = new_leaderboard_dict[p_id]
                 prev_p = prev_leaderboard[p_id]
-
-                prev_leaderboard.pop(p_id)
-            else:
-
-        for prev_p_id in prev_leaderboard:
-
-
-        for _p in new_leaderboard_dict:
-            p = new_leaderboard_dict[_p]
-            prev_p = prev_leaderboard.get(_p, {})
-            
-            if prev_p.get('board'):
+                text = {}
                 for stat in nl_dict:
                     if p[topic_to_stat[stat]] != prev_p[topic_to_stat[stat]]:
-                        p[stat+'_last_update'] = time.time()
+                        back_prev_leaderboard[p_id][stat+'_last_update'] = time.time()
                         if p[topic_to_stat[stat]] > prev_p[topic_to_stat[stat]]: 
-                            text[stat] = f'【{p.get("factionName")}】{p.get("nickname")}[{p.get("role")}]({p.get("role2")}) 在{sec_to_text(p.get(stat+"_last_update", 0) - prev_p.get(stat+"_last_update", 0))}內增加了 **{p[topic_to_stat[stat]] - prev_p[topic_to_stat[stat]]}** {nl_dict[stat]} ({prev_p[topic_to_stat[stat]]} --> {p[topic_to_stat[stat]]})'
+                            text[stat] = f'【{p.get("factionName")}】{p.get("nickname")}[{p.get("role")}]({p.get("role2")}) 在{sec_to_text(p.get(stat+"_last_update", 0) - prev_p.get(stat+"_last_update", 0))}內增加了 **{p[topic_to_stat[stat]] - prev_p[topic_to_stat[stat]]}** {nl_dict[stat]} ({prev_p[topic_to_stat[stat]]} --> {p[topic_to_stat[stat]]}) 並且回到{"、".join([nl_dict2[topic] for topic in p["board"]])}榜上'
                         else:
                             assert p[topic_to_stat[stat]] < prev_p[topic_to_stat[stat]]
-                            text[stat] = f'【{p.get("factionName")}】{p.get("nickname")}[{p.get("role")}]({p.get("role2")}) 在{sec_to_text(p.get(stat+"_last_update", 0) - prev_p.get(stat+"_last_update", 0))}內減少了 **{prev_p[topic_to_stat[stat]] - p[topic_to_stat[stat]]}** {nl_dict[stat]} ({prev_p[topic_to_stat[stat]]} --> {p[topic_to_stat[stat]]})'
+                            text[stat] = f'【{p.get("factionName")}】{p.get("nickname")}[{p.get("role")}]({p.get("role2")}) 在{sec_to_text(p.get(stat+"_last_update", 0) - prev_p.get(stat+"_last_update", 0))}內減少了 **{prev_p[topic_to_stat[stat]] - p[topic_to_stat[stat]]}** {nl_dict[stat]} ({prev_p[topic_to_stat[stat]]} --> {p[topic_to_stat[stat]]}) 並且回到{"、".join([nl_dict2[topic] for topic in p["board"]])}榜上'
                     
                 if p.get('role2') != prev_p.get('role2'):
-                    p['roles_last_update'] = time.time()
-                    text['role2'] = f'【{p.get("factionName")}】{p.get("nickname")}[{p.get("role")}]({p.get("role2")}) 在{sec_to_text(p.get("role2_last_update", 0) - prev_p.get("role2_last_update", 0))}內更換了副職業 ({prev_p["role2"]} --> {p["role2"]})'
-                prev_leaderboard.pop(p['id'])
+                    back_prev_leaderboard[p_id]['roles_last_update'] = time.time()
+                    text['role2'] = f'【{p.get("factionName")}】{p.get("nickname")}[{p.get("role")}]({p.get("role2")}) 在{sec_to_text(p.get("role2_last_update", 0) - prev_p.get("role2_last_update", 0))}內更換了副職業 ({prev_p["role2"]} --> {p["role2"]}) 並且回到{"、".join([nl_dict2[topic] for topic in p["board"]])}榜上'
+                
+                for c in g.text_channels:
+                    if c.name in channel_to_board:
+                        if text.get(channel_to_board[c.name]):
+                            await c.send(text[channel_to_board[c.name]])
+                # for stat in p['board']:
+                #     if stat == 'kill':
+                #         continue
+                #     text[stat] = f'【{p.get("factionName")}】{p.get("nickname")}[{p.get("role")}]({p.get("role2")}) 再次登上了{"、".join([nl_dict2[topic] for topic in p["board"]])}榜 ({p[topic_to_stat[stat]]}{nl_dict[stat]})'
+                prev_leaderboard.pop(p_id)
             else:
-                prev_leaderboard[p['id']] = new_leaderboard_dict[p['id']]
+                p = new_leaderboard_dict[p_id]
+                text = {}
+
+
                 for stat in p['board']:
                     if stat == 'kill':
                         continue
-                    
+                    # back_prev_leaderboard[prev_p_id][f'{stat}_last_update'] = time.time()
                     text[stat] = f'【{p.get("factionName")}】{p.get("nickname")}[{p.get("role")}]({p.get("role2")}) 登上了{"、".join([nl_dict2[topic] for topic in p["board"]])}榜 ({p[topic_to_stat[stat]]}{nl_dict[stat]})'
 
-            new_leaderboard_dict[p['id']] = p.copy()
-            for c in g.text_channels:
-                if c.name in channel_to_board:
-                    if text.get(channel_to_board[c.name]):
-                        await c.send(text[channel_to_board[c.name]])
-        for _p in prev_leaderboard:
-            prev_p = prev_leaderboard[_p]
+                for c in g.text_channels:
+                    if c.name in channel_to_board:
+                        if text.get(channel_to_board[c.name]):
+                            await c.send(text[channel_to_board[c.name]])
+        for prev_p_id in prev_leaderboard:
+            prev_p = prev_leaderboard[prev_p_id]
+            text = {}
+
             for stat in prev_p['board']:
                 if stat == 'kill':
                     continue
+
                 text[stat] = f'【{prev_p.get("factionName")}】{prev_p.get("nickname")}[{prev_p.get("role")}]({prev_p.get("role2")}) 從{"、".join(prev_p["board"])}榜上消失了 (原本有{p[topic_to_stat[stat]]}{nl_dict[stat]})'
-            prev_p['board'] = []
-            new_leaderboard_dict[prev_p['id']] = prev_p.copy()
+            back_prev_leaderboard[prev_p_id]['board'] = []
+            
             for c in g.text_channels:
                 if c.name in channel_to_board:
                     if text.get(channel_to_board[c.name]):
-                        await c.send(text[channel_to_board[c.name]])
+                        await c.send(text[channel_to_board[c.name]])            
 
-        for p in new_leaderboard_dict:
-            prev_leaderboard[p['id']] = new_leaderboard_dict[p['id']]
+        prev_leaderboard = back_prev_leaderboard.copy()
 
-        print(prev_leaderboard)
+        # for _p in new_leaderboard_dict:
+        #     p = new_leaderboard_dict[_p]
+        #     prev_p = prev_leaderboard.get(_p, {})
+            
+        #     if prev_p.get('board'):
+        #         for stat in nl_dict:
+        #             if p[topic_to_stat[stat]] != prev_p[topic_to_stat[stat]]:
+        #                 p[stat+'_last_update'] = time.time()
+        #                 if p[topic_to_stat[stat]] > prev_p[topic_to_stat[stat]]: 
+        #                     text[stat] = f'【{p.get("factionName")}】{p.get("nickname")}[{p.get("role")}]({p.get("role2")}) 在{sec_to_text(p.get(stat+"_last_update", 0) - prev_p.get(stat+"_last_update", 0))}內增加了 **{p[topic_to_stat[stat]] - prev_p[topic_to_stat[stat]]}** {nl_dict[stat]} ({prev_p[topic_to_stat[stat]]} --> {p[topic_to_stat[stat]]})'
+        #                 else:
+        #                     assert p[topic_to_stat[stat]] < prev_p[topic_to_stat[stat]]
+        #                     text[stat] = f'【{p.get("factionName")}】{p.get("nickname")}[{p.get("role")}]({p.get("role2")}) 在{sec_to_text(p.get(stat+"_last_update", 0) - prev_p.get(stat+"_last_update", 0))}內減少了 **{prev_p[topic_to_stat[stat]] - p[topic_to_stat[stat]]}** {nl_dict[stat]} ({prev_p[topic_to_stat[stat]]} --> {p[topic_to_stat[stat]]})'
+                    
+        #         if p.get('role2') != prev_p.get('role2'):
+        #             p['roles_last_update'] = time.time()
+        #             text['role2'] = f'【{p.get("factionName")}】{p.get("nickname")}[{p.get("role")}]({p.get("role2")}) 在{sec_to_text(p.get("role2_last_update", 0) - prev_p.get("role2_last_update", 0))}內更換了副職業 ({prev_p["role2"]} --> {p["role2"]})'
+        #         prev_leaderboard.pop(p['id'])
+        #     else:
+        #         prev_leaderboard[p['id']] = new_leaderboard_dict[p['id']]
+        #         for stat in p['board']:
+        #             if stat == 'kill':
+        #                 continue
+                    
+        #             text[stat] = f'【{p.get("factionName")}】{p.get("nickname")}[{p.get("role")}]({p.get("role2")}) 登上了{"、".join([nl_dict2[topic] for topic in p["board"]])}榜 ({p[topic_to_stat[stat]]}{nl_dict[stat]})'
+
+        #     new_leaderboard_dict[p['id']] = p.copy()
+        #     for c in g.text_channels:
+        #         if c.name in channel_to_board:
+        #             if text.get(channel_to_board[c.name]):
+        #                 await c.send(text[channel_to_board[c.name]])
+        # for _p in prev_leaderboard:
+        #     prev_p = prev_leaderboard[_p]
+        #     for stat in prev_p['board']:
+        #         if stat == 'kill':
+        #             continue
+        #         text[stat] = f'【{prev_p.get("factionName")}】{prev_p.get("nickname")}[{prev_p.get("role")}]({prev_p.get("role2")}) 從{"、".join(prev_p["board"])}榜上消失了 (原本有{p[topic_to_stat[stat]]}{nl_dict[stat]})'
+        #     prev_p['board'] = []
+        #     new_leaderboard_dict[prev_p['id']] = prev_p.copy()
+        #     for c in g.text_channels:
+        #         if c.name in channel_to_board:
+        #             if text.get(channel_to_board[c.name]):
+        #                 await c.send(text[channel_to_board[c.name]])
+
+        # for p in new_leaderboard_dict:
+        #     prev_leaderboard[p['id']] = new_leaderboard_dict[p['id']]
+
+        # print(prev_leaderboard)
 
 
 
-        await asyncio.sleep(600)
+        await asyncio.sleep(10)
 
 client.run(os.getenv('siesta-token'))
