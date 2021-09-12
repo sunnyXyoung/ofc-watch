@@ -54,11 +54,11 @@ logging.basicConfig(level=logging.NOTSET)
 def sec_to_text(sec):
     if sec>60:
         if int(int(sec/60)/60) == 0:
-            return f' {int(sec-int(int(sec/60)/60))/60} 分鐘'
+            return f' {int(sec-int(int(sec/60)/60))//60 +1} 分鐘'
         else:
-            return f' {int(int(sec/60)/60)} 小時 {int(int(sec-int(int(sec/60)/60)*3600)/60)} 分鐘'
+            return f' {int(int(sec/60)/60)} 小時 {int(int(sec-int(int(sec/60)/60)*3600)//60 +1)} 分鐘'
     else:
-        return f' {sec} 秒'
+        return f' {int(sec)+1} 秒'
 
 
 async def update_leaderboard():
@@ -118,7 +118,9 @@ async def on_ready():
 
         text = {}
 
-        
+        print(new_leaderboard_dict)
+        print(type(new_leaderboard_dict))
+        input()
         for _p in new_leaderboard_dict:
             p = new_leaderboard_dict[_p]
             prev_p = prev_leaderboard.get(p['id'], {})
