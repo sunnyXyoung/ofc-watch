@@ -204,7 +204,7 @@ async def on_ready():
             if time.time() - init_time >= wait_time:
                 await wait_message.delete()
                 break
-            await asyncio.sleep(1)
+            await asyncio.sleep(3)
             await wait_message.edit(content=f'距離下次檢查有無最新戰報還有{sec_to_text(int(wait_time + init_time - time.time()))}')
 
         wait_time = wait_time * wait_time_rate
