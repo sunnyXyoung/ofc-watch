@@ -150,7 +150,7 @@ async def on_ready():
                         elif m.get('s') == 'critical' and m['m'] == f"{line_dict['location'][len(faction):]}被摧毀了":
                             summary = m['m']
                             break
-                        elif m['m'].startswith(f'{line_dict["aName"]}直接攻擊城堡，造成') and m['m'].endsqwith('點傷害'):
+                        elif m['m'].startswith(f'{line_dict["aName"]}直接攻擊城堡，造成') and m['m'].endswith('點傷害'):
                             summary = m['m']
                             break
                         elif m.get('s') == 'info' and m['m'].startswith('雙方大戰 16 回合不分勝負！'):
