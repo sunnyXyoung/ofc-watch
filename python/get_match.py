@@ -198,14 +198,14 @@ async def on_ready():
         print(f'use {time_use}sec')
 
         # time.sleep(wait_time)
-        wait_message = await lastest_report_c.send(f'距離下次檢查有無最新戰報還有 {sec_to_text(wait_time)}')
+        wait_message = await lastest_report_c.send(f'距離下次檢查有無最新戰報還有{sec_to_text(wait_time)}')
         init_time = time.time()
         while True:
             if time.time() - init_time >= wait_time:
                 await wait_message.delete()
                 break
             await asyncio.sleep(1)
-            await wait_message.edit(content=f'距離下次檢查有無最新戰報還有 {sec_to_text(int(wait_time + init_time - time.time()))}')
+            await wait_message.edit(content=f'距離下次檢查有無最新戰報還有{sec_to_text(int(wait_time + init_time - time.time()))}')
 
         wait_time = wait_time * wait_time_rate
         if wait_time > max_wait_time:
