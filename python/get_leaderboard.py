@@ -117,11 +117,12 @@ async def on_ready():
                 new_leaderboard_dict[p['id']] = p.copy()
 
         text = {}
-        back_leaderboard_dict = new_leaderboard_dict.copy()
+
+        
         for _p in new_leaderboard_dict:
             p = new_leaderboard_dict[_p]
             prev_p = prev_leaderboard.get(p['id'], {})
-            print(prev_leaderboard, prev_p)
+            
             if prev_p.get('board'):
                 for stat in nl_dict:
                     if p[topic_to_stat[stat]] != prev_p[topic_to_stat[stat]]:
@@ -137,14 +138,14 @@ async def on_ready():
                     text['role2'] = f'【{p.get("factionName")}】{p.get("nickname")}[{p.get("role")}]({p.get("role2")}) 在{sec_to_text(p.get("role2_last_update", 0) - prev_p.get("role2_last_update", 0))}內更換了副職業 ({prev_p["role2"]} --> {p["role2"]})'
                 prev_leaderboard.pop(p['id'])
             else:
-                
+                prev_leaderboard[p['id']] = new_leaderboard_dict[p['id']]
                 for stat in p['board']:
                     if stat == 'kill':
                         continue
                     
                     text[stat] = f'【{p.get("factionName")}】{p.get("nickname")}[{p.get("role")}]({p.get("role2")}) 登上了{"、".join([nl_dict2[topic] for topic in p["board"]])}榜 ({p[topic_to_stat[stat]]}{nl_dict[stat]})'
 
-            back_leaderboard_dict[p['id']] = p.copy()
+            new_leaderboard_dict[p['id']] = p.copy()
             for c in g.text_channels:
                 if c.name in channel_to_board:
                     if text.get(channel_to_board[c.name]):
@@ -156,16 +157,19 @@ async def on_ready():
                     continue
                 text[stat] = f'【{prev_p.get("factionName")}】{prev_p.get("nickname")}[{prev_p.get("role")}]({prev_p.get("role2")}) 從{"、".join(prev_p["board"])}榜上消失了 (原本有{p[topic_to_stat[stat]]}{nl_dict[stat]})'
             prev_p['board'] = []
-            back_leaderboard_dict[prev_p['id']] = prev_p.copy()
+            new_leaderboard_dict[prev_p['id']] = prev_p.copy()
             for c in g.text_channels:
                 if c.name in channel_to_board:
                     if text.get(channel_to_board[c.name]):
                         await c.send(text[channel_to_board[c.name]])
 
-        prev_leaderboard = back_leaderboard_dict.copy()
+        for p in new_leaderboard_dict:
+            prev_leaderboard[p['id']] = new_leaderboard_dict[p['id']]
+
+        print(prev_leaderboard)
 
 
 
-        await asyncio.sleep(10)
+        await asyncio.sleep(600)
 
 client.run(os.getenv('siesta-token'))

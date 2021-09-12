@@ -12,6 +12,14 @@ load_dotenv()
 
 client = discord.Client()
 
+def sec_to_text(sec):
+    if sec>60:
+        if int(int(sec/60)/60) == 0:
+            return f' {int(sec-int(int(sec/60)/60))/60} 分鐘'
+        else:
+            return f' {int(int(sec/60)/60)} 小時 {int(int(sec-int(int(sec/60)/60)*3600)/60)} 分鐘'
+    else:
+        return f' {sec} 秒'
 
 def get_report(report_id):
     headers = {
@@ -190,7 +198,15 @@ async def on_ready():
         print(f'use {time_use}sec')
 
         # time.sleep(wait_time)
-        await asyncio.sleep(wait_time)
+        wait_message = await lastest_report_c.send(f'距離下次檢查有無最新戰報還有 {sec_to_text(wait_time)}')
+        init_time = time.time()
+        while True:
+            if time.time() - init_time >= wait_time:
+                await wait_message.delete()
+                break
+            await asyncio.sleep(1)
+            await wait_message.edit(content=f'距離下次檢查有無最新戰報還有 {sec_to_text(int(wait_time + init_time - time.time()))}')
+
         wait_time = wait_time * wait_time_rate
         if wait_time > max_wait_time:
             wait_time = max_wait_time
