@@ -15,11 +15,11 @@ client = discord.Client()
 def sec_to_text(sec):
     if sec>60:
         if int(int(sec/60)/60) == 0:
-            return f' {int(sec-int(int(sec/60)/60))/60} 分鐘'
+            return f' {int(sec-int(int(sec/60)/60))//60 +1} 分鐘'
         else:
-            return f' {int(int(sec/60)/60)} 小時 {int(int(sec-int(int(sec/60)/60)*3600)/60)} 分鐘'
+            return f' {int(int(sec/60)/60)} 小時 {int(int(sec-int(int(sec/60)/60)*3600)//60 +1)} 分鐘'
     else:
-        return f' {sec} 秒'
+        return f' {int(sec)+1} 秒'
 
 def get_report(report_id):
     headers = {
