@@ -176,8 +176,7 @@ async def on_message(message):
                                 # report = report['report']
                                 pass_check = True
                                 for test in params:
-
-                                    if getattr(search_filter, test.replace('-', ''))(report):
+                                    if getattr(search_filter, test.replace('-', ''))(report, params[test]):
                                         pass_check = False
                                         break
 

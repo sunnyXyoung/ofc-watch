@@ -66,113 +66,113 @@ def report_to_embed(report, _round, footer_text):
 
 
 
-def p(test_payload):
+def p(report_dict, test_payload):
 	report_dict = report_dict['report']
 	return test_payload in report_dict['aName'] or test_payload in report_dict.get('bName', '')
 
 
-def r(test_payload):
+def r(report_dict, test_payload):
 	report_dict = report_dict['report']
 	return test_payload in report_dict['messages']['stats']['a']['role'] or test_payload in report_dict['messages']['stats'].get('b', {}).get('role', '')
 
 
-def r2(test_payload):
+def r2(report_dict, test_payload):
 	report_dict = report_dict['report']
 	return test_payload in report_dict['messages']['stats']['a']['role2'] or test_payload in report_dict['messages']['stats'].get('b', {}).get('role2', '')
 
 
-def l(test_payload):
+def l(report_dict, test_payload):
 	report_dict = report_dict['report']
 	return test_payload in report_dict['location']
 
 
-def w(test_payload):
+def w(report_dict, test_payload):
 	report_dict = report_dict['report']
 	return any([test_payload in w['type'] for w in (report_dict['messages']['stats']['a']['equipments'] + report_dict['messages']['stats'].get('b', {}).get('equipments', []))])
 
 
-def wn(test_payload):
+def wn(report_dict, test_payload):
 	report_dict = report_dict['report']
 	return any([test_payload in w['name'] for w in (report_dict['messages']['stats']['a']['equipments'] + report_dict['messages']['stats'].get('b', {}).get('equipments', []))])
 
 
-def f(test_payload):
+def f(report_dict, test_payload):
 	report_dict = report_dict['report']
 	return test_payload == report_dict['aFactionName'] or test_payload == report_dict['bFactionName']
 
 
-def s(test_payload):
+def s(report_dict, test_payload):
 	report_dict = report_dict['report']
 	return test_payload in str(report_dict)
 
 
-def Wp(test_payload):
+def Wp(report_dict, test_payload):
 	report_dict = report_dict['report']
 	w = winner_and_loser(report_dict)[0]
 	return test_payload in report_dict.get(w+'Name')
 
 
-def Wr(test_payload):
+def Wr(report_dict, test_payload):
 	report_dict = report_dict['report']
 	w = winner_and_loser(report_dict)[0]
 	return test_payload in report_dict['messages']['stats'].get(w, {}).get('role', '')
 
 
-def Wr2(test_payload):
+def Wr2(report_dict, test_payload):
 	report_dict = report_dict['report']
 	w = winner_and_loser(report_dict)[0]
 	return test_payload in report_dict['messages']['stats'].get(w, {}).get('role2', '')
 
 
-def Ww(test_payload):
+def Ww(report_dict, test_payload):
 	report_dict = report_dict['report']
 	w = winner_and_loser(report_dict)[0]
 	return any([test_payload in w['type'] for w in report_dict['messages']['stats'].get(winner, {}).get('equipments', [])])
 
 
-def Wwn(test_payload):
+def Wwn(report_dict, test_payload):
 	report_dict = report_dict['report']
 	winner = winner_and_loser(report_dict)[0]
 	return any([test_payload in w['name'] for w in report_dict['messages']['stats'].get(winner, {}).get('equipments', [])])
 
 
-def Wf(test_payload):
+def Wf(report_dict, test_payload):
 	report_dict = report_dict['report']
 	w = winner_and_loser(report_dict)[0]
 	return test_payload == report_dict.get(w+'FactionName')
 
 
-def Lp(test_payload):
+def Lp(report_dict, test_payload):
 	report_dict = report_dict['report']
 	l = winner_and_loser(report_dict)[1]
 	return test_payload in report_dict.get(l+'Name')
 
 
-def Lr(test_payload):
+def Lr(report_dict, test_payload):
 	report_dict = report_dict['report']
 	l = winner_and_loser(report_dict)[1]
 	return test_payload in report_dict['messages']['stats'].get(l, {}).get('role', '')
 
 
-def Lr2(test_payload):
+def Lr2(report_dict, test_payload):
 	report_dict = report_dict['report']
 	l = winner_and_loser(report_dict)[1]
 	return test_payload in report_dict['messages']['stats'].get(l, {}).get('role2', '')
 
 
-def Lw(test_payload):
+def Lw(report_dict, test_payload):
 	report_dict = report_dict['report']
 	l = winner_and_loser(report_dict)[1]
 	return any([test_payload in w['type'] for w in report_dict['messages']['stats'].get(l, {}).get('equipments', [])])
 
 
-def Lwn(test_payload):
+def Lwn(report_dict, test_payload):
 	report_dict = report_dict['report']
 	l = winner_and_loser(report_dict)[1]
 	return any([test_payload in w['name'] for w in report_dict['messages']['stats'].get(l, {}).get('equipments', [])])
 
 
-def Lf(test_payload):
+def Lf(report_dict, test_payload):
 	report_dict = report_dict['report']
 	l = winner_and_loser(report_dict)[1]
 	return test_payload == report_dict.get(l+'FactionName')
