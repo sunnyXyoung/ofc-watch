@@ -171,12 +171,12 @@ async def on_message(message):
                         
                         ans_list = []
                         for report_f in os.listdir(os.path.join(webroot, 'ofc', _round)):
-                            break
                             with open(os.path.join(webroot, 'ofc', _round, report_f), 'r', encoding='utf8') as json_file:
                                 report = json.loads(json_file.read())
                                 # report = report['report']
                                 pass_check = True
                                 for test in params:
+
                                     if getattr(search_filter.replace('-', ''), test)(report):
                                         pass_check = False
                                         break
