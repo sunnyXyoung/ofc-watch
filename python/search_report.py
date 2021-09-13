@@ -176,7 +176,7 @@ async def on_message(message):
                                 # report = report['report']
                                 pass_check = True
                                 for test in params:
-                                    if getattr(search_filter, test.replace('-', ''))(report, params[test]):
+                                    if not getattr(search_filter, test.replace('-', ''))(report, params[test]):
                                         pass_check = False
                                         break
 
@@ -203,13 +203,13 @@ async def on_message(message):
                                 )
                                 ans_embed.set_author(name=str(message.author), icon_url=message.author.avatar_url)
                                 ans_embed.set_footer(text=f"第 {_round} 輪")
-                                await ans_m.edit(embed=ans_embed, components=[
+                                await ans_m.edit(embed=ans_embed, components=
                                         [[
                                             Button(style=ButtonStyle.gray, label="預覽戰報"),
                                             Button(style=ButtonStyle.gray, label="查看列表"),
                                             Button(style=ButtonStyle.red, label="退出")
                                         ]]
-                                    ])
+                                    )
                                 while True:
                                     try:
                                         res = await client.wait_for("button_click", timeout=60.0)
@@ -228,7 +228,7 @@ async def on_message(message):
                                             )
                                             ans_embed.set_footer(text=f"第 {_round} 輪")
                                             ans_embed.set_author(name=str(message.author), icon_url=message.author.avatar_url)
-                                            ans_embed.insert_field_at(index=0, name="閒置過久，已退出檢視")
+                                            ans_embed.insert_field_at(index=0, name="閒置過久，已退出檢視", value='閒置60秒後將會自動退出')
                                             await ans_m.edit(embed=ans_embed, components=[])
                                             return
     
@@ -241,12 +241,12 @@ async def on_message(message):
                                     )
                                     ans_embed.set_footer(text=f"第 {_round} 輪")
                                     ans_embed.set_author(name=str(message.author), icon_url=message.author.avatar_url)
-                                    ans_embed.insert_field_at(index=0, name="已退出檢視")
+                                    ans_embed.insert_field_at(index=0, name="已退出檢視", value='感謝你的使用')
                                     await ans_m.edit(embed=ans_embed, components=[])
                                     return
                                 elif res.component.label == "查看列表":
                                     text = '\n'.join([f"https://ofc-watch.kulimi.tw/history/{_round}/{i}" for i in ans_list])
-                                    if text > 1024:
+                                    if len(text) > 1024:
                                         ans_embed = discord.Embed(
                                             title = f"搜尋結果：共 {len(ans_list)} 筆戰報符合條件",
                                             colour = discord.Colour.red(),
@@ -256,27 +256,12 @@ async def on_message(message):
                                         ans_embed.set_footer(text=f"第 {_round} 輪")
                                         ans_embed.set_author(name=str(message.author), icon_url=message.author.avatar_url)
                                         ans_embed.remove_field(0)
-                                        ans_embed.insert_field_at(index=0, name="戰報過多，無法查看列表")
+                                        ans_embed.insert_field_at(index=0, name="戰報過多，無法查看列表", value='總和超過1024個字')
                                         await ans_m.edit(embed=ans_embed)
                                     else:
                                         ans_embed.remove_field(0)
                                         ans_embed.insert_field_at(index=0, name=f'結果列表', value=text, inline=False)
-                                        await ans_m.edit(embed=ans_embed)
-                                elif res.component.label == "預覽戰報":
-                                    index = 0
-                                    ans_len = len(ans_list)
-                                    while True:
-                                        with open(os.path.join(webroot, 'ofc', _round, ans_list+'.json'), 'r', encoding='utf8') as json_file:
-                                            report = json.loads(json_file.read())
-                                            ans_embed = search_filter.report_to_embed(report, _round, f"搜尋結果：共 {len(ans_list)} 筆戰報符合條件")
-                                            await ans_m.edit(embed=ans_embed, components=[
-                                                    [[
-                                                        Button(style=ButtonStyle.gray, label="上一份戰報"),
-                                                        Button(style=ButtonStyle.gray, label="下一份戰報"),
-                                                        Button(style=ButtonStyle.blue, label="回到結果"),
-                                                        Button(style=ButtonStyle.red, label="退出")
-                                                    ]]
-                                                ])
+                                        await ans_m.edit(embed=ans_embed, components=[Button(style=ButtonStyle.red, label="返回")])
                                         while True:
                                             try:
                                                 res = await client.wait_for("button_click", timeout=60.0)
@@ -295,13 +280,53 @@ async def on_message(message):
                                                     )
                                                     ans_embed.set_footer(text=f"第 {_round} 輪")
                                                     ans_embed.set_author(name=str(message.author), icon_url=message.author.avatar_url)
-                                                    ans_embed.insert_field_at(index=0, name="閒置過久，已退出檢視")
+                                                    ans_embed.insert_field_at(index=0, name="閒置過久，已退出檢視", value='閒置60秒後將會自動退出')
+                                                    await ans_m.edit(embed=ans_embed, components=[])
+                                                    return
+
+
+                                elif res.component.label == "預覽戰報":
+                                    index = 0
+                                    ans_len = len(ans_list)
+                                    while True:
+                                        with open(os.path.join(webroot, 'ofc', _round, ans_list[index]+'.json'), 'r', encoding='utf8') as json_file:
+                                            print('open', ans_list[index])
+                                            report = json.loads(json_file.read())
+                                            ans_embed = search_filter.report_to_embed(report, _round, f"搜尋結果：共 {len(ans_list)} 筆戰報符合條件")
+                                            await ans_m.edit(embed=ans_embed, components=[
+                                                    [
+                                                        Button(style=ButtonStyle.gray, label="上一份戰報"),
+                                                        Button(style=ButtonStyle.gray, label="下一份戰報"),
+                                                        Button(style=ButtonStyle.blue, label="回到結果"),
+                                                        Button(style=ButtonStyle.red, label="退出")
+                                                    ]
+                                                ])
+                                        while True:
+                                            print('wait btn click')
+                                            try:
+                                                res = await client.wait_for("button_click", timeout=60.0)
+                                                if res.message.id == ans_m.id:
+                                                    await res.respond(type=6)
+                                                    break
+                                            except Exception as e:
+                                                print(e)
+                                                if time.time() - wait_time > 60:
+                                                    refuse = True
+                                                    ans_embed = discord.Embed(
+                                                        title = f"搜尋結果：共筆 {len(ans_list)} 戰報符合條件",
+                                                        colour = discord.Colour.red(),
+                                                        description = 'k!search 戰報查詢系統',
+                                                        timestamp = datetime.datetime.utcfromtimestamp(time.time()),
+                                                    )
+                                                    ans_embed.set_footer(text=f"第 {_round} 輪")
+                                                    ans_embed.set_author(name=str(message.author), icon_url=message.author.avatar_url)
+                                                    ans_embed.insert_field_at(index=0, name="閒置過久，已退出檢視", value='閒置60秒後將會自動退出')
                                                     await ans_m.edit(embed=ans_embed, components=[])
                                                     return
                                         if res.component.label == '上一份戰報':
-                                            index -= 1
+                                            index = (index - 1) % ans_len
                                         elif res.component.label == '下一份戰報':
-                                            index += 1
+                                            index = (index + 1) % ans_len
                                         elif res.component.label == '回到結果':
                                             break
                                         elif res.component.label == '退出':
@@ -313,7 +338,7 @@ async def on_message(message):
                                             )
                                             ans_embed.set_footer(text=f"第 {_round} 輪")
                                             ans_embed.set_author(name=str(message.author), icon_url=message.author.avatar_url)
-                                            ans_embed.insert_field_at(index=0, name="已退出檢視")
+                                            ans_embed.insert_field_at(index=0, name="已退出檢視", value='感謝你的使用')
                                             await ans_m.edit(embed=ans_embed, components=[])
                                             return
 

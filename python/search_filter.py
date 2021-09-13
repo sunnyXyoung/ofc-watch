@@ -1,4 +1,5 @@
 import discord
+import datetime
 
 def winner_and_loser(report_dict):
 	for m in report_dict['messages']['messages']:
@@ -12,13 +13,15 @@ def winner_and_loser(report_dict):
 
 
 def report_to_embed(report, _round, footer_text):
-	report_dict = report_dict['report']
-	while True:
-		for faction in [report_dict["aFactionName"], report_dict["bFactionName"]]:
-			if report_dict['location'].startswith(faction):
-				break
+	report_dict = report['report']
+	for faction in [report_dict["aFactionName"], report_dict["bFactionName"]]:
+		if report_dict['location'].startswith(faction):
+			break
+	else:
+		print(report_dict['location'], [report_dict["aFactionName"], report_dict["bFactionName"]])
 				
 	summary = '戰報'
+	i = report_dict['id']
 
 	for m in report_dict['messages']['messages']:
 		a = m['m'].split(' ')
@@ -47,7 +50,7 @@ def report_to_embed(report, _round, footer_text):
 			pass
 
 
-	t = discord.Embed(title=summary, description=f"在 **{report_dict['location']}**", colour=(int(faction_dict[faction]['color'].replace('#', ''), 16)), timestamp=datetime.datetime.utcfromtimestamp(report_dict['time'] / 1000))
+	t = discord.Embed(title=summary, description=f"在 **{report_dict['location']}**", colour=discord.Colour.blue(), timestamp=datetime.datetime.utcfromtimestamp(report_dict['time'] / 1000))
 	t.set_author(name=f"戰報編號{i}", url=f"https://ofc-watch.kulimi.tw/history/{_round}/{i}")
 
 	equip_list = '\n'.join([f"{weapon['quality']}的 **{weapon['name']}**（{weapon['type']}）攻擊{weapon['atk']}、防禦{weapon['def']}、礦力{weapon['minePower']}" for weapon in report_dict['messages']['stats']['a']['equipments']])
@@ -68,6 +71,8 @@ def report_to_embed(report, _round, footer_text):
 
 def p(report_dict, test_payload):
 	report_dict = report_dict['report']
+	print(test_payload in report_dict.get('bName', ''))
+	print(test_payload, report_dict.get('bName', ''))
 	return test_payload in report_dict['aName'] or test_payload in report_dict.get('bName', '')
 
 
