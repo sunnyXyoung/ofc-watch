@@ -76,7 +76,7 @@ async def on_message(message):
 範例：`k!search -R 9 -s "第 74 層被摧毀了"`
 範例：`k!search -R 6 -p Kulimi -s 層被摧毀了`
 範例：`k!search -R 5 -p "Kulimi Beta" -s 層被摧毀了`
-範例：`k!search -R 5.5 -r 礦工,戰鬥員`
+範例：`k!search -R 5.5 -r 礦工`
 ''')
     elif message.content.startswith('k!search '):
         if 885399145005846538 not in [r.id for r in message.author.roles]:
