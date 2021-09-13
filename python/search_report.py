@@ -257,7 +257,28 @@ async def on_message(message):
                                         ans_embed.set_author(name=str(message.author), icon_url=message.author.avatar_url)
                                         ans_embed.remove_field(0)
                                         ans_embed.insert_field_at(index=0, name="戰報過多，無法查看列表", value='總和超過1024個字')
-                                        await ans_m.edit(embed=ans_embed)
+                                        await ans_m.edit(embed=ans_embed, components=[Button(style=ButtonStyle.red, label="返回")])
+                                        while True:
+                                            try:
+                                                res = await client.wait_for("button_click", timeout=60.0)
+                                                if res.message.id == ans_m.id:
+                                                    await res.respond(type=6)
+                                                    break
+                                            except Exception as e:
+                                                print(e)
+                                                if time.time() - wait_time > 60:
+                                                    refuse = True
+                                                    ans_embed = discord.Embed(
+                                                        title = f"搜尋結果：共筆 {len(ans_list)} 戰報符合條件",
+                                                        colour = discord.Colour.red(),
+                                                        description = 'k!search 戰報查詢系統',
+                                                        timestamp = datetime.datetime.utcfromtimestamp(time.time()),
+                                                    )
+                                                    ans_embed.set_footer(text=f"第 {_round} 輪")
+                                                    ans_embed.set_author(name=str(message.author), icon_url=message.author.avatar_url)
+                                                    ans_embed.insert_field_at(index=0, name="閒置過久，已退出檢視", value='閒置60秒後將會自動退出')
+                                                    await ans_m.edit(embed=ans_embed, components=[])
+                                                    return
                                     else:
                                         ans_embed.remove_field(0)
                                         ans_embed.insert_field_at(index=0, name=f'結果列表', value=text, inline=False)
