@@ -79,9 +79,11 @@ async def on_message(message):
 範例：`k!search -R 5.5 -r 礦工`
 ''')
     elif message.content.startswith('k!search '):
-        if 885399145005846538 not in [r.id for r in message.author.roles]:
-            await message.reply('此為高階功能 請使用 `k!battle` 查看更多關於高階會員的資訊')
+        if 480987568901455872 != message.author.id:
             return
+        # if 885399145005846538 not in [r.id for r in message.author.roles]:
+        #     await message.reply('此為高階功能 請使用 `k!battle` 查看更多關於高階會員的資訊')
+        #     return
 
         search_text = message.content.strip()[len('k!search '):] + ' '
 
