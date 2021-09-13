@@ -71,8 +71,6 @@ def report_to_embed(report, _round, footer_text):
 
 def p(report_dict, test_payload):
 	report_dict = report_dict['report']
-	print(test_payload in report_dict.get('bName', ''))
-	print(test_payload, report_dict.get('bName', ''))
 	return test_payload in report_dict['aName'] or test_payload in report_dict.get('bName', '')
 
 
