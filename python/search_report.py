@@ -13,7 +13,6 @@ load_dotenv()
 
 
 client = discord.Client()
-
 webroot = os.getenv('web-root')
 
 param_to_text = {
@@ -25,6 +24,16 @@ param_to_text = {
     '-w': '武器類別：',
     '-wn': '武器名稱：',
     '-s': '查詢文字：',
+    '-Wp': '贏家玩家名稱：',
+    '-Wr': '贏家職業：',
+    '-Wr2': '贏家副職業：',
+    '-Ww': '贏家武器類別：',
+    '-Wwn': '贏家武器名稱：',
+    '-Lp': '輸家玩家名稱：',
+    '-Lr': '輸家職業：',
+    '-Lr2': '輸家副職業：',
+    '-Lw': '輸家武器類別：',
+    '-Lwn': '輸家武器名稱：',
 }
 
 @client.event
@@ -37,7 +46,7 @@ async def on_ready():
 async def on_message(message):
     if message.content.strip() == 'k!search':
         await message.reply('''
-`k!search [-R round] [-p player_name,player_name2] [-r role,role] [-r2 role2,role2] [-l location] [-w weapon_type,weapon_type2,...] [-wn weapon_name,weapon_name2] [-s "search_text"]`
+`k!search <params>`
 -R 指定輪數
 -p 指定玩家名稱，若玩家名稱包含在內就會顯示
 -r 指定職業
@@ -47,8 +56,20 @@ async def on_message(message):
 -wn 指定武器名稱
 -s 指定所有包含該段文字的戰報
 
+-Wp 指定贏家玩家名稱，若玩家名稱包含在內就會顯示
+-Wr 指定贏家職業
+-Wr2 指定贏家副職業
+-Ww 指定贏家武器類別
+-Wwn 指定贏家武器名稱
+
+-Lp 指定輸家玩家名稱，若玩家名稱包含在內就會顯示
+-Lr 指定輸家職業
+-Lr2 指定輸家副職業
+-Lw 指定輸家武器類別
+-Lwn 指定輸家武器名稱
+
 除-r為必填以外，其餘欄位最少要指定一個。
-範例：`k!search "第 74 層被摧毀了"`
+範例：`k!search -s "第 74 層被摧毀了"`
 範例：`k!search -p Kulimi 層被摧毀了`
 範例：`k!search -p "Kulimi Beta" 層被摧毀了`
 範例：`k!search -r 礦工,戰鬥員`
@@ -66,7 +87,7 @@ async def on_message(message):
         start_quote = False
         for i in search_text:
             if i == ' ' and not start_quote:
-                if temp_param != '':
+                if temp_param != '' and temp_param != '\n':
                     search_params.append(temp_param)
                     temp_param = ''
             elif i == '"':
@@ -96,14 +117,81 @@ async def on_message(message):
                     
                     search_embed = discord.Embed(
                         title = "請確認參數是否正確", 
-                        colour = discord.Colour.random(seed=time.time()),
+                        colour = discord.Colour.blue(),
                         description = 'k!search 戰報查詢系統',
                         timestamp = datetime.datetime.utcfromtimestamp(time.time()),
                     )
                     search_embed.insert_field_at(index=0, name='參數設定', value=('```js\n' + '\n'.join([f"{param_to_text[i]}{params[i]}" for i in params]) + '\n```'), inline=False)
                     search_embed.set_footer(text=f"第 {_round} 輪")
-                    search_m = await message.reply(embed=search_embed)
+                    search_m = await message.reply(embed=search_embed,
+                        components=[[                        
+                            Button(style=ButtonStyle.red, label="確認"),
+                            Button(style=ButtonStyle.gray, label="取消"),
+                        ]],
+                    )
+                    wait_time = time.time()
+                    refuse = False
+                    while True:
+                        try:
+                            res = await client.wait_for("button_click", timeout=60.0)
+                            if res.message.id == search_m.id:
+                                await res.respond(type=6)
+                                break
+                        except Exception as e:
+                            print(e)
+                            if time.time() - wait_time > 60:
+                                refuse = True
+                                search_embed = discord.Embed(
+                                    title = "閒置過久，已取消搜尋", 
+                                    colour = discord.Colour.red(),
+                                    description = 'k!search 戰報查詢系統',
+                                    timestamp = datetime.datetime.utcfromtimestamp(time.time()),
+                                )
+                                search_embed.set_author(name=str(message.author), icon_url=message.author.avatar_url)
+                                search_embed.insert_field_at(index=0, name='參數設定', value=('```js\n' + '\n'.join([f"{param_to_text[i]}{params[i]}" for i in params]) + '\n```'), inline=False)
+                                search_embed.set_footer(text=f"第 {_round} 輪")
+                                await search_m.edit(embed=search_embed, components=[])
+                                return
 
+                    if not refuse and res.component.label == '確認':
+                        search_embed = discord.Embed(
+                            title = "開始搜尋", 
+                            colour = discord.Colour.green(),
+                            description = 'k!search 戰報查詢系統',
+                            timestamp = datetime.datetime.utcfromtimestamp(time.time()),
+                        )
+                        search_embed.set_author(name=str(res.user), icon_url=res.user.avatar_url)
+                        search_embed.insert_field_at(index=0, name='參數設定', value=('```js\n' + '\n'.join([f"{param_to_text[i]}{params[i]}" for i in params]) + '\n```'), inline=False)
+                        search_embed.set_footer(text=f"第 {_round} 輪")
+                        await search_m.edit(embed=search_embed, components=[])
+                        
+                        ans_list = []
+                        for report_f in os.listdir(os.path.join(webroot, 'ofc', _round)):
+                            with open(os.path.join(webroot, 'ofc', _round, report_f), 'r', encoding='utf8') as json_file:
+                                report = json.loads(json_file.read())
+                                report = report['report']
+
+                                pass_check = True
+                                for test in params:
+                                    if test_fail:
+                                        pass_check = False
+                                        break
+
+                                if pass_check:
+                                    ans_list.append(report_f.replace('.json', ''))
+
+                    else:
+                        search_embed = discord.Embed(
+                            title = "已取消搜尋", 
+                            colour = discord.Colour.red(),
+                            description = 'k!search 戰報查詢系統',
+                            timestamp = datetime.datetime.utcfromtimestamp(time.time()),
+                        )
+                        search_embed.set_author(name=str(res.user), icon_url=res.user.avatar_url)
+                        search_embed.insert_field_at(index=0, name='參數設定', value=('```js\n' + '\n'.join([f"{param_to_text[i]}{params[i]}" for i in params]) + '\n```'), inline=False)
+                        search_embed.set_footer(text=f"第 {_round} 輪")
+                        await search_m.edit(embed=search_embed, components=[])
+                        return
 
                 else:
                     await message.reply('格式不正確 請使用 `k!search` 查看更多資訊')
