@@ -81,7 +81,7 @@ def r(report_dict, test_payload):
 
 def r2(report_dict, test_payload):
 	report_dict = report_dict['report']
-	return test_payload in report_dict['messages']['stats']['a']['role2'] or (test_payload in report_dict['messages']['stats'].get('b', {}).get('role2', '') if report_dict.get('bName') else False)
+	return test_payload in report_dict['messages']['stats']['a'].get('role2', '') or (test_payload in report_dict['messages']['stats'].get('b', {}).get('role2', '') if report_dict.get('bName') else False)
 
 
 def l(report_dict, test_payload):
