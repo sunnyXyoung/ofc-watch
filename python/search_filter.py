@@ -129,7 +129,7 @@ def Wr2(report_dict, test_payload):
 
 def Ww(report_dict, test_payload):
 	report_dict = report_dict['report']
-	w = winner_and_loser(report_dict)[0]
+	winner = winner_and_loser(report_dict)[0]
 	return any([test_payload in w['type'] for w in report_dict['messages']['stats'].get(winner, {}).get('equipments', [])])
 
 
