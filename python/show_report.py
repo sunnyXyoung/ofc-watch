@@ -63,4 +63,6 @@ async def on_button_click(res):
             report = json.loads(json_file.read())
             r_embed = search_filter.report_to_embed(report, _round, f"第 {_round} 輪 k!show")
             await res.message.edit(embed=r_embed, components=[[Button(style=ButtonStyle.gray, label="上一份戰報"),Button(style=ButtonStyle.gray, label="下一份戰報"),]])
+            await res.respond(type=6)
+        
 client.run(os.getenv('autokulimi-token'))
