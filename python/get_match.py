@@ -219,12 +219,18 @@ async def on_ready():
                     res_list.remove(res)
                 elif res[0].message.id == wait_message.id:
                     if 885399145005846538 in [r.id for r in res[0].user.roles]:
-                        await res[0].respond(type=6)
+                        try:
+                            await res[0].respond(type=6)
+                        except:
+                            pass
                         res_list.remove(res)
                         await wait_message.delete()
                         break
                     else:
-                        await res[0].respond(content='此為高階功能 請使用 `k!battle` 查看更多關於高階會員的資訊')
+                        try:
+                            await res[0].respond(content='此為高階功能 請使用 `k!battle` 查看更多關於高階會員的資訊')
+                        except:
+                            pass
                         res_list.remove(res)
             else:
                 continue
