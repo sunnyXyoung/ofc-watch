@@ -1,3 +1,5 @@
+from discord_components import *
+import discord_components
 import asyncio
 import requests
 import time
@@ -55,6 +57,7 @@ def get_faction():
 @client.event
 async def on_ready():
     global res_list
+    DiscordComponents(client)
     print(f'{client.user} online')
     for g in client.guilds:
         if g.id == 881543633290035211:
@@ -202,7 +205,7 @@ async def on_ready():
         print(f'use {time_use}sec')
 
         # time.sleep(wait_time)
-        wait_message = await lastest_report_c.send(f'距離下次檢查有無最新戰報還有{sec_to_text(wait_time)}')
+        wait_message = await lastest_report_c.send(f'距離下次檢查有無最新戰報還有{sec_to_text(wait_time)}' , components=[Button(style=ButtonStyle.gray, label="刷新")])
         init_time = time.time()
         while True:
             if time.time() - init_time >= wait_time:
