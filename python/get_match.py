@@ -218,7 +218,7 @@ async def on_ready():
                 if time.time() - res[1] > 60:
                     res_list.remove(res)
                 elif res[0].message.id == wait_message.id:
-                    if 885399145005846538 in [r.id for r in message.author.roles]:
+                    if 885399145005846538 in [r.id for r in res[0].user.roles]:
                         await res[0].respond(type=6)
                         res_list.remove(res)
                         await wait_message.delete()
