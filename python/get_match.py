@@ -142,7 +142,7 @@ async def on_ready():
                     break
                 
                 summary = '戰報'
-
+                line_dict['messages']['messages'].reverse()
                 for m in line_dict['messages']['messages']:
                     a = m['m'].split(' ')
                     try:
