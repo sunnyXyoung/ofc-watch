@@ -19,9 +19,10 @@ report_db = {}
 
 def reload_all_data():
     global report_db
-    print('start loading data ...', end='', flush=True)
+    print('start loading data ...')
     report_db = {}
     for _round in os.listdir(os.path.join(webroot, 'ofc')):
+        print(_round)
         report_db[_round] = {}
         for report_f in os.listdir(os.path.join(webroot, 'ofc', _round)):
             with open(os.path.join(webroot, 'ofc', _round, report_f), 'r', encoding='utf8') as json_file:
