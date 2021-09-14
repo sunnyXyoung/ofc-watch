@@ -112,7 +112,7 @@ def s(report_dict, test_payload):
 def Wp(report_dict, test_payload):
 	report_dict = report_dict['report']
 	w = winner_and_loser(report_dict)[0]
-	return test_payload in report_dict.get(w+'Name')
+	return test_payload in report_dict.get(w+'Name', '')
 
 
 def Wr(report_dict, test_payload):
@@ -148,7 +148,7 @@ def Wf(report_dict, test_payload):
 def Lp(report_dict, test_payload):
 	report_dict = report_dict['report']
 	l = winner_and_loser(report_dict)[1]
-	return test_payload in report_dict.get(l+'Name')
+	return test_payload in report_dict.get(l+'Name', '')
 
 
 def Lr(report_dict, test_payload):
