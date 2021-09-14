@@ -15,6 +15,22 @@ load_dotenv()
 
 client = discord.Client()
 webroot = os.getenv('web-root')
+report_db = {}
+
+def reload_all_data():
+    global report_db
+    print('start loading data ...', end='', flush=True)
+    report_db = {}
+    for _round in os.listdir(os.path.join(webroot, 'ofc')):
+        report_db[_round] = {}
+        for report_f in os.listdir(os.path.join(webroot, 'ofc', _round)):
+            with open(os.path.join(webroot, 'ofc', _round, report_f), 'r', encoding='utf8') as json_file:
+                report = json.loads(json_file.read())
+                report_db[_round][report['report']['id']] = report
+
+    print('Done')
+
+
 
 param_to_text = {
     '-R': '輪數：',
@@ -44,7 +60,9 @@ param_to_text = {
 async def on_ready():
     DiscordComponents(client)
     print(f'{client.user} online')
-
+    while True:
+        reload_all_data()
+        await asyncio.sleep(600)
 
 @client.event
 async def on_message(message):
@@ -175,18 +193,14 @@ async def on_message(message):
                         await search_m.edit(embed=search_embed, components=[])
                         
                         ans_list = []
-                        for report_f in os.listdir(os.path.join(webroot, 'ofc', _round)):
-                            with open(os.path.join(webroot, 'ofc', _round, report_f), 'r', encoding='utf8') as json_file:
-                                report = json.loads(json_file.read())
-                                # report = report['report']
-                                pass_check = True
-                                for test in params:
-                                    if not getattr(search_filter, test.replace('-', ''))(report, params[test]):
-                                        pass_check = False
-                                        break
+                        for r_id in report_db[_round]:
+                            report = report_db[_round][r_id]
 
-                                if pass_check:
-                                    ans_list.append(report_f.replace('.json', ''))
+                            for test in params:
+                                if not getattr(search_filter, test.replace('-', ''))(report, params[test]):
+                                    break
+                            else:
+                                ans_list.append(report_f.replace('.json', ''))
                         if len(ans_list) == 0:
                             ans_embed = discord.Embed(
                                 title = "無符合的結果", 
@@ -316,7 +330,6 @@ async def on_message(message):
                                     ans_len = len(ans_list)
                                     while True:
                                         with open(os.path.join(webroot, 'ofc', _round, ans_list[index]+'.json'), 'r', encoding='utf8') as json_file:
-                                            print('open', ans_list[index])
                                             report = json.loads(json_file.read())
                                             ans_embed = search_filter.report_to_embed(report, _round, f"搜尋結果：共 {len(ans_list)} 筆戰報符合條件")
                                             await ans_m.edit(embed=ans_embed, components=[
@@ -328,7 +341,6 @@ async def on_message(message):
                                                     ]
                                                 ])
                                         while True:
-                                            print('wait btn click')
                                             try:
                                                 res = await client.wait_for("button_click", timeout=60.0)
                                                 if res.message.id == ans_m.id:
