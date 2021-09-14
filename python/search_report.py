@@ -17,7 +17,7 @@ client = discord.Client()
 webroot = os.getenv('web-root')
 report_db = {}
 
-def reload_all_data():
+async def reload_all_data():
     global report_db
     print('start loading data ...')
     report_db = {}
@@ -62,7 +62,7 @@ async def on_ready():
     DiscordComponents(client)
     print(f'{client.user} online')
     while True:
-        reload_all_data()
+        await reload_all_data()
         await asyncio.sleep(600)
 
 @client.event
