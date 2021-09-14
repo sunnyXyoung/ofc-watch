@@ -225,6 +225,7 @@ async def on_ready():
                         break
                     else:
                         await res[0].respond(content='此為高階功能 請使用 `k!battle` 查看更多關於高階會員的資訊')
+                        res_list.remove(res)
             else:
                 continue
             break
