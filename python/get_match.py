@@ -215,14 +215,16 @@ async def on_ready():
             await wait_message.edit(content=f'距離下次檢查有無最新戰報還有{sec_to_text(int(wait_time + init_time - time.time()))}')
 
             for res in res_list:
-                if res.message.id == wait_message.id:
+                if time.time() - res[1] > 60:
+                    res_list.remove(res)
+                elif res[0].message.id == wait_message.id:
                     if 885399145005846538 in [r.id for r in message.author.roles]:
-                        await res.respond(type=6)
+                        await res[0].respond(type=6)
                         res_list.remove(res)
                         await wait_message.delete()
                         break
                     else:
-                        await res.respond(content='此為高階功能 請使用 `k!battle` 查看更多關於高階會員的資訊')
+                        await res[0].respond(content='此為高階功能 請使用 `k!battle` 查看更多關於高階會員的資訊')
             else:
                 continue
             break
