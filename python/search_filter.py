@@ -71,17 +71,17 @@ def report_to_embed(report, _round, footer_text):
 
 def p(report_dict, test_payload):
 	report_dict = report_dict['report']
-	return test_payload in report_dict['aName'] or test_payload in report_dict.get('bName', '')
+	return test_payload in report_dict['aName'] or (test_payload in report_dict.get('bName', '') if report_dict.get('bName') else False)
 
 
 def r(report_dict, test_payload):
 	report_dict = report_dict['report']
-	return test_payload in report_dict['messages']['stats']['a']['role'] or test_payload in report_dict['messages']['stats'].get('b', {}).get('role', '')
+	return test_payload in report_dict['messages']['stats']['a']['role'] or (test_payload in report_dict['messages']['stats'].get('b', {}).get('role', '') if report_dict.get('bName') else False)
 
 
 def r2(report_dict, test_payload):
 	report_dict = report_dict['report']
-	return test_payload in report_dict['messages']['stats']['a']['role2'] or test_payload in report_dict['messages']['stats'].get('b', {}).get('role2', '')
+	return test_payload in report_dict['messages']['stats']['a']['role2'] or (test_payload in report_dict['messages']['stats'].get('b', {}).get('role2', '') if report_dict.get('bName') else False)
 
 
 def l(report_dict, test_payload):
