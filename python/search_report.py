@@ -17,6 +17,12 @@ client = discord.Client()
 webroot = os.getenv('web-root')
 report_db = {}
 
+async def load_report(_round, report_f):
+    global report_db
+    with open(os.path.join(webroot, 'ofc', _round, report_f), 'r', encoding='utf8') as json_file:
+        report = json.loads(json_file.read())
+        report_db[_round][report['report']['id']] = report
+
 async def reload_all_data():
     global report_db
     print('start loading data ...')
@@ -25,9 +31,7 @@ async def reload_all_data():
         print(_round)
         report_db[_round] = {}
         for report_f in os.listdir(os.path.join(webroot, 'ofc', _round)):
-            with open(os.path.join(webroot, 'ofc', _round, report_f), 'r', encoding='utf8') as json_file:
-                report = json.loads(json_file.read())
-                report_db[_round][report['report']['id']] = report
+            await load_report(_round, report_f)
 
     print('Done')
 
