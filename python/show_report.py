@@ -62,5 +62,5 @@ async def on_button_click(res):
         with open(os.path.join(webroot, 'ofc', _round, f'{r_id}.json'), 'r', encoding='utf8') as json_file:
             report = json.loads(json_file.read())
             r_embed = search_filter.report_to_embed(report, _round, f"第 {_round} 輪 k!show")
-            await message.reply(embed=r_embed, components=[[Button(style=ButtonStyle.gray, label="上一份戰報"),Button(style=ButtonStyle.gray, label="下一份戰報"),]])
+            await res.message.edit(embed=r_embed, components=[[Button(style=ButtonStyle.gray, label="上一份戰報"),Button(style=ButtonStyle.gray, label="下一份戰報"),]])
 client.run(os.getenv('autokulimi-token'))
