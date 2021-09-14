@@ -171,6 +171,7 @@ async def on_ready():
                     if c.name in channel_to_board:
                         if text.get(channel_to_board[c.name]):
                             await c.send(text[channel_to_board[c.name]])
+                
                 # for stat in p['board']:
                 #     if stat == 'kill':
                 #         continue

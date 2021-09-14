@@ -211,4 +211,4 @@ async def on_ready():
         if wait_time > max_wait_time:
             wait_time = max_wait_time
 
-client.run(os.getenv('siesta-token'))
+client.run(os.getenv('riza-ii-token'))
