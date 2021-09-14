@@ -11,6 +11,8 @@ import datetime
 load_dotenv()
 
 client = discord.Client()
+res_list = []
+
 
 def sec_to_text(sec):
     if sec>60:
@@ -20,6 +22,7 @@ def sec_to_text(sec):
             return f' {int(int(sec/60)/60)} 小時 {int(int(sec-int(int(sec/60)/60)*3600)//60 +1)} 分鐘'
     else:
         return f' {int(sec)+1} 秒'
+
 
 def get_report(report_id):
     headers = {
@@ -51,6 +54,7 @@ def get_faction():
 
 @client.event
 async def on_ready():
+    global res_list
     print(f'{client.user} online')
     for g in client.guilds:
         if g.id == 881543633290035211:
@@ -207,8 +211,30 @@ async def on_ready():
             await asyncio.sleep(3)
             await wait_message.edit(content=f'距離下次檢查有無最新戰報還有{sec_to_text(int(wait_time + init_time - time.time()))}')
 
+            for res in res_list:
+                if res.message.id == wait_message.id:
+                    if 885399145005846538 in [r.id for r in message.author.roles]:
+                        await res.respond(type=6)
+                        res_list.remove(res)
+                        await wait_message.delete()
+                        break
+                    else:
+                        await res.respond(content='此為高階功能 請使用 `k!battle` 查看更多關於高階會員的資訊')
+            else:
+                continue
+            break
+                    
+            
         wait_time = wait_time * wait_time_rate
         if wait_time > max_wait_time:
             wait_time = max_wait_time
+
+
+@client.event
+async def on_button_click(res):
+    global res_list
+    if res.component.label:
+        res_list.append([res, time.time()])
+
 
 client.run(os.getenv('riza-ii-token'))
