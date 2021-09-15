@@ -32,7 +32,8 @@ async def reload_all_data(cd):
         report_db[_round] = {}
         for report_f in os.listdir(os.path.join(webroot, 'ofc', _round)):
             await load_report(_round, report_f)
-            await asyncio.sleep(cd)
+            if cd:
+                await asyncio.sleep(cd)
 
     print('Done')
 
