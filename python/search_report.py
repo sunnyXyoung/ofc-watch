@@ -196,7 +196,7 @@ async def on_message(message):
                                 if not getattr(search_filter, test.replace('-', ''))(report, params[test]):
                                     break
                             else:
-                                ans_list.append(str(report_id))
+                                ans_list.append(report_f.replace('.json', ''))
                         if len(ans_list) == 0:
                             ans_embed = discord.Embed(
                                 title = "無符合的結果", 
