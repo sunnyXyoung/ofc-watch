@@ -123,8 +123,10 @@ async def on_message(message):
             if _round in os.listdir(os.path.join(webroot, 'ofc')):
                 del search_params[search_params.index('-R')+1]
                 del search_params[search_params.index('-R')]
-                
-                if len(search_params) % 2 == 0:
+                if len(search_params) == 0:
+                    await message.reply(f'參數不足 請使用 `k!search` 查看更多資訊')
+                    return                    
+                elif len(search_params) % 2 == 0:
                     params = {}
                     for i in range(len(search_params) // 2):
                         params[search_params[2*i]] = search_params[2*i+1]
