@@ -23,7 +23,7 @@ async def load_report(_round, report_f):
         report = json.loads(json_file.read())
         report_db[_round][report['report']['id']] = report
 
-async def reload_all_data():
+async def reload_all_data(cd):
     global report_db
     print('start loading data ...')
     report_db = {}
@@ -32,7 +32,7 @@ async def reload_all_data():
         report_db[_round] = {}
         for report_f in os.listdir(os.path.join(webroot, 'ofc', _round)):
             await load_report(_round, report_f)
-            await asyncio.sleep(0.01)
+            await asyncio.sleep(cd)
 
     print('Done')
 
@@ -66,9 +66,11 @@ param_to_text = {
 async def on_ready():
     DiscordComponents(client)
     print(f'{client.user} online')
+    await reload_all_data(0)
     while True:
-        await reload_all_data()
         await asyncio.sleep(600)
+        await reload_all_data(0.1)
+        
 
 @client.event
 async def on_message(message):
@@ -206,7 +208,7 @@ async def on_message(message):
                                 if not getattr(search_filter, test.replace('-', ''))(report, params[test]):
                                     break
                             else:
-                                ans_list.append(report_f.replace('.json', ''))
+                                ans_list.append(str(report_id))
                         if len(ans_list) == 0:
                             ans_embed = discord.Embed(
                                 title = "無符合的結果", 
