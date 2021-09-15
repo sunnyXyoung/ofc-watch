@@ -21,12 +21,13 @@ async def load_report(_round, report_f):
     global report_db
     with open(os.path.join(webroot, 'ofc', _round, report_f), 'r', encoding='utf8') as json_file:
         report = json.loads(json_file.read())
-        report_db[_round][report['report']['id']] = report
+        report_db[_round][report_f] = report
+    return report
 
 async def reload_all_data(cd):
-    global report_db
+    global report_db, new_report_db
     print('start loading data ...')
-    report_db = {}
+    new_report_db = {}
     for _round in os.listdir(os.path.join(webroot, 'ofc')):
         print(_round)
         report_db[_round] = {}
@@ -67,10 +68,6 @@ param_to_text = {
 async def on_ready():
     DiscordComponents(client)
     print(f'{client.user} online')
-    await reload_all_data(0)
-    while True:
-        await asyncio.sleep(600)
-        await reload_all_data(1)
         
 
 @client.event
@@ -202,9 +199,14 @@ async def on_message(message):
                         await search_m.edit(embed=search_embed, components=[])
                         
                         ans_list = []
-                        for r_id in report_db[_round]:
-                            report = report_db[_round][r_id]
+                        if not report_db.get(_round):
+                            report_db[_round] = {}
 
+                        for report_f in os.listdir(os.path.join(webroot, 'ofc', _round)):
+                            report = report_db[_round].get(report_f)
+                            if not report:
+                                report = await load_report(_round, report_f)
+                        
                             for test in params:
                                 if not getattr(search_filter, test.replace('-', ''))(report, params[test]):
                                     break
