@@ -70,7 +70,7 @@ async def on_ready():
     await reload_all_data(0)
     while True:
         await asyncio.sleep(600)
-        await reload_all_data(0.1)
+        await reload_all_data(1)
         
 
 @client.event
