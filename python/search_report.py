@@ -24,21 +24,6 @@ async def load_report(_round, report_f):
         report_db[_round][report_f] = report
     return report
 
-async def reload_all_data(cd):
-    global report_db, new_report_db
-    print('start loading data ...')
-    new_report_db = {}
-    for _round in os.listdir(os.path.join(webroot, 'ofc')):
-        print(_round)
-        report_db[_round] = {}
-        for report_f in os.listdir(os.path.join(webroot, 'ofc', _round)):
-            await load_report(_round, report_f)
-            if cd:
-                await asyncio.sleep(cd)
-
-    print('Done')
-
-
 
 param_to_text = {
     '-R': '輪數：',
