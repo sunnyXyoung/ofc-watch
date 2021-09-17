@@ -45,7 +45,7 @@ def get_faction():
         'User-Agent': 'I just wanna know all the secret data',
         'Accept': '*/*',
         'Accept-Language': 'zh-TW,zh;q=0.8,en-US;q=0.5,en;q=0.3',
-        
+
         'Origin': 'https://ourfloatingcastle.com',
         'Connection': 'keep-alive',
         'TE': 'Trailers',
@@ -124,11 +124,11 @@ async def on_ready():
                     for faction in faction_dict:
                         if line_dict['location'].startswith(faction):
                             break
-                        
-                            
+
+
                     else:
                         logging.error('unknown faction')
-                        
+
                         _faction_dict = await client.loop.run_in_executor(None, get_faction)
                         if _faction_dict.status_code != 200:
                             logging.error(_faction_dict, _faction_dict.text, _faction_dict.status_code)
@@ -140,7 +140,7 @@ async def on_ready():
                             faction_dict[faction['name']] = faction
                         continue
                     break
-                
+
                 summary = '戰報'
                 line_dict['messages']['messages'].reverse()
                 for m in line_dict['messages']['messages']:
@@ -176,7 +176,7 @@ async def on_ready():
                 equip_list = '\n'.join([f"{weapon['quality']}的 **{weapon['name']}**（{weapon['type']}）攻擊{weapon['atk']}、防禦{weapon['def']}、礦力{weapon['minePower']}" for weapon in line_dict['messages']['stats']['a']['equipments']])
                 text = f"陣營：**{line_dict['aFactionName']}**\n玩家：**{line_dict['aName']}**\n職業：**{line_dict['messages']['stats']['a']['role']}**\n副職：**{line_dict['messages']['stats']['a'].get('role2', '無')}**\nHP：**{line_dict['messages']['stats']['a']['hp']}**\n熟練：**{line_dict['messages']['stats']['a']['fightExp']}**\nID：**{line_dict['aId']}**\n裝備：\n{equip_list}"
                 t.add_field(name="**攻擊方**", value=text, inline=True)
-                
+
                 if line_dict.get('bName'):
                     equip_list = '\n'.join([f"{weapon['quality']}的 **{weapon['name']}**（{weapon['type']}）攻擊{weapon['atk']}、防禦{weapon['def']}、礦力{weapon['minePower']}" for weapon in line_dict['messages']['stats']['b']['equipments']])
                     text = f"陣營：**{line_dict['bFactionName']}**\n玩家：**{line_dict['bName']}**\n職業：**{line_dict['messages']['stats']['b']['role']}**\n副職：**{line_dict['messages']['stats']['b'].get('role2', '無')}**\nHP：**{line_dict['messages']['stats']['b']['hp']}**\n熟練：**{line_dict['messages']['stats']['b']['fightExp']}**\nID：**{line_dict['bId']}**\n裝備：\n{equip_list}"
@@ -184,7 +184,7 @@ async def on_ready():
                     text = line_dict['location'] + '的城牆'
                 t.add_field(name="**防守方**", value=text, inline=True)
                 report_message = await lastest_report_c.send(embed=t)
-                
+
                 for c in g.text_channels:
                     if c.name == faction:
                         await c.send(embed=t)
@@ -218,25 +218,18 @@ async def on_ready():
                 if time.time() - res[1] > 60:
                     res_list.remove(res)
                 elif res[0].message.id == wait_message.id:
-                    if 885399145005846538 in [r.id for r in res[0].user.roles]:
-                        try:
-                            await res[0].respond(type=6)
-                        except:
-                            pass
-                        res_list.remove(res)
-                        await wait_message.delete()
-                        break
-                    else:
-                        try:
-                            await res[0].respond(content='此為高階功能 請使用 `k!battle` 查看更多關於高階會員的資訊')
-                        except:
-                            pass
-                        res_list.remove(res)
+                    try:
+                        await res[0].respond(type=6)
+                    except:
+                        pass
+                    res_list.remove(res)
+                    await wait_message.delete()
+                    break
             else:
                 continue
             break
-                    
-            
+
+
         wait_time = wait_time * wait_time_rate
         if wait_time > max_wait_time:
             wait_time = max_wait_time

@@ -53,7 +53,7 @@ param_to_text = {
 async def on_ready():
     DiscordComponents(client)
     print(f'{client.user} online')
-        
+
 
 @client.event
 async def on_message(message):
@@ -91,11 +91,6 @@ async def on_message(message):
 範例：`k!search -R 5.5 -r 礦工`
 ''')
     elif message.content.startswith('k!search '):
-        # if 480987568901455872 != message.author.id:
-        #     return
-        if 885399145005846538 not in [r.id for r in message.author.roles]:
-            await message.reply('此為高階功能 請使用 `k!battle` 查看更多關於高階會員的資訊')
-            return
 
         search_text = message.content.strip()[len('k!search '):] + ' '
 
@@ -125,7 +120,7 @@ async def on_message(message):
                 del search_params[search_params.index('-R')]
                 if len(search_params) == 0:
                     await message.reply(f'參數不足 請使用 `k!search` 查看更多資訊')
-                    return                    
+                    return
                 elif len(search_params) % 2 == 0:
                     params = {}
                     for i in range(len(search_params) // 2):
@@ -134,9 +129,9 @@ async def on_message(message):
                         if i not in param_to_text:
                             await message.reply(f'未知的參數 `{i}` 請使用 `k!search` 查看更多資訊')
                             return
-                    
+
                     search_embed = discord.Embed(
-                        title = "請確認參數是否正確", 
+                        title = "請確認參數是否正確",
                         colour = discord.Colour.blue(),
                         description = 'k!search 戰報查詢系統',
                         timestamp = datetime.datetime.utcfromtimestamp(time.time()),
@@ -144,7 +139,7 @@ async def on_message(message):
                     search_embed.insert_field_at(index=0, name='參數設定', value=('```js\n' + '\n'.join([f"{param_to_text[i]}{params[i]}" for i in params]) + '\n```'), inline=False)
                     search_embed.set_footer(text=f"第 {_round} 輪")
                     search_m = await message.reply(embed=search_embed,
-                        components=[[                        
+                        components=[[
                             Button(style=ButtonStyle.red, label="確認"),
                             Button(style=ButtonStyle.gray, label="取消"),
                         ]],
@@ -162,7 +157,7 @@ async def on_message(message):
                             if time.time() - wait_time > 60:
                                 refuse = True
                                 search_embed = discord.Embed(
-                                    title = "閒置過久，已取消搜尋", 
+                                    title = "閒置過久，已取消搜尋",
                                     colour = discord.Colour.red(),
                                     description = 'k!search 戰報查詢系統',
                                     timestamp = datetime.datetime.utcfromtimestamp(time.time()),
@@ -175,7 +170,7 @@ async def on_message(message):
 
                     if not refuse and res.component.label == '確認':
                         search_embed = discord.Embed(
-                            title = "開始搜尋", 
+                            title = "開始搜尋",
                             colour = discord.Colour.green(),
                             description = 'k!search 戰報查詢系統',
                             timestamp = datetime.datetime.utcfromtimestamp(time.time()),
@@ -184,7 +179,7 @@ async def on_message(message):
                         search_embed.insert_field_at(index=0, name='參數設定', value=('```js\n' + '\n'.join([f"{param_to_text[i]}{params[i]}" for i in params]) + '\n```'), inline=False)
                         search_embed.set_footer(text=f"第 {_round} 輪")
                         await search_m.edit(embed=search_embed, components=[])
-                        
+
                         ans_list = []
                         if not report_db.get(_round):
                             report_db[_round] = {}
@@ -193,7 +188,7 @@ async def on_message(message):
                             report = report_db[_round].get(report_f)
                             if not report:
                                 report = await load_report(_round, report_f)
-                        
+
                             for test in params:
                                 if not getattr(search_filter, test.replace('-', ''))(report, params[test]):
                                     break
@@ -201,7 +196,7 @@ async def on_message(message):
                                 ans_list.append(report_f.replace('.json', ''))
                         if len(ans_list) == 0:
                             ans_embed = discord.Embed(
-                                title = "無符合的結果", 
+                                title = "無符合的結果",
                                 colour = discord.Colour.dark_magenta(),
                                 description = 'k!search 戰報查詢系統',
                                 timestamp = datetime.datetime.utcfromtimestamp(time.time()),
@@ -248,7 +243,7 @@ async def on_message(message):
                                             ans_embed.insert_field_at(index=0, name="閒置過久，已退出檢視", value='閒置60秒後將會自動退出')
                                             await ans_m.edit(embed=ans_embed, components=[])
                                             return
-    
+
                                 if res.component.label == "退出":
                                     ans_embed = discord.Embed(
                                         title = f"搜尋結果：共筆 {len(ans_list)} 戰報符合條件",
@@ -383,7 +378,7 @@ async def on_message(message):
 
                     else:
                         search_embed = discord.Embed(
-                            title = "已取消搜尋", 
+                            title = "已取消搜尋",
                             colour = discord.Colour.red(),
                             description = 'k!search 戰報查詢系統',
                             timestamp = datetime.datetime.utcfromtimestamp(time.time()),
@@ -400,6 +395,6 @@ async def on_message(message):
                 await message.reply('無該輪數資料 請使用 `k!search` 查看更多資訊')
         else:
             await message.reply('未指定輪數 請使用 `k!search` 查看更多資訊')
-        
+
 
 client.run(os.getenv('siesta-token'))
