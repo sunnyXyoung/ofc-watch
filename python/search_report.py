@@ -85,9 +85,9 @@ async def on_message(message):
 -Lwn 指定輸家武器名稱
 
 除-R為必填以外，其餘欄位最少要指定一個。
-範例：`k!search -R 9 -s '第 74 層被摧毀了'`
+範例：`k!search -R 9 -s "第 74 層被摧毀了"`
 範例：`k!search -R 6 -p Kulimi -s 層被摧毀了`
-範例：`k!search -R 5 -p 'Kulimi Beta' -s 層被摧毀了`
+範例：`k!search -R 5 -p "Kulimi Beta" -s 層被摧毀了`
 範例：`k!search -R 5.5 -r 礦工`
 ''')
     elif message.content.startswith('k!search '):
@@ -103,7 +103,7 @@ async def on_message(message):
                 if temp_param != '':
                     search_params.append(temp_param)
                     temp_param = ''
-            elif i == "'":
+            elif i == '"':
                 if start_quote:
                     start_quote = False
                 else:
