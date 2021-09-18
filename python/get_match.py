@@ -16,6 +16,12 @@ client = discord.Client()
 res_list = []
 
 
+faction_color_dict = {
+    "烤肉": "a7604b",
+    "月餅": "b78830",
+    "文旦": "a6bf70",
+}
+
 def sec_to_text(sec):
     if sec>60:
         if int(int(sec/60)/60) == 0:
@@ -120,27 +126,12 @@ async def on_ready():
 
                 # text = f"https://ofc-watch.kulimi.tw/history/{_round}/{i}"
                 line_dict = line_dict['report']
-                while True:
-                    for faction in faction_dict:
-                        if line_dict['location'].startswith(faction):
-                            break
-
-
-                    else:
-                        logging.error('unknown faction')
-
-                        _faction_dict = await client.loop.run_in_executor(None, get_faction)
-                        print(_faction_dict. _faction_dict.text)
-                        if _faction_dict.status_code != 200:
-                            logging.error(_faction_dict, _faction_dict.text, _faction_dict.status_code)
-                            exit()
-                        _faction_dict = json.loads(faction_dict.text)
-                        _faction_list = _faction_dict['factions']
-                        faction_dict = {}
-                        for faction in _faction_list:
-                            faction_dict[faction['name']] = faction
-                        continue
-                    break
+                
+                for faction in faction_dict:
+                    if line_dict['location'].startswith(faction):
+                        break
+                else:
+                    logging.error('unknown faction')
 
                 summary = '戰報'
                 line_dict['messages']['messages'].reverse()
@@ -171,7 +162,7 @@ async def on_ready():
                         pass
 
 
-                t = discord.Embed(title=summary, description=f"在 **{line_dict['location']}**", colour=(int(faction_dict[faction]['color'].replace('#', ''), 16)), timestamp=datetime.datetime.utcfromtimestamp(line_dict['time'] / 1000))
+                t = discord.Embed(title=summary, description=f"在 **{line_dict['location']}**", colour=(int(faction_color_dict[faction].replace('#', ''), 16)), timestamp=datetime.datetime.utcfromtimestamp(line_dict['time'] / 1000))
                 t.set_author(name=f"戰報編號{i}", url=f"https://ofc-watch.kulimi.tw/history/{_round}/{i}")
 
                 equip_list = '\n'.join([f"{weapon['quality']}的 **{weapon['name']}**（{weapon['type']}）攻擊{weapon['atk']}、防禦{weapon['def']}、礦力{weapon['minePower']}" for weapon in line_dict['messages']['stats']['a']['equipments']])
