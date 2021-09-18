@@ -130,6 +130,7 @@ async def on_ready():
                         logging.error('unknown faction')
 
                         _faction_dict = await client.loop.run_in_executor(None, get_faction)
+                        print(_faction_dict. _faction_dict.text)
                         if _faction_dict.status_code != 200:
                             logging.error(_faction_dict, _faction_dict.text, _faction_dict.status_code)
                             exit()
