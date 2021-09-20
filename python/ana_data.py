@@ -257,6 +257,8 @@ with open(os.path.join(web_root, round, 'laList.json'), 'w', encoding='utf8') as
                             unknown_la['isUnknown'] = True
                             true_la = (json.dumps(unknown_la, ensure_ascii=False), 0)
                             break
+                    else:
+                        true_la = [f'{{"name": "{la[0]}"}}', 0]
             except:
                 true_la = [f'{{"name": "{la[0]}"}}', 0]
         true_la_dict = json.loads(true_la[0].replace("'", '"'))
