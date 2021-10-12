@@ -56,7 +56,8 @@
 
         <hr align="center" width="20%" style="margin-bottom: 25px;margin-top: 25px;border-color: rgba(12, 34, 56, 0.5)">
         資料每分鐘更新一次，所以請適時搭配重新整理。<br>
-        v3.0.1
+        上次更新時間： {{ aboutList[0] }} <br>
+        v3.0.0
         <hr align="center" width="20%" style="margin-bottom: 25px;margin-top: 25px;border-color: rgba(12, 34, 56, 0.5)">
         <div class="row-div2">
           <router-link class="link" to="/thanks">感謝素材提供</router-link>
