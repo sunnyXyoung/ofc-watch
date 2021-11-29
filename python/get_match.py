@@ -86,7 +86,7 @@ async def on_ready():
     for faction in faction_list:
         faction_dict[faction['name']] = faction
 
-    logging.basicConfig(level=logging.NOTSET)
+    logging.basicConfig(level=logging.WARNING)
     try: _round = sys.argv[1]
     except IndexError: _round = '6'
     webroot = os.getenv('web-root')
