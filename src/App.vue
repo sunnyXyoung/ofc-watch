@@ -55,6 +55,7 @@ export default {
         {text: '第七輪 端午亂鬥', value: '7'},
         {text: '第八輪 疫苗亂鬥', value: '8'},
         {text: '第九輪 吳剛', value: '9'},
+	{text: '第十輪 bang利商店大亂鬥', value: '10'},
       ],
       sidebar: false
 
