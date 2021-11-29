@@ -178,7 +178,7 @@ async def on_ready():
                 report_message = await lastest_report_c.send(embed=t)
 
                 for c in g.text_channels:
-                    if c.name == faction:
+                    if c.name == faction.lower():
                         await c.send(embed=t)
 
 
