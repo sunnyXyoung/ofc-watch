@@ -126,7 +126,7 @@ async def on_ready():
 
                 # text = f"https://ofc-watch.kulimi.tw/history/{_round}/{i}"
                 line_dict = line_dict['report']
-                
+                print(faction_dict)
                 for faction in faction_dict:
                     if line_dict['location'].startswith(faction):
                         break
