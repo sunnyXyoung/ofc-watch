@@ -1,5 +1,3 @@
-from discord_components import *
-import discord_components
 import asyncio
 import requests
 import time
@@ -8,28 +6,10 @@ from dotenv import load_dotenv
 import sys
 import json
 import logging
-import discord
 import datetime
 load_dotenv()
 
-client = discord.Client()
-res_list = []
 
-
-faction_color_dict = {
-    "烤肉": "a7604b",
-    "月餅": "b78830",
-    "文旦": "a6bf70",
-}
-
-def sec_to_text(sec):
-    if sec>60:
-        if int(int(sec/60)/60) == 0:
-            return f' {int(sec-int(int(sec/60)/60))//60 +1} 分鐘'
-        else:
-            return f' {int(int(sec/60)/60)} 小時 {int(int(sec-int(int(sec/60)/60)*3600)//60 +1)} 分鐘'
-    else:
-        return f' {int(sec)+1} 秒'
 
 
 def get_report(report_id):
@@ -46,192 +26,73 @@ def get_report(report_id):
     return get_response
 
 
-def get_faction():
-    headers = {
-        'User-Agent': 'I just wanna know all the secret data',
-        'Accept': '*/*',
-        'Accept-Language': 'zh-TW,zh;q=0.8,en-US;q=0.5,en;q=0.3',
-
-        'Origin': 'https://ourfloatingcastle.com',
-        'Connection': 'keep-alive',
-        'TE': 'Trailers',
-    }
-    get_response = requests.get('https://api.ourfloatingcastle.com/api/factions/overview', headers=headers)
-    return get_response
 
 
-@client.event
-async def on_ready():
-    global res_list
-    DiscordComponents(client)
-    print(f'{client.user} online')
-    for g in client.guilds:
-        if g.id == 881543633290035211:
-            for c in g.text_channels:
-                if c.id == 886220694793379841:
-                    lastest_report_c = c
-                    break
-            else:
-                continue
-            break
-
-    faction_dict = get_faction()
-    if faction_dict.status_code != 200:
-        logging.error(faction_dict, faction_dict.text, faction_dict.status_code)
-        exit()
-    faction_dict = json.loads(faction_dict.text)
-
-    faction_list= faction_dict['factions']
-    faction_dict = {}
-    for faction in faction_list:
-        faction_dict[faction['name']] = faction
-
-    logging.basicConfig(level=logging.WARNING)
-    try: _round = sys.argv[1]
-    except IndexError: _round = '6'
-    webroot = os.getenv('web-root')
-    initial_wait_time = 10
-    wait_time = initial_wait_time
-    wait_time_rate = 1.5
-    max_wait_time = 600
-
-    try: os.mkdir(os.path.join(webroot, 'ofc', _round))
-    except FileExistsError: pass
-    exist_report = {}
-    for i in os.listdir(os.path.join(webroot, 'ofc', _round)):
-        if '.json' in i: exist_report[int(i[:-5])] = i
-
-    try:
-        for i in range(1, sorted(exist_report.items())[-1][0]+1):
-            if f'{i}.json' != exist_report.get(i, ''):
-                with open(os.path.join(webroot, 'ofc', _round, f'{i}.json'), 'w', encoding="utf-8") as f:
-                    f.write(json.dumps(json.loads(get_report(i).text), ensure_ascii=False))
-        i = sorted(exist_report.items())[-1][0] + 1
-    except IndexError:
-        i = 1
 
 
-    while True:
-        logging.info(i)
-        initial_time = time.time()  # Record initial time.
+logging.basicConfig(level=logging.INFO)
+try: _round = sys.argv[1]
+except IndexError: _round = '6'
+webroot = os.getenv('web-root')
+initial_wait_time = 10
+wait_time = initial_wait_time
+wait_time_rate = 1.5
+max_wait_time = 600
 
-        _response = await client.loop.run_in_executor(None, get_report, i)
-        logging.info(_response.text)
+try: os.mkdir(os.path.join(webroot, 'ofc', _round))
+except FileExistsError: pass
+exist_report = {}
+for i in os.listdir(os.path.join(webroot, 'ofc', _round)):
+    if '.json' in i: exist_report[int(i[:-5])] = i
 
-        if _response.status_code == 200:
-            try:
-                line_dict = json.loads(_response.text)
-                with open(os.path.join(webroot, 'ofc', _round, f'{i}.json'), 'w', encoding="utf-8") as f:
-                    f.write(json.dumps(line_dict, ensure_ascii=False))
-
-                # text = f"https://ofc-watch.kulimi.tw/history/{_round}/{i}"
-                line_dict = line_dict['report']
-                print(faction_dict)
-                for faction in faction_dict:
-                    if line_dict['location'].startswith(faction):
-                        break
-                else:
-                    logging.error('unknown faction')
-
-                summary = '戰報'
-                line_dict['messages']['messages'].reverse()
-                for m in line_dict['messages']['messages']:
-                    a = m['m'].split(' ')
-                    try:
-                        if m.get('s') == 'critical' and ((m['m'].startswith(f"{line_dict['aName']}被擊殺身亡了，{line_dict.get('bName', '')}還有") and m['m'].endswith("點體力")) or (m['m'].startswith(f"{line_dict.get('bName', '')}被擊殺身亡了，{line_dict['aName']}還有") and m['m'].endswith("點體力"))) and faction == line_dict['aFactionName']:
-                            summary = '[衛兵] ' + m['m']
-                        if m.get('s') == 'critical' and ((m['m'].startswith(f"{line_dict['aName']}被擊殺身亡了，{line_dict.get('bName', '')}還有") and m['m'].endswith("點體力")) or (m['m'].startswith(f"{line_dict.get('bName', '')}被擊殺身亡了，{line_dict['aName']}還有") and m['m'].endswith("點體力"))):
-                            summary = m['m']
-                            break
-                        elif m.get('s') == 'critical' and a[:-1] == f"獲得了{line_dict['location'][len(faction):]}獎勵".split(' '):
-                            summary = m['m']
-                            break
-                        elif m.get('s') == 'critical' and m['m'] == f"{line_dict['location'][len(faction):]}被摧毀了":
-                            summary = m['m']
-                            break
-                        elif m['m'].startswith(f'{line_dict["aName"]}直接攻擊城堡，造成') and m['m'].endswith('點傷害'):
-                            summary = m['m']
-                            break
-                        elif m.get('s') == 'info' and m['m'].startswith('雙方大戰 16 回合不分勝負！'):
-                            summary = m['m']
-                            break
-                        elif m.get('s') == 'info' and m['m'].startswith(f"{line_dict['bName']}被打得落荒而逃了，{line_dict['aName']}還有") and m['m'].endswith('點體力'):
-                            summary = m['m']
-                            break
-                    except IndexError:
-                        pass
+try:
+    for i in range(1, sorted(exist_report.items())[-1][0]+1):
+        if f'{i}.json' != exist_report.get(i, ''):
+            with open(os.path.join(webroot, 'ofc', _round, f'{i}.json'), 'w', encoding="utf-8") as f:
+                f.write(json.dumps(json.loads(get_report(i).text), ensure_ascii=False))
+    i = sorted(exist_report.items())[-1][0] + 1
+except IndexError:
+    i = 1
 
 
-                t = discord.Embed(title=summary, description=f"在 **{line_dict['location']}**", colour=(int(faction_color_dict[faction].replace('#', ''), 16)), timestamp=datetime.datetime.utcfromtimestamp(line_dict['time'] / 1000))
-                t.set_author(name=f"戰報編號{i}", url=f"https://ofc-watch.kulimi.tw/history/{_round}/{i}")
+while True:
+    logging.info(i)
+    initial_time = time.time()  # Record initial time.
 
-                equip_list = '\n'.join([f"{weapon['quality']}的 **{weapon['name']}**（{weapon['type']}）攻擊{weapon['atk']}、防禦{weapon['def']}、礦力{weapon['minePower']}" for weapon in line_dict['messages']['stats']['a']['equipments']])
-                text = f"陣營：**{line_dict['aFactionName']}**\n玩家：**{line_dict['aName']}**\n職業：**{line_dict['messages']['stats']['a']['role']}**\n副職：**{line_dict['messages']['stats']['a'].get('role2', '無')}**\nHP：**{line_dict['messages']['stats']['a']['hp']}**\n熟練：**{line_dict['messages']['stats']['a']['fightExp']}**\nID：**{line_dict['aId']}**\n裝備：\n{equip_list}"
-                t.add_field(name="**攻擊方**", value=text, inline=True)
+    _response = get_report(i)
+    logging.info(_response.text)
 
-                if line_dict.get('bName'):
-                    equip_list = '\n'.join([f"{weapon['quality']}的 **{weapon['name']}**（{weapon['type']}）攻擊{weapon['atk']}、防禦{weapon['def']}、礦力{weapon['minePower']}" for weapon in line_dict['messages']['stats']['b']['equipments']])
-                    text = f"陣營：**{line_dict['bFactionName']}**\n玩家：**{line_dict['bName']}**\n職業：**{line_dict['messages']['stats']['b']['role']}**\n副職：**{line_dict['messages']['stats']['b'].get('role2', '無')}**\nHP：**{line_dict['messages']['stats']['b']['hp']}**\n熟練：**{line_dict['messages']['stats']['b']['fightExp']}**\nID：**{line_dict['bId']}**\n裝備：\n{equip_list}"
-                else:
-                    text = line_dict['location'] + '的城牆'
-                t.add_field(name="**防守方**", value=text, inline=True)
-                report_message = await lastest_report_c.send(embed=t)
+    if _response.status_code == 200:
+        try:
+            line_dict = json.loads(_response.text)
+            with open(os.path.join(webroot, 'ofc', _round, f'{i}.json'), 'w', encoding="utf-8") as f:
+                f.write(json.dumps(line_dict, ensure_ascii=False))
 
-                for c in g.text_channels:
-                    if c.name == faction.lower():
-                        await c.send(embed=t)
-
-
-                i += 1
-                wait_time = initial_wait_time
-                continue
-            except Exception as e:
-                logging.error(e)
-                logging.warning(f'Error occur while downloading report. : {i}')
-                logging.warning(_response.text)
-
-        elif _response.status_code == 400:
-            print(f'Last report: {i}')
-
-        time_use = time.time() - initial_time
-        print(f'use {time_use}sec')
-
-        # time.sleep(wait_time)
-        wait_message = await lastest_report_c.send(f'距離下次檢查有無最新戰報還有{sec_to_text(wait_time)}' , components=[Button(style=ButtonStyle.gray, label="刷新")])
-        init_time = time.time()
-        while True:
-            if time.time() - init_time >= wait_time:
-                await wait_message.delete()
-                break
-            await asyncio.sleep(3)
-            await wait_message.edit(content=f'距離下次檢查有無最新戰報還有{sec_to_text(int(wait_time + init_time - time.time()))}')
-
-            for res in res_list:
-                if time.time() - res[1] > 60:
-                    res_list.remove(res)
-                elif res[0].message.id == wait_message.id:
-                    try:
-                        await res[0].respond(type=6)
-                    except:
-                        pass
-                    res_list.remove(res)
-                    await wait_message.delete()
-                    break
-            else:
-                continue
-            break
+                
+            line_dict = line_dict['report']
+            print(faction_dict)
+            
 
 
-        wait_time = wait_time * wait_time_rate
-        if wait_time > max_wait_time:
-            wait_time = max_wait_time
+            i += 1
+            wait_time = initial_wait_time
+            continue
+        except Exception as e:
+            logging.error(e)
+            logging.warning(f'Error occur while downloading report. : {i}')
+            logging.warning(_response.text)
+
+    elif _response.status_code == 400:
+        print(f'Last report: {i}')
+
+    time_use = time.time() - initial_time
+    print(f'use {time_use}sec')
+
+    time.sleep(wait_time)
+    
+    wait_time = wait_time * wait_time_rate
+    if wait_time > max_wait_time:
+        wait_time = max_wait_time
 
 
-@client.event
-async def on_button_click(res):
-    global res_list
-    if res.component.label:
-        res_list.append([res, time.time()])
 
-
-client.run(os.getenv('riza-ii-token'))
