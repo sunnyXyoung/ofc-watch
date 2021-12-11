@@ -70,7 +70,6 @@ while True:
 
                 
             line_dict = line_dict['report']
-            print(faction_dict)
             
 
 
