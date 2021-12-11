@@ -11,5 +11,3 @@ services:
       MONGO_INITDB_ROOT_PASSWORD:  "${MONGO_INITDB_ROOT_PASSWORD}"
     volumes:
       - /Users/kulimi/mongo/data:/data/db
-volumes:
-  /Users/kulimi/mongo/data:
