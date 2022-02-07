@@ -59,7 +59,7 @@ while True:
     logging.info(i)
     initial_time = time.time()  # Record initial time.
 
-    _response = await client.loop.run_in_executor(None, get_report, i)
+    _response = get_report(i)
     logging.info(_response.text)
 
     if _response.status_code == 200:
