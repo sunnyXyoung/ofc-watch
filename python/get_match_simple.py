@@ -27,7 +27,7 @@ def get_report(report_id):
     return get_response
 
 
-logging.basicConfig(level=logging.WARNING)
+logging.basicConfig(level=logging.DEBUG)
 try: _round = sys.argv[1]
 except IndexError: _round = '6'
 
