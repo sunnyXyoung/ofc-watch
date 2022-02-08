@@ -17,5 +17,6 @@ report_collection = ofc_db['report']
 for i in os.listdir(os.path.join(webroot, 'ofc', _round)):
 	with open(os.path.join(webroot, 'ofc', _round, i), 'r') as f:
 		report = json.load(f)
-		report['_id'] = report['id']
+		report['_id'] = report['report']['id']
+
 
