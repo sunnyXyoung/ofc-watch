@@ -19,7 +19,8 @@ def report_to_embed(report, _round, footer_text):
 			break
 	else:
 		print(report_dict['location'], [report_dict["aFactionName"], report_dict["bFactionName"]])
-	
+		faction = ''
+
 				
 	summary = '戰報'
 	i = report_dict['id']
