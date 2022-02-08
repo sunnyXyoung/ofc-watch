@@ -19,6 +19,6 @@ for i in os.listdir(os.path.join(webroot, 'ofc', _round)):
 		report['_id'] = report['report']['id']
 		if report['report']['id'] % 100 == 0:
 			print(report['report']['id'])
-print(f'done, total {len(os.listdir(os.path.join(webroot, 'ofc', _round)))} reports')
+print(f'done, total {len(os.listdir(os.path.join(webroot, "ofc", _round)))} reports')
 
 
