@@ -10,7 +10,7 @@ _round = sys.argv[1]
 mgclient = pymongo.MongoClient(os.getenv('dbconnect'))
 webroot = os.getenv('web-root')
 
-ofc_db = mgclient[f'ofc{_round}']
+ofc_db = mgclient[f'ofc{_round}'.replace('.', '-')]
 report_collection = ofc_db['report']
 
 for i in os.listdir(os.path.join(webroot, 'ofc', _round)):
