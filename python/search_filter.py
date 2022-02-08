@@ -15,10 +15,11 @@ def winner_and_loser(report_dict):
 def report_to_embed(report, _round, footer_text):
 	report_dict = report['report']
 	for faction in [report_dict["aFactionName"], report_dict["bFactionName"]]:
-		if report_dict['location'].startswith(faction):
+		if faction and report_dict['location'].startswith(faction):
 			break
 	else:
 		print(report_dict['location'], [report_dict["aFactionName"], report_dict["bFactionName"]])
+	
 				
 	summary = '戰報'
 	i = report_dict['id']
