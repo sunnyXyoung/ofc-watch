@@ -1,24 +1,16 @@
-# ofc-watch
+# OurFloatingCastle Report Watcher
 
-## Project setup
-```
-yarn install
-```
+https://ofc-watch.kulimi.tw
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
+---
 
-### Compiles and minifies for production
-```
-yarn build
-```
+分析每一輪的浮游城戰報
+順便看看團長到底作弊了幾次
 
-### Lints and fixes files
-```
-yarn lint
-```
+# Distribute
+1. `git clone https://github.com/Xialai-Kulimi/ofc-watch.git`
+2. `cd ofc-watch`
+3. `npm i`
+4. `npm run build`
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+此時`ofc-watch/dist`資料夾就是可以部署的前端了。
