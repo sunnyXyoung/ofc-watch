@@ -1,52 +1,83 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <div>
-        <router-link class="left-btn" to="/">首頁</router-link>
-        |
-        <router-link class="left-btn" to="/report">戰報分析</router-link>
-        |
-        <router-link class="left-btn" to="/fighter">戰鬥員分析</router-link>
-        |
-        <router-link class="left-btn" to="/faction">陣營分析</router-link>
-        |
-        <router-link class="left-btn" to="/weapon">裝備分析</router-link>
-        <!--        |
-                <router-link class="left-btn" to="/about">關於</router-link>-->
-      </div>
-      <div class="pusher"></div>
-      <div>
-        <router-link class="left-btn" to="/match">免費賽事分析</router-link>
-        <router-link class="right-btn" to="/about">關於</router-link>
-      </div>
-    </div>
-    <div class="m-menu">
-      <router-link class="m-btn" to="/match"><p class="m-btn">免費賽事分析</p></router-link>
-      <router-link class="m-icon" to="/report"><img class="m-img reverse" src="./assets/history.svg" alt="戰報"></router-link>
-      <router-link class="m-icon" to="/fighter"><img class="m-img reverse"  src="./assets/man-with-two-swords.svg" alt="戰鬥員"></router-link>
-      <router-link class="m-icon" to="/faction"><img class="m-img reverse"  src="./assets/flag.svg" alt="陣營"></router-link>
-      <router-link class="m-icon" to="/weapon"><img class="m-img reverse" src="./assets/sword.svg" alt="裝備"></router-link>
-      <router-link class="m-icon" to="/about"><img class="m-img reverse"  src="./assets/information.svg" alt="關於"></router-link>
-    </div>
+  <v-app id="inspire">
+    <v-app-bar
+        app
+        color="white"
+        flat
+    >
+      <v-container class="py-0 fill-height">
+<!--        <v-avatar-->
+<!--            class="mr-10"-->
+<!--            color="grey darken-1"-->
+<!--            size="32"-->
+<!--        ></v-avatar>-->
+<!--        <v-icon-->
+<!--            color="black"-->
+<!--        >-->
+<!--        </v-icon>-->
+        <v-btn
+            text
+            to="/"
+        >
+          OFC WATCH
+        </v-btn>
 
-    <select id="round-selector" v-model="round" @change="ChangeRound">
-      <option v-for="option in options" :key="option.value" :value="option.value" >
-        {{ option.text }}
-      </option>
+        <v-btn
+            v-for="link in links"
+            :key="link"
+            :to=link.path
+            text
+        >
+          {{ link.label }}
+        </v-btn>
+        <v-responsive max-width="260">
+          <v-select
+              dense
+              flat
+              hide-details
+              rounded
+              solo-inverted
+              :items="options"
+          >
+          </v-select>
+        </v-responsive>
+        <v-spacer></v-spacer>
 
-    </select>
+        <v-responsive max-width="260">
+          <v-text-field
+              dense
+              flat
+              hide-details
+              rounded
+              solo-inverted
+              v-model=search_text
+              append-icon="mdi-eye"
+              @keydown.enter.prevent="send_search"
+          ></v-text-field>
 
-    <router-view/>
-  </div>
+        </v-responsive>
+      </v-container>
+    </v-app-bar>
+
+    <v-main class="grey lighten-3">
+      <v-container>
+<!--        <v-parallax src="https://cdn.vuetifyjs.com/images/parallax/material.jpg">-->
+
+        <router-view></router-view>
+<!--  </v-parallax>-->
+      </v-container>
+    </v-main>
+  </v-app>
+
 </template>
+
 <script>
-
-
+import router from "./router";
 
 export default {
   data() {
     return {
-      round: this.$store.state.round,
+      search_text: "",
       options: [
         {text: '第四輪', value: '4'},
         {text: '第五輪', value: '5'},
@@ -55,377 +86,37 @@ export default {
         {text: '第七輪 端午亂鬥', value: '7'},
         {text: '第八輪 疫苗亂鬥', value: '8'},
         {text: '第九輪 吳剛', value: '9'},
-	{text: '第十輪 bang利商店大亂鬥', value: '10'},
+        {text: '第十輪 bang利商店大亂鬥', value: '10'},
+        {text: '第十二輪 年夜飯', value: '11'}
       ],
-      sidebar: false
-
+      links: [
+        {label: '玩家', path: "Dashboard"},
+        {label: '會戰', path: "Messages"},
+        {label: '訊息牆', path: "Profile"},
+        {label: '關於', path: "Updates"},
+      ],
     }
-  },
-  watch: {
-    "$store.state.dark": async function () {
-      if(this.$store.state.dark){
-        document.getElementsByTagName('html')[0].className="dark"
-      }else {
-        document.getElementsByTagName('html')[0].classList.remove('dark')
-      }
-    },
   },
   methods: {
-    ChangeRound() {
-      this.$store.commit("ChangeRound", this.round);
-    },
-    SideBarOn() {
-      this.sidebar = (!this.sidebar);
-    }
-  },
+    send_search() {
+      router.replace("/")
 
-  mounted() {
-    const round = localStorage.getItem("round");
-    const isDark = localStorage.getItem("dark");
-
-    if (round){
-      this.$store.commit("ChangeRound", round);
-      this.round = round
-    }
-
-    if (isDark === "false") {
-
-      this.$store.commit("ChangeTheme", false)
-    }
-    else {
-      this.$store.commit("ChangeTheme", isDark)
-    }
-
-    if(!this.$store.state.dark){
-
-      document.getElementsByTagName('html')[0].classList.remove('dark')
-    }
-    else {
-
-      document.getElementsByTagName('html')[0].className="dark"
-
+      router.replace({name: "Search", params: {payload: this.search_text}})
+      // alert(0)
     }
   }
+  ,
 }
-
-
 </script>
-<style lang="scss">
-
-a{
-  color: #0075c6;
-}
-
-
-.wide-table {
-  padding: 10px;
-  text-align: left;
-
-  @include phone-width {
-    overflow-x: scroll;
-    width: 100% ;
-
-    table {
-      //width: 120%;
-
-      tr {
-        * {
-          flex-wrap: nowrap;
-          white-space: nowrap;
-        }
-      }
-    }
-  }
-  @include small-pad-width {
-    overflow-x: scroll;
-    width: 100% ;
-
-    table {
-      //width: 120%;
-
-      tr {
-        * {
-          flex-wrap: nowrap;
-          white-space: nowrap;
-        }
-      }
-    }
-  }
-}
-
-.row-div {
-  display: flex;
-  flex-flow: row;
-  justify-content: center;
-  width: 100%;
-}
-
-.row-div2 {
-  display: flex;
-  width: 100%;
-  justify-content: center;
-  flex-flow: row;
-  flex-wrap: wrap;
-}
-
-a {
-  text-decoration: none;
-}
-
-#app {
-  width: 100%;
+<style>
+html {
   height: 100%;
-  flex-direction: row-reverse;
-
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+  font-family: "Helvetica", "Arial","LiHei Pro","黑體-繁","微軟正黑體", sans-serif;
 }
-
-#round-selector {
-  display: flex;
-  flex-flow: row;
-  margin-left: 50px;
-}
-
 body {
-  display: flex;
-}
-
-.pusher {
-  display: flex;
-  flex-grow: 10;
-}
-
-#nav {
-  display: flex;
-  padding: 30px;
-  flex-direction: row;
-  text-align: left;
-  @include phone-width{
-    display: none;
-  }
-  @include small-pad-width{
-    display: none;
-  }
-}
-
-@keyframes menu-hover {
-  0% {
-    background-color: #ffffff;
-    color: white;
-    margin-left: 20px;
-    margin-right: 20px;
-    padding: 0px;
-    border-radius: 0 10px 0 10px;
-  }
-  100% {
-    background-color: #123456;
-    color: white;
-    margin-left: 10px;
-    margin-right: 10px;
-    padding: 10px;
-    border-radius: 0 10px 0 10px;
-  }
-
-}
-
-.left-btn:hover {
-  animation-name: menu-hover;
-  animation-duration: 0.5s;
-  background-color: #123456;
-  color: white;
-  margin-left: 10px;
-  margin-right: 10px;
-  padding: 10px;
-  border-radius: 0 10px 0 10px;
-
-}
-
-
-.left-btn {
-  font-weight: bold;
-  color: #2c3e50;
-
-  margin-right: 20px;
-  margin-left: 20px;
-}
-
-.left-btn.router-link-exact-active {
-  color: #6c8eb0;
-
-}
-
-.right-btn {
-  background-color: #123456;
-  color: white;
-  margin-left: 10px;
-  margin-right: 10px;
-  padding: 10px;
-  border-radius: 0 10px 0 10px;
-}
-
-.charts{
-  width: 40%;
-  @include phone-width{
-    width: 90%;
-  }
-  @include small-pad-width{
-    width: 100%;
-  }
-  @include pad-width{
-    width: 100%;
-  }
-  @include pc-width{
-    width: 80%
-  }
-}
-
-.navbar-toggler{
-  display: none;
-  @include phone-width{
-    display: block;
-  }
-  @include small-pad-width{
-    display: block;
-  }
-}
-
-
-
-.black-layout {
-  position: fixed;
-  top: 0;
-  left: 0;
-  background: rgba(0, 0, 0, 0.6);
-  z-index: 2;
-  width: 100%;
   height: 100%;
 }
-
-.m-menu{
-  display: none;
-  width: 100%;
-  height: 40px;
-  box-shadow:3px 3px 5px 6px #cccccc;
-  align-content: center;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  margin-bottom: 20px;
-
-  @include phone-width{
-    display: flex;
-  }
-  @include small-pad-width{
-    display: flex;
-  }
-}
-
-body {
-  margin: 0;
-  height: 100%;
-  width: 100%;
-  max-width: 100%;
-  overflow-x: hidden;
-}
-
-.m-btn{
-  font-weight: bold;
-  color: #2c3e50;
-  display: flex;
-  height: 50px;
-  width: auto;
-  align-content: center;
-  justify-content: center;
-  z-index: 2;
-
-}
-
-.m-icon {
-  width: 30px;
-  height: 50px;
-  display: flex;
-  align-content: center;
-  justify-content: center;
-}
-
-.m-img{
-  width: 30px;
-  height: 50px;
-}
-
-html{
-  max-width: 100%;
-  overflow-x: hidden;
-  font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-  line-height: 1.4;
-}
-
-.dark{
-  background-color: #000000;
-  .ranks-link{
-    color: #c4c4c4 !important;
-  }
-  #app{
-    color: #c4c4c4;
-  }
-  .left-btn {
-    color: #3a96ff;
-  }
-  .m-menu{
-    box-shadow:3px 3px 5px 6px #000000;
-  }
-
-  a{
-    color: #24a7ff;
-  }
-
-  .m-btn{
-    color: #c4c4c4;
-  }
-
-  .left-btn.router-link-exact-active {
-    color: #9acaff;
-  }
-
-
-  .skill{
-    color: #00d2c2 !important;
-  }
-
-  .info{
-    color: #009aea !important;
-  }
-
-  .critical{
-    color: #ff1200 !important;
-  }
-
-  .reverse{
-    filter: invert(1);
-    -webkit-filter: invert(1);
-  }
-
-
-  .navbar-toggler {
-
-    background-color: #0c0c0c !important;
-    box-shadow: none !important;
-    border: white 1px solid !important;
-    border-right: black 1px solid !important;
-
-  }
-  #sidebar-nav {
-    background: #0c0c0c !important;
-    box-shadow: none !important;
-    border: white 1px solid;
-  }
-}
-
-body{
-  height: 100%;
-  width: 100%;
-}
-
+/*v-parallax {*/
+/*  height: 100%;*/
+/*}*/
 </style>
