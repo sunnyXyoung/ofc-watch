@@ -1,4 +1,5 @@
 <template>
+<!--          <v-parallax src="https://cdn.vuetifyjs.com/images/parallax/material.jpg">-->
   <v-app id="inspire">
     <v-app-bar
         app
@@ -6,15 +7,7 @@
         flat
     >
       <v-container class="py-0 fill-height">
-<!--        <v-avatar-->
-<!--            class="mr-10"-->
-<!--            color="grey darken-1"-->
-<!--            size="32"-->
-<!--        ></v-avatar>-->
-<!--        <v-icon-->
-<!--            color="black"-->
-<!--        >-->
-<!--        </v-icon>-->
+
         <v-btn
             text
             to="/"
@@ -59,16 +52,28 @@
       </v-container>
     </v-app-bar>
 
-    <v-main class="grey lighten-3">
+    <v-main class="grey lighten-3 fill-height">
       <v-container>
-<!--        <v-parallax src="https://cdn.vuetifyjs.com/images/parallax/material.jpg">-->
+
 
         <router-view></router-view>
-<!--  </v-parallax>-->
+
       </v-container>
+
+        <v-footer
+            fixed
+            dense
+            padless
+        >
+          <v-card-text
+              class="text-center"
+
+          >Copyright © {{ new Date().getFullYear() }}  ofc-watch.kulimi.tw All rights reserved.</v-card-text>
+        </v-footer>
+
     </v-main>
   </v-app>
-
+<!--              </v-parallax>-->
 </template>
 
 <script>
@@ -116,7 +121,5 @@ html {
 body {
   height: 100%;
 }
-/*v-parallax {*/
-/*  height: 100%;*/
-/*}*/
+
 </style>
