@@ -20,6 +20,16 @@ const routes = [
     name: 'Search',
     component: () => import('../views/Search.vue')
   },
+  {
+    path: '/message-wall',
+    name: 'Message-wall',
+    component: () => import('../views/Message-wall.vue')
+  },
+  {
+    path: '/:orderId(\\d+)',
+    name: 'round_home',
+    component: Home
+  }
 ]
 
 const router = new VueRouter({
