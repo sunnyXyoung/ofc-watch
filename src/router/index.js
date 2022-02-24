@@ -26,12 +26,12 @@ const routes = [
     component: () => import('../views/Message-wall.vue')
   },
   {
-    path: '/:orderId(\\d+)',
+    path: '/:round(\\d+)',
     name: 'round_home',
     component: Home
   },
   {
-    path: '/:orderId(\\d+)/player',
+    path: '/:round(\\d+)/player',
     name: 'Leaderboard',
     component: () => import('../views/leaderboard.vue')
   },
