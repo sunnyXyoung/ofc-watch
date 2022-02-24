@@ -29,7 +29,12 @@ const routes = [
     path: '/:orderId(\\d+)',
     name: 'round_home',
     component: Home
-  }
+  },
+  {
+    path: '/:orderId(\\d+)/player',
+    name: 'Leaderboard',
+    component: () => import('../views/leaderboard.vue')
+  },
 ]
 
 const router = new VueRouter({
