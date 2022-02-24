@@ -1,9 +1,14 @@
 <template>
   <v-container>
-    <v-row>
-      <v-col cols="6">
+    <v-container
+        fluid
+        row
+        class="align-center justify-center"
+    >
+
         <v-card
-            class="pa-10"
+            style="width: 100%;display: flex"
+            class="pa-10 ma-5 justify-center align-center flex-column"
         >
 
           <img alt="Vue logo" src="../assets/big-eye.png" class="eye">
@@ -11,56 +16,190 @@
           <h1>我們的浮游城 觀察者</h1>
         </v-card>
 
-        <v-card>
-          <v-card-title>裝備種類統計</v-card-title>
-          <v-list
-              style=" overflow-y: scroll"
-          >
-            <v-list-item
-                v-for="n in 10"
-                :key="n"
-            >
-              <v-list-item-content>
-                <v-list-item-title>{{n}} Single-line item</v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </v-list>
-        </v-card>
 
-      </v-col>
-      <v-col cols="6">
-        <v-card>
+        <v-card
+            class="ma-5"
+            width="500"
+
+        >
           <v-card-title>最新事件</v-card-title>
-          <v-list
-              style=" overflow-y: scroll"
+          <v-virtual-scroll
+              :bench="5"
+              :items="events"
+              height="400"
+              item-height="32"
           >
-            <v-list-item
-                v-for="n in 10"
-                :key="n"
+            <template v-slot:default="{ item }">
+                  <v-list-item
+                      :key="item"
+                      link
+                      dense
+                      color="red"
+                      :to="item.link"
+                  >
+                    {{item.text}}
+                  </v-list-item>
+            </template>
+          </v-virtual-scroll>
+        </v-card>
+
+      <v-card
+          class="ma-5"
+      >
+        <v-card-title>狩獵</v-card-title>
+
+        <v-container
+            v-for="hunt in hunts"
+            :key="hunt"
+            style="display: flex"
+            class="justify-end"
+        >
+          <v-dialog
+              :v-model="hunt.dialog"
+              width="500"
+          >
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                  plain
+                  color="black"
+                  v-bind="attrs"
+                  v-on="on"
+              >
+                {{hunt.name}}
+              </v-btn>
+            </template>
+
+            <v-card>
+              <v-card-title>
+                {{hunt.name}}
+              </v-card-title>
+
+              <v-simple-table
+                  fixed-header
+                  height="300px"
+              >
+                <template v-slot:default>
+                  <thead>
+                  <tr>
+                    <th class="text-left">
+                      層數
+                    </th>
+                    <th class="text-left">
+                      次數
+                    </th>
+                    <th class="text-left">
+                      怪物組成
+                    </th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr
+                      v-for="item in hunt.dist"
+                      :key="item"
+
+                  >
+                    <td>{{ item.level }}</td>
+                    <td>{{ item.count }}</td>
+                    <td>
+                      <v-menu
+
+                          close-on-click
+                      >
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-btn
+                              plain
+                              v-bind="attrs"
+                              v-on="on"
+                          >
+                            點擊查看
+                          </v-btn>
+                        </template>
+
+                        <v-list
+                            width="500"
+                        >
+                          <v-list-item
+                              v-for="i in item.monster"
+                              :key="i"
+                          >
+                            <v-list-item-title>{{ i.type }}</v-list-item-title>
+                            <v-list-item>{{i.count}}</v-list-item>
+                          </v-list-item>
+                        </v-list>
+                      </v-menu>
+                    </td>
+                  </tr>
+                  </tbody>
+                </template>
+              </v-simple-table>
+
+            </v-card>
+          </v-dialog>
+          <v-menu
+
+              close-on-click
+          >
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                  plain
+                  v-bind="attrs"
+                  v-on="on"
+              >
+                點擊查看
+              </v-btn>
+            </template>
+
+            <v-list
+                width="500"
             >
-              <v-list-item-content>
-                <v-list-item-title>{{n}} Single-line item</v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </v-list>
-          <v-container class="max-width">
-            <v-pagination
-                v-model="page"
+              <v-list-item
+                  v-for="i in hunt.loot"
+                  :key="i"
+              >
+                <v-list-item-title>{{ i.name }}</v-list-item-title>
+                <v-list-item>{{i.count}}</v-list-item>
+              </v-list-item>
+            </v-list>
+          </v-menu>
+        </v-container>
+      </v-card>
 
-                :length="100"
-            ></v-pagination>
-          </v-container>
-        </v-card>
 
-        <v-card>
-          <v-card-title>狩獵</v-card-title>
+      <v-card
+          class="ma-5"
+          width="500"
 
-        </v-card>
-      </v-col>
+      >
+        <v-card-title>裝備種類統計</v-card-title>
+        <v-simple-table>
+          <template v-slot:default>
+            <thead>
+            <tr>
+              <th class="text-left">
+                種類
+              </th>
+              <th class="text-left">
+                次數
+              </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr
+                v-for="item in weapon_type_count"
+                :key="item.name"
 
-    </v-row
+            >
+              <td>{{ item.name }}</td>
+              <td>{{ item.count }}</td>
+            </tr>
+            </tbody>
+          </template>
+        </v-simple-table>
+      </v-card>
 
-    >
+
+
+    </v-container>
   </v-container>
 </template>
 
@@ -72,7 +211,275 @@ export default {
   name: 'Home',
   data() {
     return {
-      page: 200000,
+      benched: 0,
+      events: [
+        {
+          text: "Kulimi died",
+          color: "red",
+          link: "/12/545454"
+        },
+        {
+          text: "Kulimi died",
+          color: "FF0000",
+          link: "/12/545454"
+        },
+        {
+          text: "Kulimi died",
+          color: "red",
+          link: "/12/545454"
+        },
+        {
+          text: "Kulimi died",
+          color: "red",
+          link: "/12/545454"
+        },
+        {
+          text: "Kulimi died",
+          color: "red",
+          link: "/12/545454"
+        },
+        {
+          text: "Kulimi died",
+          color: "red",
+          link: "/12/545454"
+        },
+        {
+          text: "Kulimi died",
+          color: "red",
+          link: "/12/545454"
+        },
+        {
+          text: "Kulimi died",
+          color: "red",
+          link: "/12/545454"
+        },
+        {
+          text: "Kulimi died",
+          color: "red",
+          link: "/12/545454"
+        },
+        {
+          text: "Kulimi died",
+          color: "red",
+          link: "/12/545454"
+        },
+        {
+          text: "Kulimi died",
+          color: "red",
+          link: "/12/545454"
+        },
+        {
+          text: "Kulimi died",
+          color: "red",
+          link: "/12/545454"
+        },
+        {
+          text: "Kulimi died",
+          color: "red",
+          link: "/12/545454"
+        },
+        {
+          text: "Kulimi died",
+          color: "red",
+          link: "/12/545454"
+        },
+        {
+          text: "Kulimi died",
+          color: "black",
+          link: "/12/545454"
+        },
+        {
+          text: "Kulimi died",
+          color: "gray",
+          link: "/12/545454"
+        },
+        {
+          text: "Kulimi died",
+          color: "danger",
+          link: "/12/545454"
+        },
+        {
+          text: "Kulimi died",
+          color: "danger",
+          link: "/12/545454"
+        },
+        {
+          text: "Kulimi died",
+          color: "danger",
+          link: "/12/545454"
+        },
+        {
+          text: "fsdf died",
+          color: "info",
+          link: "/12/54fff5454"
+        },
+        {
+          text: "Kulimi died",
+          color: "danger",
+          link: "/12/545454"
+        },
+        {
+          text: "Kulimi died",
+          color: "danger",
+          link: "/12/545454"
+        },
+
+      ],
+
+      page: 1,
+      hunts: [
+
+        {
+          name: "vul3蝙蝠動",
+          dialog: false,
+          loot: [
+            {
+              name: "依",
+              count: 67
+            },
+            {
+              name: "斷入",
+              count: 67
+            },
+          ],
+          dist: [
+            {
+              level: 1,
+              count : 67890,
+              monster: [
+                {
+                  type: "wolf",
+                  count: 678
+                },
+                {
+                  type: "rabbot",
+                  count: 678
+                },
+              ]
+            },
+            {
+              level: 2,
+              count : 67890,
+              monster: [
+                {
+                  type: "wolf",
+                  count: 678
+                },
+                {
+                  type: "rabbot",
+                  count: 678
+                },
+              ]
+            },
+            {
+              level: 3,
+              count : 67890,
+              monster: [
+                {
+                  type: "wolf",
+                  count: 678
+                },
+                {
+                  type: "rabbot",
+                  count: 678
+                },
+              ]
+            },
+            {
+              level: 4,
+              count : 67890,
+              monster: [
+                {
+                  type: "wolf",
+                  count: 678
+                },
+                {
+                  type: "rabbot",
+                  count: 678
+                },
+              ]
+            },
+
+
+          ]
+        },
+        {
+          name: "迷宮區",
+          dialog: false,
+          dist: [
+            {
+              level: 1,
+              count : 67890,
+              monster: [
+                {
+                  type: "wolf",
+                  count: 678
+                },
+                {
+                  type: "rabbot",
+                  count: 678
+                },
+              ]
+            },
+            {
+              level: 2,
+              count : 67890,
+              monster: [
+                {
+                  type: "wolf",
+                  count: 678
+                },
+                {
+                  type: "rabbot",
+                  count: 678
+                },
+              ]
+            },
+            {
+              level: 3,
+              count : 67890,
+              monster: [
+                {
+                  type: "wolf",
+                  count: 678
+                },
+                {
+                  type: "rabbot",
+                  count: 678
+                },
+              ]
+            },
+            {
+              level: 4,
+              count : 67890,
+              monster: [
+                {
+                  type: "wolf",
+                  count: 678
+                },
+                {
+                  type: "rabbot",
+                  count: 678
+                },
+              ]
+            },
+
+
+          ]
+        }
+      ],
+      weapon_type_count:[
+        {name: "水龍頭", count: 87878787},
+        {name: "單手劍", count: 69696969},
+        {name: "單手劍", count: 69696969},
+        {name: "單手劍", count: 69696969},
+        {name: "單手劍", count: 69696969},
+        {name: "單手劍", count: 69696969},
+        {name: "單手劍", count: 69696969},
+        {name: "單手劍", count: 69696969},
+        {name: "單手劍", count: 69696969},
+        {name: "單手劍", count: 69696969},
+      ]
     }
   },
   mounted() {
