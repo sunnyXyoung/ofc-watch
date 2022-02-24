@@ -1,5 +1,4 @@
 <template>
-<!--          <v-parallax src="https://cdn.vuetifyjs.com/images/parallax/material.jpg">-->
   <v-app id="inspire">
     <v-app-bar
         app
@@ -30,6 +29,8 @@
               hide-details
               rounded
               solo-inverted
+              v-model="round"
+              @change="change_round"
               :items="options"
           >
           </v-select>
@@ -61,7 +62,7 @@
       </v-container>
 
         <v-footer
-            fixed
+
             dense
             padless
         >
@@ -73,7 +74,6 @@
 
     </v-main>
   </v-app>
-<!--              </v-parallax>-->
 </template>
 
 <script>
@@ -83,6 +83,7 @@ export default {
   data() {
     return {
       search_text: "",
+      round: {},
       options: [
         {text: '第四輪', value: '4'},
         {text: '第五輪', value: '5'},
@@ -95,10 +96,9 @@ export default {
         {text: '第十二輪 年夜飯', value: '11'}
       ],
       links: [
-        {label: '玩家', path: "Dashboard"},
-        {label: '會戰', path: "Messages"},
-        {label: '訊息牆', path: "Profile"},
-        {label: '關於', path: "Updates"},
+        {label: '玩家', path: "leaderboard"},
+        {label: '會戰', path: "match"},
+        {label: '關於', path: "about"},
       ],
     }
   },
@@ -108,9 +108,24 @@ export default {
 
       router.replace({name: "Search", params: {payload: this.search_text}})
       // alert(0)
+    },
+    change_round() {
+      // alert(this.round)
+      router.push(this.round)
+      localStorage.round = this.round
     }
+  },
+  mounted() {
+    if (localStorage.round) {
+      this.round = localStorage.round;
+    }
+    else {
+      localStorage.round = this.options[this.options.length - 1].value
+      this.round = this.options[this.options.length - 1];
+    }
+
+    router.push(this.round.value)
   }
-  ,
 }
 </script>
 <style>
