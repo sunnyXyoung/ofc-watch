@@ -140,7 +140,7 @@ export default {
 <style>
 html {
   height: 100%;
-  font-family: "Helvetica", "Arial","LiHei Pro","黑體-繁","微軟正黑體", sans-serif;
+  font-family: "微軟正黑體", "Helvetica", "Arial","LiHei Pro", "黑體-繁", sans-serif;
 }
 body {
   height: 100%;
