@@ -31,7 +31,7 @@
               solo-inverted
               v-model="round"
               @change="change_round"
-              :items="options"
+              :items="round_options"
           >
           </v-select>
         </v-responsive>
@@ -78,13 +78,14 @@
 
 <script>
 import router from "./router";
+import api from "./api";
 
 export default {
   data() {
     return {
       search_text: "",
       round: {},
-      options: [
+      round_options: [
         {text: '第四輪', value: '4'},
         {text: '第五輪', value: '5'},
         {text: '幕間劇場', value: '5.5'},
@@ -124,16 +125,17 @@ export default {
       localStorage.round = this.round
     }
   },
-  mounted() {
+  mounted: async function () {
+    this.round_options = await api.getData("round_options.json")
     if (localStorage.round) {
       this.round = localStorage.round;
     }
     else {
-      localStorage.round = this.options[this.options.length - 1].value
-      this.round = this.options[this.options.length - 1];
+      localStorage.round = this.round_options[this.round_options.length - 1].value
+      this.round = this.round_options[this.round_options.length - 1];
     }
 
-    router.push(this.round.value)
+    await router.replace(this.round.value)
   }
 }
 </script>
