@@ -96,7 +96,7 @@ export default {
         {text: '第十二輪 年夜飯', value: '11'}
       ],
       links: [
-        {label: '玩家', path: "leaderboard"},
+        {label: '玩家', path: "player"},
         {label: '會戰', path: "match"},
         {label: '關於', path: "about"},
       ],
@@ -120,7 +120,7 @@ export default {
     },
     change_round() {
       // alert(this.round)
-      router.push(this.round)
+      router.replace("/" + this.round)
       localStorage.round = this.round
     }
   },
