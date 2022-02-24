@@ -2,7 +2,7 @@
 var jsonify = res => res.json();
 function ajax(url){
     return new Promise((resolve, reject) => {
-        fetch(`/${localStorage.getItem("round")}/${url}`).then(jsonify).then(resolve).catch(reject)
+        fetch(`/${url}`).then(jsonify).then(resolve).catch(reject)
     })
 }
 function report(url){
