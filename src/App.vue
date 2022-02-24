@@ -104,7 +104,13 @@ export default {
   },
   methods: {
     goto_page(path) {
-      router.replace("/" + localStorage.round + "/" + path)
+      if (path === "about") {
+        router.replace("/" + path)
+      }
+      else{
+        router.replace("/" + localStorage.round + "/" + path)
+      }
+
     },
     send_search() {
       router.replace("/")
