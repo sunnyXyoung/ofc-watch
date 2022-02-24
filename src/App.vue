@@ -17,7 +17,7 @@
         <v-btn
             v-for="link in links"
             :key="link"
-            :to=link.path
+            @click="goto_page(link.path)"
             text
         >
           {{ link.label }}
@@ -103,6 +103,9 @@ export default {
     }
   },
   methods: {
+    goto_page(path) {
+      router.replace("/" + localStorage.round + "/" + path)
+    },
     send_search() {
       router.replace("/")
 
